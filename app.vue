@@ -1,6 +1,6 @@
 <template>
-    <div class="min-h-screen flex flex-col">
-        <Topbar />
+    <div class="min-h-screen flex flex-col" data-theme="emerlard">
+        <Navbar />
         <main class="flex-grow">
             <NuxtPage />
         </main>
