@@ -11,8 +11,19 @@ export default defineNuxtConfig({
                 { charset: "utf-8" },
                 {
                     name: "viewport",
-                    content:
-                        "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+                    content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+                },
+                {
+                    name: "Cache-Control",
+                    content: "no-cache, no-store, must-revalidate",
+                },
+                {
+                    name: "Expires",
+                    content: "0",
+                },
+                {
+                    name: "Pragma",
+                    content: "no-cache",
                 },
             ],
         },

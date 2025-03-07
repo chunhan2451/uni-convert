@@ -1,17 +1,14 @@
-// pages/color-converter.vue
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-xl mx-auto">
             <!-- Narrower max-width for single column -->
             <h1 class="text-4xl font-bold mb-4 text-center">Color Converter</h1>
-            <p class="text-gray-600 mb-8 text-center text-lg">
-                Convert between HEX, RGB, HSL, and CMYK formats instantly
-            </p>
+            <p class="text-gray-600 mb-8 text-center text-lg">Convert between HEX, RGB, HSL, and CMYK formats instantly</p>
 
             <!-- Color Preview -->
             <div class="mb-8">
                 <div
-                    class="w-full h-32 rounded-2xl shadow-lg transition-colors duration-200"
+                    class="w-full h-32 rounded-lg shadow-lg transition-colors duration-200"
                     :style="{ backgroundColor: previewColor }"
                 ></div>
             </div>
@@ -19,28 +16,27 @@
             <!-- Color Inputs -->
             <div class="space-y-8">
                 <!-- HEX Input -->
-                <div class="space-y-2">
-                    <h2 class="text-xl font-semibold">HEX</h2>
-                    <div class="flex gap-2">
+                <div class="form-control">
+                    <label class="block text-gray-700 text-sm font-medium mb-2"> HEX </label>
+                    <div class="input-group">
                         <input
                             v-model="hex"
                             type="text"
-                            class="flex-1 p-3 border rounded-lg text-lg"
+                            class="input input-bordered flex-1 text-lg w-full"
                             placeholder="#000000"
                             @input="updateFromHex"
                         />
-                        <button
-                            @click="copyToClipboard(hex)"
-                            class="px-6 py-3 bg-gray-100 rounded-lg hover:bg-gray-200 text-lg"
-                        >
-                            Copy
-                        </button>
+                        <div class="flex justify-end items-center mt-2">
+                            <button @click="copyToClipboard(hex)" class="btn btn-sm btn-primary">
+                                <Icon name="solar:copy-linear" size="1.25rem" />Copy
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- RGB Input -->
-                <div class="space-y-2">
-                    <h2 class="text-xl font-semibold">RGB</h2>
+                <div class="form-control">
+                    <label class="block text-gray-700 text-sm font-medium mb-2"> RGB </label>
                     <div class="grid grid-cols-3 gap-2">
                         <input
                             v-for="(label, i) in ['R', 'G', 'B']"
@@ -49,25 +45,22 @@
                             type="number"
                             min="0"
                             max="255"
-                            class="w-full p-3 border rounded-lg text-lg"
+                            class="input input-bordered w-full text-lg"
                             :placeholder="label"
                             @input="updateFromRgb"
                         />
                     </div>
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-gray-600">rgb({{ rgb.join(", ") }})</span>
-                        <button
-                            @click="copyToClipboard(`rgb(${rgb.join(', ')})`)"
-                            class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"
-                        >
-                            Copy
+                        <button @click="copyToClipboard(`rgb(${rgb.join(', ')})`)" class="btn btn-sm btn-primary">
+                            <Icon name="solar:copy-linear" size="1.25rem" />Copy
                         </button>
                     </div>
                 </div>
 
                 <!-- HSL Input -->
-                <div class="space-y-2">
-                    <h2 class="text-xl font-semibold">HSL</h2>
+                <div class="form-control">
+                    <label class="block text-gray-700 text-sm font-medium mb-2"> HSL </label>
                     <div class="grid grid-cols-3 gap-2">
                         <div
                             v-for="(item, i) in [
@@ -82,28 +75,23 @@
                                 type="number"
                                 :min="0"
                                 :max="item.max"
-                                class="w-full p-3 border rounded-lg text-lg"
+                                class="input input-bordered w-full text-lg"
                                 :placeholder="`${item.label} (${item.unit})`"
                                 @input="updateFromHsl"
                             />
                         </div>
                     </div>
                     <div class="flex justify-between items-center mt-2">
-                        <span class="text-gray-600"
-                            >hsl({{ hsl.h }}°, {{ hsl.s }}%, {{ hsl.l }}%)</span
-                        >
-                        <button
-                            @click="copyToClipboard(`hsl(${hsl.h}°, ${hsl.s}%, ${hsl.l}%)`)"
-                            class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"
-                        >
-                            Copy
+                        <span class="text-gray-600">hsl({{ hsl.h }}°, {{ hsl.s }}%, {{ hsl.l }}%)</span>
+                        <button @click="copyToClipboard(`hsl(${hsl.h}°, ${hsl.s}%, ${hsl.l}%)`)" class="btn btn-sm btn-primary">
+                            <Icon name="solar:copy-linear" size="1.25rem" />Copy
                         </button>
                     </div>
                 </div>
 
                 <!-- CMYK Input -->
-                <div class="space-y-2">
-                    <h2 class="text-xl font-semibold">CMYK</h2>
+                <div class="form-control">
+                    <label class="block text-gray-700 text-sm font-medium mb-2"> CMYK </label>
                     <div class="grid grid-cols-4 gap-2">
                         <input
                             v-for="(label, i) in ['C', 'M', 'Y', 'K']"
@@ -112,31 +100,27 @@
                             type="number"
                             min="0"
                             max="100"
-                            class="w-full p-3 border rounded-lg text-lg"
+                            class="input input-bordered w-full text-lg"
                             :placeholder="`${label}%`"
                             @input="updateFromCmyk"
                         />
                     </div>
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-gray-600">cmyk({{ cmyk.join("%, ") }}%)</span>
-                        <button
-                            @click="copyToClipboard(`cmyk(${cmyk.join('%, ')}%)`)"
-                            class="px-6 py-2 bg-gray-100 rounded-lg hover:bg-gray-200"
-                        >
-                            Copy
+                        <button @click="copyToClipboard(`cmyk(${cmyk.join('%, ')}%)`)" class="btn btn-sm btn-primary">
+                            <Icon name="solar:copy-linear" size="1.25rem" />Copy
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Toast Notification -->
-    <div
-        v-if="showToast"
-        class="fixed bottom-4 right-4 bg-green-500 text-white p-3 rounded-lg shadow-lg"
-    >
-        Copied to clipboard!
+        <!-- Toast Notification -->
+        <div v-if="showToast" class="toast toast-end toast-bottom">
+            <div class="alert alert-success">
+                <span>Copied to clipboard!</span>
+            </div>
+        </div>
     </div>
 </template>
 
