@@ -1,3 +1,5 @@
 <template>
     <ConvertUnit />
+    
+    <ConvertColor />
 </template>

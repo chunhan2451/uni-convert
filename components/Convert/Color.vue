@@ -126,7 +126,7 @@
 
 <script setup>
 // Reference: https://convertacolor.com/
-import { colorConversions } from "~/utils/converters/color";
+import { colorConversions } from "~/utils/color";
 
 const hex = ref("#000000");
 const rgb = ref([0, 0, 0]);
