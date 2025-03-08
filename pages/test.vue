@@ -1,9 +1,11 @@
 <template>
-    <ConvertUnit />
+    <!-- <ConvertUnit /> -->
 
-    <ConvertColor />
+    <!-- <ConvertColor /> -->
+    <ConvertInterface  />
 </template>
 <script setup>
-import { ConvertUnit } from "~/components/Convert/Unit.vue";
-import { ConvertColor } from "~/components/Convert/Color.vue";
+import { ConvertUnit, ConvertColor, ConvertInterface } from "#components";
+// import { ConvertColor } from "~/components/Convert/Color.vue";
+// import { ConvertInterface } from "~/components/Convert/Interface.vue";
 </script>
