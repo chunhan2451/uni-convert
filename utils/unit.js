@@ -1,4 +1,4 @@
-export const convertCategories = [
+export const unitConvertCategories = [
     {
         id: "angle",
         name: "Angle",

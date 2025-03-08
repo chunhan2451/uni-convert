@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar bg-base-100 container mx-auto">
+    <nav class="navbar bg-base-100 container mx-auto">
         <!-- Mobile menu (hamburger) -->
         <div class="navbar-start">
             <div class="dropdown">
@@ -26,5 +26,5 @@
                 <li><NuxtLink to="/about" class="font-medium">About</NuxtLink></li>
             </ul>
         </div>
-    </div>
+    </nav>
 </template>

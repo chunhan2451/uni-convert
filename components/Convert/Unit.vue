@@ -8,7 +8,7 @@
                 <label class="block text-zinc-700 text-sm font-medium mb-2">Conversion Type</label>
                 <select v-model="selectedCategory" class="select w-full bg-white" @change="handleCategoryChange">
                     <option disabled value="">Select type</option>
-                    <option v-for="category in convertCategories" :key="category.id" :value="category.id">
+                    <option v-for="category in unitConvertCategories" :key="category.id" :value="category.id">
                         {{ category.name }}
                     </option>
                 </select>
@@ -123,7 +123,7 @@
 </template>
 
 <script setup>
-import { convertCategories } from "~/utils/convert";
+import { unitConvertCategories } from "~/utils/unit";
 import { ref, computed, watch } from "vue";
 
 // State
@@ -144,13 +144,13 @@ const cssOptions = ref({
 
 // Get current units based on selected category
 const currentUnits = computed(() => {
-    const category = convertCategories.find((cat) => cat.id === selectedCategory.value);
+    const category = unitConvertCategories.find((cat) => cat.id === selectedCategory.value);
     return category ? category.units : [];
 });
 
 // Initialize units when component mounts or category changes
 const handleCategoryChange = () => {
-    const category = convertCategories.find((cat) => cat.id === selectedCategory.value);
+    const category = unitConvertCategories.find((cat) => cat.id === selectedCategory.value);
 
     if (category && category.units.length > 0) {
         fromUnit.value = category.units[0].id;

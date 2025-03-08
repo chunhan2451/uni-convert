@@ -75,11 +75,11 @@
         </section>
 
         
-        <section class="py-12">
+        <!-- <section class="py-12">
             <div class="container mx-auto px-4">
                 <ConvertColor />
             </div>
-        </section>
+        </section> -->
 
         <!-- Features Section -->
         <section class="py-12 bg-base-300">
