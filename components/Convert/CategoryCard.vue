@@ -68,7 +68,7 @@ const props = defineProps({
 
 // Display up to 6 units for preview
 const displayUnits = computed(() => {
-    return props.category.units.slice(0, 6);
+    return props.category.units.slice(0, 10);
 });
 
 // Get shortened unit name by removing parentheses content
