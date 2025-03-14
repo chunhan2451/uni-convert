@@ -15,7 +15,9 @@
         <div class="max-w-xl mx-auto">
             <div v-if="conversionData">
                 <!-- Full converter component -->
-                <component :is="converterComponent" />
+                <div v-if="dynamicComponent">
+                    <component :is="dynamicComponent" />
+                </div>
             </div>
 
             <div v-else class="text-center py-8">
@@ -28,14 +30,17 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { unitConvertCategories } from "~/utils/unit";
-import { getConverterByCategory } from "~/components/Convert";
+import { ref, computed, onMounted, watch, shallowRef } from 'vue';
+import { unitConvertCategories } from '~/utils/unit';
+import { getConverterByCategory } from '~/components/Convert';
 
 // Get the from and to parameters from the route
 const route = useRoute();
 const fromUnitId = route.params.from;
 const toUnitId = route.params.to;
+
+// Use shallowRef for the component to prevent reactivity issues
+const dynamicComponent = shallowRef(null);
 
 // Find conversion data
 const conversionData = computed(() => {
@@ -66,29 +71,73 @@ const categoryData = computed(() => {
 const fromUnit = computed(() => conversionData.value?.fromUnit || {});
 const toUnit = computed(() => conversionData.value?.toUnit || {});
 
-// Get appropriate converter component
-const converterComponent = ref(null);
-
 // Construct page title
 const pageTitle = computed(() => {
-    if (!conversionData.value) return "Unit Converter";
+    if (!conversionData.value) return 'Unit Converter';
     return `${fromUnit.value.name} to ${toUnit.value.name} Converter`;
 });
 
+// Function to update page state when units change
+function updatePageForNewUnits() {
+    // Find conversion data for the new units
+    for (const category of unitConvertCategories) {
+        const fromUnitExists = category.units.some((unit) => unit.id === fromUnitId);
+        const toUnitExists = category.units.some((unit) => unit.id === toUnitId);
+
+        if (fromUnitExists && toUnitExists) {
+            // Update the conversion data
+            conversionData.value = {
+                categoryId: category.id,
+                fromUnit: category.units.find((unit) => unit.id === fromUnitId),
+                toUnit: category.units.find((unit) => unit.id === toUnitId),
+            };
+
+            // Update the converter component
+            if (categoryData.value) {
+                loadDynamicComponent();
+            }
+
+            break;
+        }
+    }
+}
+
+// Load the converter component
+function loadDynamicComponent() {
+    if (!categoryData.value) return;
+
+    // Get the component and explicitly mark it as not reactive
+    const component = getConverterByCategory(categoryData.value.id);
+
+    // Update the shallowRef
+    dynamicComponent.value = component;
+}
+
+// Watch for route changes to handle direct navigation or back/forward browser buttons
+watch(
+    () => route.path,
+    (newPath) => {
+        const match = newPath.match(/\/([^-]+)-to-([^-]+)-converter/);
+        if (match && match.length === 3) {
+            fromUnitId = match[1];
+            toUnitId = match[2];
+            updatePageForNewUnits();
+        }
+    }
+);
+
 // Mount the component
 onMounted(() => {
-    // Initialize the converter component
-    if (categoryData.value) {
-        converterComponent.value = getConverterByCategory(categoryData.value.id);
-    }
+    // Load dynamic component
+    loadDynamicComponent();
 });
 
 // Set SEO metadata
 useHead(() => {
     if (!conversionData.value) {
         return {
-            title: "Unit Converter - Not Found",
-            meta: [{ name: "description", content: "Conversion not available. Try our other unit converters." }],
+            title: 'Unit Converter - Not Found',
+            meta: [{ name: 'description', content: 'Conversion not available. Try our other unit converters.' }],
         };
     }
 
@@ -96,7 +145,7 @@ useHead(() => {
         title: `${fromUnit.value.name} to ${toUnit.value.name} Converter - Free Online Calculator`,
         meta: [
             {
-                name: "description",
+                name: 'description',
                 content: `Convert from ${fromUnit.value.name} to ${
                     toUnit.value.name
                 } with our free online calculator. Quick, easy, and accurate ${categoryData.value.name.toLowerCase()} conversions.`,

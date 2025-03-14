@@ -74,13 +74,6 @@
             </div>
         </section>
 
-        
-        <!-- <section class="py-12">
-            <div class="container mx-auto px-4">
-                <ConvertColor />
-            </div>
-        </section> -->
-
         <!-- Features Section -->
         <section class="py-12 bg-base-300">
             <div class="container mx-auto px-4">

@@ -3,7 +3,7 @@
     <div class="container mx-auto p-4">
         <div class="text-center mb-8 max-w-3xl mx-auto">
             <h1 class="text-4xl font-bold mb-3">Universal Unit Converter</h1>
-            <p class="text-xl text-zinc-600">Choose a converter from our comprehensive collection of measurement tools</p>
+            <p class="text-xl text-zinc-600">Transform any measurement with precision and ease</p>
         </div>
 
         <!-- Search Input -->

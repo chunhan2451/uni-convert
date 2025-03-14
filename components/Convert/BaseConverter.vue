@@ -2,7 +2,7 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-xl mx-auto">
-            <h1 v-if="title" class="text-3xl font-bold mb-6 text-center">{{ title }}</h1>
+            <h1 v-show="title" class="text-3xl font-bold mb-6 text-center">{{ title }}</h1>
 
             <!-- From Section -->
             <div class="mb-4">
@@ -76,13 +76,17 @@ const props = defineProps({
     },
     title: {
         type: String,
+        default: null,
+    },
+    convertFunction: {
+        type: Function,
+        default: null,
+    },
+    formulaFunction: {
+        type: Function,
+        default: null,
     },
 });
-
-// Get the from and to parameters from the route
-const route = useRoute();
-const fromUnitId = route.params.from;
-const toUnitId = route.params.to;
 
 // Get URL update functionality
 const { updateUrlPath, getUnitsFromUrl } = useUrlUpdate();
@@ -100,22 +104,27 @@ const showToast = ref(false);
 // Initialize units when component mounts
 const initializeUnits = () => {
     if (units.value && units.value.length > 0) {
-        if (fromUnitId && units.value.some((unit) => unit.id === fromUnitId)) {
-            fromUnit.value = fromUnitId;
+        // Try to get units from URL first
+        const urlUnits = getUnitsFromUrl();
+
+        if (
+            urlUnits &&
+            units.value.some((unit) => unit.id === urlUnits.fromUnit) &&
+            units.value.some((unit) => unit.id === urlUnits.toUnit)
+        ) {
+            // Use units from URL if they exist and are valid for this category
+            fromUnit.value = urlUnits.fromUnit;
+            toUnit.value = urlUnits.toUnit;
         } else {
+            // Otherwise use default units
             fromUnit.value = units.value[0].id;
-        }
-
-        if (toUnitId && units.value.some((unit) => unit.id === toUnitId)) {
-            toUnit.value = toUnitId;
-        } else {
             toUnit.value = units.value.length > 1 ? units.value[1].id : units.value[0].id;
-        }
 
-        // Update URL with the default units
-        setTimeout(() => {
-            updateUrlPath(fromUnit.value, toUnit.value);
-        }, 0);
+            // Update URL with the default units
+            setTimeout(() => {
+                updateUrlPath(fromUnit.value, toUnit.value);
+            }, 0);
+        }
 
         // Reset values
         fromValue.value = '';
@@ -123,8 +132,13 @@ const initializeUnits = () => {
     }
 };
 
-// Computed for formula display - to be overridden in specialized converters
+// Computed for formula display - can be overridden by props
 const conversionFormula = computed(() => {
+    // Use custom formula function if provided
+    if (props.formulaFunction) {
+        return props.formulaFunction(fromUnit.value, toUnit.value);
+    }
+
     const from = units.value.find((unit) => unit.id === fromUnit.value);
     const to = units.value.find((unit) => unit.id === toUnit.value);
 
@@ -143,15 +157,24 @@ const computeConversion = (value, fromUnitId, toUnitId) => {
     return value * (fromUnit.factor / toUnit.factor);
 };
 
-// Convert from the "from" value - can be overridden in specialized converters
+// Convert from the "from" value - can be overridden by props
 const convertFromValue = () => {
     if (!fromUnit.value || !toUnit.value || fromValue.value === '') {
         toValue.value = '';
         return;
     }
 
-    // Standard conversion using factor
-    const result = computeConversion(parseFloat(fromValue.value), fromUnit.value, toUnit.value);
+    let result;
+    const value = parseFloat(fromValue.value);
+
+    // Use custom conversion function if provided
+    if (props.convertFunction) {
+        result = props.convertFunction(value, fromUnit.value, toUnit.value);
+    } else {
+        // Standard conversion using factor
+        result = computeConversion(value, fromUnit.value, toUnit.value);
+    }
+
     toValue.value = result.toFixed(4);
 };
 
@@ -170,6 +193,7 @@ const copyToClipboard = async (text) => {
 const swapUnits = () => {
     // Save current values
     const tempUnit = fromUnit.value;
+    const tempValue = fromValue.value;
 
     // Swap units
     fromUnit.value = toUnit.value;

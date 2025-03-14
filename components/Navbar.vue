@@ -8,8 +8,11 @@
                 </div>
                 <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                     <li><NuxtLink to="/">Home</NuxtLink></li>
-                    <li><NuxtLink to="/converter">Converter</NuxtLink></li>
-                    <li><NuxtLink to="/about">About</NuxtLink></li>
+                    <li>
+                        <NuxtLink to="/converter">
+                            Convert
+                        </NuxtLink>
+                    </li>
                 </ul>
             </div>
             <!-- Logo -->
@@ -22,7 +25,11 @@
         <div class="navbar-end hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
                 <li><NuxtLink to="/" class="font-medium">Home</NuxtLink></li>
-                <li><NuxtLink to="/converter" class="font-medium">Converter</NuxtLink></li>
+                <li>
+                    <NuxtLink to="/converter" class="font-medium">
+                        <Icon name="solar:rounded-magnifer-linear" class="h-5 w-5 mr-2 text-xl"
+                    /></NuxtLink>
+                </li>
                 <li><NuxtLink to="/about" class="font-medium">About</NuxtLink></li>
             </ul>
         </div>

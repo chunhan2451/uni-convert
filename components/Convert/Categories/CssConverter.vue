@@ -11,56 +11,41 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-zinc-700 text-sm mb-1">Base Font Size (px)</label>
-                        <input
-                            v-model="cssOptions.baseSize"
-                            type="number"
-                            class="input input-sm w-full bg-white"
-                            @change="baseConverter.convertFromValue"
-                        />
+                        <input v-model.number="cssOptions.baseSize" type="number" class="input input-sm w-full bg-white" />
                     </div>
                     <div>
                         <label class="block text-zinc-700 text-sm mb-1">Container Size (px)</label>
-                        <input
-                            v-model="cssOptions.containerSize"
-                            type="number"
-                            class="input input-sm w-full bg-white"
-                            @change="baseConverter.convertFromValue"
-                        />
+                        <input v-model.number="cssOptions.containerSize" type="number" class="input input-sm w-full bg-white" />
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 mt-2">
                     <div>
                         <label class="block text-zinc-700 text-sm mb-1">Viewport Width (px)</label>
-                        <input
-                            v-model="cssOptions.viewportWidth"
-                            type="number"
-                            class="input input-sm w-full bg-white"
-                            @change="baseConverter.convertFromValue"
-                        />
+                        <input v-model.number="cssOptions.viewportWidth" type="number" class="input input-sm w-full bg-white" />
                     </div>
                     <div>
                         <label class="block text-zinc-700 text-sm mb-1">Viewport Height (px)</label>
-                        <input
-                            v-model="cssOptions.viewportHeight"
-                            type="number"
-                            class="input input-sm w-full bg-white"
-                            @change="baseConverter.convertFromValue"
-                        />
+                        <input v-model.number="cssOptions.viewportHeight" type="number" class="input input-sm w-full bg-white" />
                     </div>
                 </div>
             </div>
 
-            <!-- Use the BaseConverter component and pass ref to access its methods -->
-            <BaseConverter :category="cssCategory" ref="baseConverter" />
+            <!-- Use the BaseConverter component with props for custom conversion -->
+            <BaseConverter
+                :category="cssCategory"
+                ref="baseConverter"
+                :convert-function="convertCssUnits"
+                :formula-function="getConversionFormula"
+            />
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import { unitConvertCategories } from '~/utils/unit';
-import BaseConverter from '../BaseConverter.vue';
+import BaseConverter from "../BaseConverter.vue";
 
 // Get the CSS category from unitConvertCategories
 const cssCategory = unitConvertCategories.find((cat) => cat.id === 'css');
@@ -149,32 +134,6 @@ const getConversionFormula = (fromUnit, toUnit) => {
 
     return `Converted using CSS unit calculations`;
 };
-
-// Override the default conversion method when the component is mounted
-onMounted(() => {
-    //!! issue on convertFromValue function
-    if (baseConverter.value) {
-        // Override the conversion method
-        baseConverter.value.convertFromValue = () => {
-            const { fromUnit, toUnit, fromValue, toValue } = baseConverter.value;
-
-            console.log(fromUnit, toUnit, fromValue, toValue);
-            if (!fromUnit.value || !toUnit.value || fromValue.value === '') {
-                toValue.value = '';
-                return;
-            }
-
-            const result = convertCssUnits(parseFloat(fromValue.value), fromUnit.value, toUnit.value);
-
-            toValue.value = result.toFixed(4);
-        };
-
-        // Override the formula display
-        Object.defineProperty(baseConverter.value, 'conversionFormula', {
-            get: () => getConversionFormula(baseConverter.value.fromUnit.value, baseConverter.value.toUnit.value),
-        });
-    }
-});
 
 // Watch CSS option changes to recalculate
 watch(
