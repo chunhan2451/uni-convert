@@ -1,3 +1,5 @@
+import { colorCategory } from './color';
+
 export const unitConvertCategories = [
     {
         id: "angle",
@@ -146,4 +148,5 @@ export const unitConvertCategories = [
             { id: "st", name: "Stone (st)", factor: 6.35029 },
         ],
     },
-];;
+    colorCategory
+];

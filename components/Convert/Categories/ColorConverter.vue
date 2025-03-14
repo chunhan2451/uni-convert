@@ -1,3 +1,4 @@
+<!-- components/Convert/Color.vue -->
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-xl mx-auto">
@@ -51,7 +52,7 @@
                         />
                     </div>
                     <div class="flex justify-between items-center mt-2">
-                        <span class="text-gray-600">rgb({{ rgb.join(", ") }})</span>
+                        <span class="text-gray-600">rgb({{ rgb.join(', ') }})</span>
                         <button @click="copyToClipboard(`rgb(${rgb.join(', ')})`)" class="btn btn-sm btn-primary">
                             <Icon name="solar:copy-linear" size="1.25rem" />Copy
                         </button>
@@ -106,7 +107,7 @@
                         />
                     </div>
                     <div class="flex justify-between items-center mt-2">
-                        <span class="text-gray-600">cmyk({{ cmyk.join("%, ") }}%)</span>
+                        <span class="text-gray-600">cmyk({{ cmyk.join('%, ') }}%)</span>
                         <button @click="copyToClipboard(`cmyk(${cmyk.join('%, ')}%)`)" class="btn btn-sm btn-primary">
                             <Icon name="solar:copy-linear" size="1.25rem" />Copy
                         </button>
@@ -126,14 +127,14 @@
 
 <script setup>
 // Reference: https://convertacolor.com/
-import { colorConversions } from "~/utils/color";
+import { colorConversions } from '~/utils/color';
 
-const hex = ref("#000000");
+const hex = ref('#000000');
 const rgb = ref([0, 0, 0]);
 const hsl = ref({ h: 0, s: 0, l: 0 });
 const cmyk = ref([0, 0, 0, 0]);
 
-const previewColor = computed(() => `rgb(${rgb.value.join(",")})`);
+const previewColor = computed(() => `rgb(${rgb.value.join(',')})`);
 
 const showToast = ref(false);
 
@@ -174,7 +175,7 @@ const copyToClipboard = async (text) => {
         showToast.value = true;
         setTimeout(() => (showToast.value = false), 2000); // Hide toast after 2 seconds
     } catch (err) {
-        console.error("Failed to copy:", err);
+        console.error('Failed to copy:', err);
     }
 };
 

@@ -1,3 +1,4 @@
+// utils/color.js
 export const colorConversions = {
     hexToRgb(hex) {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -106,4 +107,20 @@ export const colorConversions = {
             b: Math.round(b),
         };
     },
+};
+
+// Color format definitions for the converter
+export const colorFormats = [
+    { id: 'hex', name: 'HEX Color', description: 'Hexadecimal color format (#RRGGBB)' },
+    { id: 'rgb', name: 'RGB Color', description: 'Red, Green, Blue (0-255)' },
+    { id: 'hsl', name: 'HSL Color', description: 'Hue, Saturation, Lightness' },
+    { id: 'cmyk', name: 'CMYK Color', description: 'Cyan, Magenta, Yellow, Key (Black)' }
+];
+
+// Add color to the category list for global usage
+export const colorCategory = {
+    id: "color",
+    name: "Color",
+    description: "Convert between color formats (HEX, RGB, HSL, CMYK)",
+    units: colorFormats
 };
