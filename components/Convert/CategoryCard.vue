@@ -45,7 +45,7 @@
                 </NuxtLink>
                 <NuxtLink
                     v-else
-                    :to="`/converter/${category.id}`"
+                    :to="`/${category.id}-converter`"
                     class="btn btn-primary btn-sm w-full group transition-all hover:shadow-md hover:shadow-primary/20"
                 >
                     Open Converter
@@ -68,7 +68,7 @@ const props = defineProps({
 
 // Display up to 6 units for preview
 const displayUnits = computed(() => {
-    return props.category.units.slice(0, 10);
+    return props.category.units.slice(0, 6);
 });
 
 // Get shortened unit name by removing parentheses content

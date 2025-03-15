@@ -8,5 +8,5 @@ import { unitConvertCategories } from "~/utils/unit";
 import BaseConverter from "../BaseConverter.vue";
 
 // Get the category from unitConvertCategories
-const category = unitConvertCategories.find((cat) => cat.id === "Time");
+const category = unitConvertCategories.find((cat) => cat.id === "time");
 </script>
