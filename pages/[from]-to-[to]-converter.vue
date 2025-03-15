@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, shallowRef } from 'vue';
+import { computed, onMounted, watch, shallowRef } from 'vue';
 import { unitConvertCategories } from '~/utils/unit';
 import { getConverterByCategory } from '~/components/Convert';
 
