@@ -52,7 +52,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import BaseTextConverter from '../BaseTextConverter.vue';
+import BaseTextConverter from '../../BaseTextConverter.vue';
 import { dataConverters } from '~/utils/textDataConverters';
 
 const converter = ref(null);
