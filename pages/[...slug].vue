@@ -205,6 +205,11 @@ const resolveToolToComponent = () => {
         // Handle simple converter pattern like "tool-converter"
         toolId = slug.replace('-converter', '');
 
+        // case converter
+        if (toolId === 'text-case') {
+            toolId = 'case';
+        }
+
         // Set category based on tool ID
         if (['timestamp', 'timezone', 'duration'].includes(toolId)) {
             toolCategory.value = 'Time & Date';
