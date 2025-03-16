@@ -14,8 +14,12 @@
             </div>
         </div>
 
+        <div v-if="isLoading" class="container mx-auto p-4 justify-items-center">
+            <Skeleton />
+        </div>
+
         <!-- From-To Unit Converter -->
-        <div v-if="isFromToPattern && conversionData" class="container mx-auto p-4">
+        <div v-else-if="isFromToPattern && conversionData" class="container mx-auto p-4">
             <div class="max-w-xl mx-auto">
                 <div v-if="dynamicComponent">
                     <component :is="dynamicComponent" />
@@ -39,8 +43,11 @@
 
 <script setup>
 import { onMounted, shallowRef, ref, computed, watch } from 'vue';
+import Skeleton from '~/components/Skeleton.vue';
 import { getConverterByCategory } from '~/components/Convert';
 import { unitConvertCategories, additionalConverterCategories } from '~/utils/unit';
+
+const isLoading = ref(true);
 
 // Get the slug parameter from the route
 const route = useRoute();
@@ -299,5 +306,7 @@ onMounted(() => {
     if (componentId) {
         dynamicComponent.value = getConverterByCategory(componentId);
     }
+
+    isLoading.value = false;
 });
 </script>
