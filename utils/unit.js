@@ -187,6 +187,7 @@ export const additionalConverterCategories = [
             { id: 'timestamp', name: 'Timestamp Converter', description: 'Convert between date/time and Unix timestamps' },
             { id: 'timezone', name: 'Time Zone Converter', description: 'Convert times between different time zones' },
             { id: 'duration', name: 'Duration Formatter', description: 'Format and parse time durations' },
+            { id: 'age', name: 'Age Calculator', description: 'Calculate age from birthdate' },
         ],
         icon: uiIcons.clock,
     },
@@ -200,6 +201,13 @@ export const additionalConverterCategories = [
             { id: 'lines', name: 'Line Tools', description: 'Sort, deduplicate, and manipulate text lines' },
         ],
         icon: uiIcons.textVariant,
+    },
+    {
+        id: 'qr',
+        name: 'QR Code',
+        description: 'Generate QR codes for text, URLs, and more',
+        tools: [{ id: 'qr-code', name: 'QR Code Generator', description: 'Generate QR codes for text, URLs, and more' }],
+        icon: uiIcons.qr,
     },
 ];
 

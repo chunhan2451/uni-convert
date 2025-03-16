@@ -1,3 +1,5 @@
+import { warn } from "vue";
+
 /**
  * UI Icons utility using Phosphor Icons
  * A centralized icon management system for consistent usage across the application
@@ -35,6 +37,19 @@ export const uiIcons = {
 
     // Status
     checkCircle: 'ph:check-circle-bold',
+
+    //Utility
+    qr: 'ph:qr-code-bold',
+
+    envelope: 'ph:envelope-bold',
+    phone: 'ph:phone-bold',
+    question: 'ph:question-bold',
+    calendar: 'ph:calendar-bold',
+    info: 'ph:info-bold',
+    warning: 'ph:alert-triangle-bold',
+
+    png: 'ph:file-png-bold',
+    svg: 'ph:file-svg-bold',
 
     // Add any category-specific icons here if needed
     categoryIcons: {

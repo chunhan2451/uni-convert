@@ -37,12 +37,16 @@ const converterComponents = {
     timestamp: () => import('./TextDataTools/Time/TimestampConverter.vue'),
     timezone: () => import('./TextDataTools/Time/TimezoneConverter.vue'),
     duration: () => import('./TextDataTools/Time/DurationConverter.vue'),
+    age: () => import('./TextDataTools/Time/AgeCalculator.vue'),
 
     // Text transformation
     'text-transform': () => import('./TextDataTools/Text/CaseConverter.vue'),
     case: () => import('./TextDataTools/Text/CaseConverter.vue'),
     stats: () => import('./TextDataTools/Text/TextStats.vue'),
     lines: () => import('./TextDataTools/Text/LineTools.vue'),
+
+    // Utilities
+    'qr-code': () => import('./Utility/QrCodeGenerator.vue'),
 };
 
 // Helper function to get a converter component by category ID
