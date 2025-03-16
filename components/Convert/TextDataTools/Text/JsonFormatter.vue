@@ -12,7 +12,7 @@
                     <div class="flex space-x-2">
                         <button @click="clearInput" class="btn btn-xs btn-ghost">Clear</button>
                         <button @click="pasteClipboard" class="btn btn-xs btn-ghost">
-                            <Icon name="solar:clipboard-linear" class="h-4 w-4 mr-1" />
+                            <Icon :name="uiIcons.clipboard" class="h-4 w-4 mr-1" />
                             Paste
                         </button>
                     </div>
@@ -28,15 +28,15 @@
             <!-- Action buttons -->
             <div class="flex flex-wrap justify-center gap-2 mb-6">
                 <button @click="formatJson" class="btn btn-primary">
-                    <Icon name="mdi:code-brackets" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.codeBrackets" class="h-5 w-5 mr-2" />
                     Pretty Format
                 </button>
                 <button @click="minifyJson" class="btn btn-outline">
-                    <Icon name="mdi:code-braces" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.codeBraces" class="h-5 w-5 mr-2" />
                     Minify
                 </button>
                 <button @click="validateJson" class="btn btn-outline">
-                    <Icon name="mdi:check-circle-outline" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.checkCircle" class="h-5 w-5 mr-2" />
                     Validate
                 </button>
             </div>
@@ -44,11 +44,11 @@
             <!-- Validation result -->
             <div v-if="validationResult !== null" class="mb-6">
                 <div v-if="validationResult.valid" class="alert alert-success">
-                    <Icon name="heroicons:check-circle" class="h-5 w-5" />
+                    <Icon :name="uiIcons.checkCircle" class="h-5 w-5" />
                     <span>Valid JSON! Your JSON is well-formed.</span>
                 </div>
                 <div v-else class="alert alert-error">
-                    <Icon name="heroicons:x-circle" class="h-5 w-5" />
+                    <Icon :name="uiIcons.close" class="h-5 w-5" />
                     <span>Invalid JSON: {{ validationResult.error }}</span>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <div class="flex justify-between items-center mb-2">
                     <label class="block text-zinc-700 text-sm font-medium">Result</label>
                     <button @click="copyToClipboard(jsonOutput)" class="btn btn-xs btn-primary">
-                        <Icon name="solar:copy-linear" class="mr-1" />Copy
+                        <Icon :name="uiIcons.copy" class="mr-1" />Copy
                     </button>
                 </div>
                 <textarea

@@ -29,7 +29,7 @@
                             @input="convertSecondsToHuman"
                         />
                         <button @click="clearSeconds" class="btn btn-ghost">
-                            <Icon name="solar:eraser-linear" class="h-5 w-5" />
+                            <Icon :name="uiIcons.eraser" class="h-5 w-5" />
                         </button>
                     </div>
                     <div v-if="secondsError" class="text-error text-sm mt-1">{{ secondsError }}</div>
@@ -39,7 +39,7 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="block text-zinc-700 text-sm font-medium">Human Readable Format</label>
                         <button v-if="humanDuration" @click="copyToClipboard(humanDuration)" class="btn btn-xs btn-primary">
-                            <Icon name="solar:copy-linear" class="mr-1" />Copy
+                            <Icon :name="uiIcons.copy" class="mr-1" />Copy
                         </button>
                     </div>
                     <div class="p-4 bg-base-200 rounded-lg min-h-10 text-xl">
@@ -84,7 +84,7 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="block text-zinc-700 text-sm font-medium">Seconds</label>
                         <button v-if="seconds" @click="copyToClipboard(seconds.toString())" class="btn btn-xs btn-primary">
-                            <Icon name="solar:copy-linear" class="mr-1" />Copy
+                            <Icon :name="uiIcons.copy" class="mr-1" />Copy
                         </button>
                     </div>
                     <div class="p-4 bg-base-200 rounded-lg min-h-10 text-xl font-mono">

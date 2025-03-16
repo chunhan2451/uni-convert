@@ -20,7 +20,6 @@
                         :key="unit.id"
                         class="badge badge-outline bg-base-100 border-primary/30 text-xs px-2.5 py-1 gap-1"
                     >
-                        <Icon v-if="unit.icon" :name="unit.icon" class="h-3 w-3" />
                         {{ getShortUnitName(unit.name) }}
                     </span>
                 </div>
@@ -33,7 +32,7 @@
                     class="btn btn-primary btn-sm w-full group transition-all hover:shadow-md hover:shadow-primary/20"
                 >
                     Open Converter
-                    <Icon name="solar:arrow-right-linear" class="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <Icon :name="uiIcons.arrowRight" class="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </NuxtLink>
                 <NuxtLink
                     v-else-if="category.units && category.units.length >= 2"
@@ -41,7 +40,7 @@
                     class="btn btn-primary btn-sm w-full group transition-all hover:shadow-md hover:shadow-primary/20"
                 >
                     Open Converter
-                    <Icon name="solar:arrow-right-linear" class="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <Icon :name="uiIcons.arrowRight" class="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </NuxtLink>
                 <NuxtLink
                     v-else
@@ -49,7 +48,7 @@
                     class="btn btn-primary btn-sm w-full group transition-all hover:shadow-md hover:shadow-primary/20"
                 >
                     Open Converter
-                    <Icon name="solar:arrow-right-linear" class="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <Icon :name="uiIcons.arrowRight" class="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </NuxtLink>
             </div>
         </div>
@@ -79,24 +78,6 @@ const getShortUnitName = (name) => {
 
 // Get category icon based on category ID
 const getCategoryIcon = (categoryId) => {
-    const icons = {
-        angle: 'mdi:angle-acute',
-        area: 'mdi:checkbox-blank-outline',
-        css: 'mdi:language-css3',
-        data: 'mdi:database',
-        energy: 'mdi:lightning-bolt',
-        length: 'mdi:ruler',
-        pressure: 'mdi:gauge',
-        speed: 'mdi:speedometer',
-        temperature: 'mdi:thermometer',
-        time: 'mdi:clock-outline',
-        volume: 'mdi:cube-outline',
-        weight: 'mdi:weight',
-        color: 'mdi:palette',
-        // Fallback
-        default: 'mdi:swap-horizontal',
-    };
-
-    return icons[categoryId] || icons.default;
+    return uiIcons.categoryIcons[categoryId] || uiIcons.categoryIcons.default;
 };
 </script>

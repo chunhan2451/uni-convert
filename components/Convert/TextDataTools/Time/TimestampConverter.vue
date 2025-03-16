@@ -18,14 +18,14 @@
             <!-- Current timestamp display -->
             <div class="alert bg-base-200 mb-6">
                 <div>
-                    <Icon name="solar:clock-circle-linear" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.clock" class="h-5 w-5 mr-2" />
                     <span
                         >Current Timestamp: <strong>{{ currentTimestamp }}</strong></span
                     >
                 </div>
                 <div>
                     <button @click="copyToClipboard(currentTimestamp.toString())" class="btn btn-sm btn-ghost">
-                        <Icon name="solar:copy-linear" class="mr-1" />Copy
+                        <Icon :name="uiIcons.copy" class="mr-1" />Copy
                     </button>
                     <button @click="useCurrentTimestamp" class="btn btn-sm btn-primary ml-2">Use This</button>
                 </div>
@@ -44,7 +44,7 @@
                             @input="convertTimestampToDate"
                         />
                         <button @click="clearTimestampInput" class="btn btn-ghost">
-                            <Icon name="solar:eraser-linear" class="h-5 w-5" />
+                            <Icon :name="uiIcons.eraser" class="h-5 w-5" />
                         </button>
                     </div>
                     <div v-if="timestampError" class="text-error text-sm mt-1">{{ timestampError }}</div>
@@ -71,7 +71,7 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="block text-zinc-700 text-sm font-medium">Converted Date</label>
                         <button v-if="dateResult" @click="copyToClipboard(dateResult)" class="btn btn-xs btn-primary">
-                            <Icon name="solar:copy-linear" class="mr-1" />Copy
+                            <Icon :name="uiIcons.copy" class="mr-1" />Copy
                         </button>
                     </div>
                     <input
@@ -111,7 +111,7 @@
 
                 <div>
                     <button @click="useCurrentDatetime" class="btn btn-sm btn-outline">
-                        <Icon name="solar:clock-circle-linear" class="mr-1" />
+                        <Icon :name="uiIcons.clock" class="mr-1" />
                         Use Current Date & Time
                     </button>
                 </div>
@@ -120,7 +120,7 @@
                     <div class="flex justify-between items-center mb-2">
                         <label class="block text-zinc-700 text-sm font-medium">Unix Timestamp</label>
                         <button v-if="timestampResult" @click="copyToClipboard(timestampResult)" class="btn btn-xs btn-primary">
-                            <Icon name="solar:copy-linear" class="mr-1" />Copy
+                            <Icon :name="uiIcons.copy" class="mr-1" />Copy
                         </button>
                     </div>
                     <input

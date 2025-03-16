@@ -11,7 +11,7 @@
             <!-- Search Input -->
             <div class="max-w-xl mx-auto mb-10 relative">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                    <Icon name="heroicons:magnifying-glass" class="h-5 w-5 text-base-content/50 z-1" />
+                    <Icon :name="uiIcons.search" class="h-5 w-5 text-base-content/50 z-1" />
                 </div>
                 <input
                     v-model="searchQuery"
@@ -20,7 +20,7 @@
                     placeholder="Search for converters..."
                 />
                 <button v-if="searchQuery" @click="searchQuery = ''" class="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <Icon name="heroicons:x-mark" class="h-5 w-5 text-base-content/50 hover:text-error" />
+                    <Icon :name="uiIcons.close" class="h-5 w-5 text-base-content/50 hover:text-error" />
                 </button>
             </div>
 
@@ -51,11 +51,11 @@
 
             <!-- No Results Message -->
             <div v-else class="text-center py-20 bg-base-200/50 rounded-xl shadow-inner border border-base-300">
-                <Icon name="heroicons:magnifying-glass" class="h-16 w-16 text-base-content/20 mx-auto mb-4" />
+                <Icon :name="uiIcons.search" class="h-16 w-16 text-base-content/20 mx-auto mb-4" />
                 <p class="text-xl text-base-content/60 mb-2">No converters found matching</p>
                 <p class="text-2xl font-semibold mb-6">"{{ searchQuery }}"</p>
                 <button @click="searchQuery = ''" class="btn btn-primary mt-2">
-                    <Icon name="heroicons:arrow-path" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.refresh" class="h-5 w-5 mr-2" />
                     Reset Search
                 </button>
             </div>

@@ -12,7 +12,7 @@
                     <div class="flex space-x-2">
                         <button @click="clearInput" class="btn btn-xs btn-ghost">Clear</button>
                         <button @click="pasteClipboard" class="btn btn-xs btn-ghost">
-                            <Icon name="solar:clipboard-linear" class="h-4 w-4 mr-1" />
+                            <Icon :name="uiIcons.clipboard" class="h-4 w-4 mr-1" />
                             Paste
                         </button>
                     </div>
@@ -54,7 +54,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-base-100 p-4 rounded-lg shadow-sm">
                         <h3 class="font-medium mb-2 flex items-center">
-                            <Icon name="solar:time-square-bold" class="h-5 w-5 mr-2 text-secondary" />
+                            <Icon :name="uiIcons.timeSquare" class="h-5 w-5 mr-2 text-secondary" />
                             Reading Time
                         </h3>
                         <div class="flex items-center">
@@ -66,7 +66,7 @@
 
                     <div class="bg-base-100 p-4 rounded-lg shadow-sm">
                         <h3 class="font-medium mb-2 flex items-center">
-                            <Icon name="solar:notebook-linear" class="h-5 w-5 mr-2 text-secondary" />
+                            <Icon :name="uiIcons.notebook" class="h-5 w-5 mr-2 text-secondary" />
                             Paragraph Count
                         </h3>
                         <div class="flex items-center">
@@ -107,7 +107,7 @@
 
             <div v-else class="mb-8">
                 <button @click="toggleWordFrequency" class="btn btn-outline w-full">
-                    <Icon name="solar:chart-line-linear" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.chart" class="h-5 w-5 mr-2" />
                     Show Word Frequency Analysis
                 </button>
             </div>
@@ -115,11 +115,11 @@
             <!-- Export Options -->
             <div class="flex flex-wrap justify-center gap-2">
                 <button @click="copyStats" class="btn btn-primary">
-                    <Icon name="solar:copy-linear" class="mr-2" />
+                    <Icon :name="uiIcons.copy" class="mr-2" />
                     Copy Stats
                 </button>
                 <button @click="downloadReport" class="btn btn-outline">
-                    <Icon name="solar:download-linear" class="mr-2" />
+                    <Icon :name="uiIcons.download" class="mr-2" />
                     Download Report
                 </button>
             </div>

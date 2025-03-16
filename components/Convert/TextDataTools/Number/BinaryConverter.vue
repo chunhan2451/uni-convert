@@ -58,7 +58,7 @@
                             {{ base.name }}
                         </label>
                         <button v-if="results[base.id]" @click="copyToClipboard(results[base.id])" class="btn btn-xs btn-primary">
-                            <Icon name="solar:copy-linear" class="mr-1" />Copy
+                            <Icon :name="uiIcons.copy" class="mr-1" />Copy
                         </button>
                     </div>
                     <input

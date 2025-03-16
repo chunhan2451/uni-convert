@@ -7,8 +7,8 @@
                 <ul>
                     <li><NuxtLink to="/">Home</NuxtLink></li>
                     <li><NuxtLink to="/converter">Converters</NuxtLink></li>
-                    <li v-if="toolCategory && !isFromToPattern">{{ toolCategory }}</li>
-                    <li v-if="categoryData && isFromToPattern">{{ categoryData.name }}</li>
+                    <!-- <li v-if="toolCategory && !isFromToPattern">{{ toolCategory }}</li>
+                    <li v-if="categoryData && isFromToPattern">{{ categoryData.name }}</li> -->
                     <li>{{ pageTitle }}</li>
                 </ul>
             </div>

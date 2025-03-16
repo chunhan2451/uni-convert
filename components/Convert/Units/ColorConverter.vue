@@ -29,7 +29,7 @@
                         />
                         <div class="flex justify-end items-center mt-2">
                             <button @click="copyToClipboard(hex)" class="btn btn-sm btn-primary">
-                                <Icon name="solar:copy-linear" size="1.25rem" />Copy
+                                <Icon :name="uiIcons.copy" size="1.25rem" />Copy
                             </button>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-gray-600">rgb({{ rgb.join(', ') }})</span>
                         <button @click="copyToClipboard(`rgb(${rgb.join(', ')})`)" class="btn btn-sm btn-primary">
-                            <Icon name="solar:copy-linear" size="1.25rem" />Copy
+                            <Icon :name="uiIcons.copy" size="1.25rem" />Copy
                         </button>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-gray-600">hsl({{ hsl.h }}°, {{ hsl.s }}%, {{ hsl.l }}%)</span>
                         <button @click="copyToClipboard(`hsl(${hsl.h}°, ${hsl.s}%, ${hsl.l}%)`)" class="btn btn-sm btn-primary">
-                            <Icon name="solar:copy-linear" size="1.25rem" />Copy
+                            <Icon :name="uiIcons.copy" size="1.25rem" />Copy
                         </button>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                     <div class="flex justify-between items-center mt-2">
                         <span class="text-gray-600">cmyk({{ cmyk.join('%, ') }}%)</span>
                         <button @click="copyToClipboard(`cmyk(${cmyk.join('%, ')}%)`)" class="btn btn-sm btn-primary">
-                            <Icon name="solar:copy-linear" size="1.25rem" />Copy
+                            <Icon :name="uiIcons.copy" size="1.25rem" />Copy
                         </button>
                     </div>
                 </div>

@@ -24,7 +24,7 @@
 
             <template #input-actions>
                 <button v-if="mode === 'encode'" @click="pasteClipboard" class="btn btn-xs btn-ghost">
-                    <Icon name="solar:clipboard-linear" class="h-4 w-4" />
+                    <Icon :name="uiIcons.clipboard" class="h-4 w-4" />
                     Paste
                 </button>
             </template>

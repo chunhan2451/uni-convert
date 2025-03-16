@@ -31,7 +31,7 @@
                         <label class="block text-zinc-700 text-sm font-medium">{{ outputLabel }}</label>
                         <div class="flex space-x-1">
                             <button v-if="outputText" @click="copyToClipboard(outputText)" class="btn btn-xs btn-primary">
-                                <Icon name="solar:copy-linear" class="mr-1" />Copy
+                                <Icon :name="uiIcons.copy" class="mr-1" />Copy
                             </button>
                             <slot name="output-actions"></slot>
                         </div>

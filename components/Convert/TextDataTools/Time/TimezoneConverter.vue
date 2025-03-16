@@ -8,7 +8,7 @@
             <!-- Current time display -->
             <div class="alert bg-base-200 mb-8">
                 <div>
-                    <Icon name="solar:clock-circle-linear" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.clock" class="h-5 w-5 mr-2" />
                     <span
                         >Local Time Now: <strong>{{ currentLocalTime }}</strong></span
                     >
@@ -76,7 +76,7 @@
                         <div class="flex justify-between items-center mb-2">
                             <label class="block text-zinc-700 text-sm font-medium">Converted Time</label>
                             <button v-if="convertedTime" @click="copyToClipboard(convertedTime)" class="btn btn-xs btn-primary">
-                                <Icon name="solar:copy-linear" class="mr-1" />Copy
+                                <Icon :name="uiIcons.copy" class="mr-1" />Copy
                             </button>
                         </div>
                         <div class="p-4 bg-base-200 rounded-lg min-h-10 text-lg font-mono">
@@ -115,7 +115,7 @@
 
             <div v-else class="mt-8">
                 <button @click="showComparisonTable = true" class="btn btn-outline w-full">
-                    <Icon name="solar:globe-linear" class="h-5 w-5 mr-2" />
+                    <Icon :name="uiIcons.globe" class="h-5 w-5 mr-2" />
                     Show Time Across Major Cities
                 </button>
             </div>

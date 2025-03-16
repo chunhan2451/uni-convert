@@ -36,7 +36,7 @@
 
                 <div class="flex justify-center items-center">
                     <div class="bg-primary text-primary-content rounded-full p-2">
-                        <Icon name="solar:arrow-right-linear" class="h-6 w-6" />
+                        <Icon :name="uiIcons.arrowRight" class="h-6 w-6" />
                     </div>
                 </div>
 

@@ -1,5 +1,6 @@
 // utils/unit.js
 import { colorCategory } from './color';
+import { uiIcons } from './appConstant';
 
 // Original unit conversion categories
 export const unitConvertCategories = [
@@ -166,7 +167,7 @@ export const additionalConverterCategories = [
             { id: 'json', name: 'JSON Formatter/Validator', description: 'Format, minify, or validate JSON' },
             { id: 'csv', name: 'CSV to JSON Converter', description: 'Convert between CSV and JSON formats' },
         ],
-        icon: 'mdi:text-box-outline',
+        icon: uiIcons.textBox,
     },
     {
         id: 'number-systems',
@@ -176,7 +177,7 @@ export const additionalConverterCategories = [
             { id: 'binary', name: 'Binary Converter', description: 'Convert between decimal, binary, octal, and hex' },
             { id: 'roman', name: 'Roman Numerals', description: 'Convert between decimal and Roman numerals' },
         ],
-        icon: 'mdi:numeric',
+        icon: uiIcons.numeric,
     },
     {
         id: 'time-date',
@@ -187,7 +188,7 @@ export const additionalConverterCategories = [
             { id: 'timezone', name: 'Time Zone Converter', description: 'Convert times between different time zones' },
             { id: 'duration', name: 'Duration Formatter', description: 'Format and parse time durations' },
         ],
-        icon: 'mdi:clock-outline',
+        icon: uiIcons.clock,
     },
     {
         id: 'text-transform',
@@ -198,7 +199,7 @@ export const additionalConverterCategories = [
             { id: 'stats', name: 'Text Statistics', description: 'Count characters, words, and analyze text' },
             { id: 'lines', name: 'Line Tools', description: 'Sort, deduplicate, and manipulate text lines' },
         ],
-        icon: 'mdi:format-text-variant',
+        icon: uiIcons.textVariant,
     },
 ];
 

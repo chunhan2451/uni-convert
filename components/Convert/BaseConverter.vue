@@ -27,7 +27,7 @@
             <!-- Swap Button -->
             <div class="flex justify-center my-2">
                 <button @click="swapUnits" class="btn btn-circle btn-sm btn-outline" title="Swap units">
-                    <Icon name="solar:transfer-vertical-linear" class="h-5 w-5 text-base" />
+                    <Icon :name="uiIcons.transfer" class="h-5 w-5 text-base" />
                 </button>
             </div>
 
@@ -47,7 +47,7 @@
 
             <!-- Copy Button -->
             <button v-show="toUnit && toValue" @click="copyToClipboard(toValue.toString())" class="btn btn-primary w-full mb-6">
-                <Icon name="solar:copy-linear" class="mr-2" />Copy Result
+                <Icon :name="uiIcons.copy" class="mr-2" />Copy Result
             </button>
 
             <!-- Formula Display -->

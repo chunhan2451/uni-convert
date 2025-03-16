@@ -7,7 +7,7 @@
             <!-- Category title with icon -->
             <div class="flex items-center gap-3">
                 <div class="p-2 bg-primary/10 rounded-lg flex">
-                    <Icon :name="category.icon || 'mdi:tools'" class="text-primary h-6 w-6 text-2xl" />
+                    <Icon :name="category.icon || uiIcons.tools" class="text-primary h-6 w-6 text-2xl" />
                 </div>
                 <h3 class="card-title text-xl">{{ category.name }}</h3>
             </div>
@@ -26,7 +26,7 @@
                         <span class="font-medium">{{ tool.name }}</span>
                     </div>
                     <Icon
-                        name="solar:arrow-right-linear"
+                        :name="uiIcons.arrowRight"
                         class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity group-hover:translate-x-1 duration-200"
                     />
                 </div>

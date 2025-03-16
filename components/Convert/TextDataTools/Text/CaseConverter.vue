@@ -12,7 +12,7 @@
                     <div class="flex space-x-2">
                         <button @click="clearInput" class="btn btn-xs btn-ghost">Clear</button>
                         <button @click="pasteClipboard" class="btn btn-xs btn-ghost">
-                            <Icon name="solar:clipboard-linear" class="h-4 w-4 mr-1" />
+                            <Icon :name="uiIcons.clipboard" class="h-4 w-4 mr-1" />
                             Paste
                         </button>
                     </div>
@@ -42,7 +42,7 @@
                 <div class="flex justify-between items-center mb-2">
                     <label class="block text-zinc-700 text-sm font-medium">Result</label>
                     <button v-if="outputText" @click="copyToClipboard(outputText)" class="btn btn-xs btn-primary">
-                        <Icon name="solar:copy-linear" class="mr-1" />Copy
+                        <Icon :name="uiIcons.copy" class="mr-1" />Copy
                     </button>
                 </div>
                 <textarea
