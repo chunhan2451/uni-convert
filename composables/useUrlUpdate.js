@@ -7,7 +7,6 @@ import { navigateTo } from '#app';
  */
 export const useUrlUpdate = () => {
     const route = useRoute();
-    const router = useRouter();
 
     /**
      * Updates the URL path without triggering a page refresh

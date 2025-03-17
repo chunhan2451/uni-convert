@@ -24,12 +24,12 @@
                             v-model="secondsInput"
                             type="number"
                             min="0"
-                            class="input input-bordered w-full text-xl"
+                            class="input input-bordered w-full text-base"
                             placeholder="Enter number of seconds"
                             @input="convertSecondsToHuman"
                         />
                         <button @click="clearSeconds" class="btn btn-ghost">
-                            <Icon :name="uiIcons.eraser" class="h-5 w-5" />
+                            <Icon :name="uiIcons.eraser" class="h-5 w-5 text-lg" />
                         </button>
                     </div>
                     <div v-if="secondsError" class="text-error text-sm mt-1">{{ secondsError }}</div>
@@ -70,7 +70,7 @@
                     <input
                         v-model="humanInput"
                         type="text"
-                        class="input input-bordered w-full text-xl"
+                        class="input input-bordered w-full text-base"
                         placeholder="e.g. 2 days 5 hours 30 min"
                         @input="convertHumanToSeconds"
                     />
@@ -193,19 +193,15 @@
                 </div>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
 import { timeConverters } from '~/utils/timeConverters';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 // State
 const mode = ref('seconds-to-human');
@@ -215,7 +211,6 @@ const humanDuration = ref('');
 const seconds = ref('');
 const secondsError = ref('');
 const humanError = ref('');
-const showToast = ref(false);
 
 // Duration components builder
 const durationComponents = ref({
@@ -330,8 +325,8 @@ const clearSeconds = () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }

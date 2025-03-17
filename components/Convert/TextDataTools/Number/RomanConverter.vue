@@ -7,10 +7,10 @@
 
             <!-- Mode selection -->
             <div class="tabs tabs-boxed justify-center mb-8">
-                <a class="tab" :class="{ 'tab-active': mode === 'decimal-to-roman' }" @click="mode = 'decimal-to-roman'">
+                <a class="tab" :class="{ 'tab-active': mode === 'decimal-to-roman' }" @click="switchMode('decimal-to-roman')">
                     Decimal to Roman
                 </a>
-                <a class="tab" :class="{ 'tab-active': mode === 'roman-to-decimal' }" @click="mode = 'roman-to-decimal'">
+                <a class="tab" :class="{ 'tab-active': mode === 'roman-to-decimal' }" @click="switchMode('roman-to-decimal')">
                     Roman to Decimal
                 </a>
             </div>
@@ -24,7 +24,7 @@
                     <input
                         v-model="inputValue"
                         type="text"
-                        class="input input-bordered w-full text-center text-xl"
+                        class="input input-bordered w-full text-center text-base"
                         :class="{ 'border-error': inputError }"
                         :placeholder="
                             mode === 'decimal-to-roman' ? 'Enter a number (1-3999)' : 'Enter roman numeral (e.g., MCMXCIV)'
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="flex justify-center items-center">
-                    <div class="bg-primary text-primary-content rounded-full p-2">
+                    <div class="bg-primary text-primary-content rounded-full p-2 flex">
                         <Icon :name="uiIcons.arrowRight" class="h-6 w-6" />
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <input
                         v-model="outputValue"
                         type="text"
-                        class="input input-bordered w-full text-center text-xl font-bold"
+                        class="input input-bordered w-full text-center text-base font-bold"
                         readonly
                         :placeholder="mode === 'decimal-to-roman' ? 'Roman numeral result' : 'Decimal number result'"
                     />
@@ -121,6 +121,9 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { numberConverters } from '~/utils/numberConverters';
+import { useUrlUpdate } from '~/composables/useUrlUpdate';
+
+const { updateUrlPath } = useUrlUpdate();
 
 // State
 const mode = ref('decimal-to-roman');
@@ -208,6 +211,19 @@ const selectQuickReference = (num) => {
     convertValue();
 };
 
+// Switch between encode and decode modes
+const switchMode = (newMode) => {
+    if (mode.value === newMode) return;
+
+    mode.value = newMode;
+
+    if (newMode === 'decimal-to-roman') {
+        updateUrlPath('decimal', 'roman');
+    } else {
+        updateUrlPath('roman', 'decimal');
+    }
+};
+
 // Watch for mode changes
 watch(mode, () => {
     // Clear values when switching modes
@@ -218,4 +234,19 @@ watch(mode, () => {
 
 // Watch for input changes
 watch(inputValue, convertValue);
+
+// Initialize path when component mounts
+const initializePath = () => {
+    const urlPath = window.location.pathname.split('/').pop();
+    if (urlPath === 'decimal-to-roman-converter') {
+        mode.value = 'decimal-to-roman';
+    } else {
+        mode.value = 'roman-to-decimal';
+    }
+};
+
+// Initialize on mount
+onMounted(() => {
+    initializePath();
+});
 </script>

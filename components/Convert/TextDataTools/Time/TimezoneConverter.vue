@@ -133,19 +133,15 @@
                 </p>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { timeConverters } from '~/utils/timeConverters';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 // State
 const sourceTimeZone = ref('');
@@ -155,7 +151,6 @@ const sourceTime = ref('');
 const convertedTime = ref('');
 const sourceTimeDisplay = ref('');
 const targetTimeDisplay = ref('');
-const showToast = ref(false);
 const showComparisonTable = ref(false);
 const worldTimes = ref([]);
 
@@ -333,8 +328,8 @@ const updateWorldTimes = () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }

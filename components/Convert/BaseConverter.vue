@@ -55,19 +55,15 @@
                 <p>{{ conversionFormula }}</p>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-bottom">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import { useUrlUpdate } from '~/composables/useUrlUpdate';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 const props = defineProps({
     category: {
@@ -99,7 +95,6 @@ const fromUnit = ref('');
 const toUnit = ref('');
 const fromValue = ref('');
 const toValue = ref('');
-const showToast = ref(false);
 
 // Initialize units when component mounts
 const initializeUnits = () => {
@@ -182,8 +177,8 @@ const convertFromValue = () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000); // Hide toast after 2 seconds
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000); // Hide toast after 2 seconds
     } catch (err) {
         console.error('Failed to copy:', err);
     }
@@ -193,7 +188,6 @@ const copyToClipboard = async (text) => {
 const swapUnits = () => {
     // Save current values
     const tempUnit = fromUnit.value;
-    const tempValue = fromValue.value;
 
     // Swap units
     fromUnit.value = toUnit.value;

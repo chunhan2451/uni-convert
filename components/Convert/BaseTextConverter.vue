@@ -58,18 +58,14 @@
 
             <slot name="additional-content"></slot>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, watch } from 'vue';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 const props = defineProps({
     title: {
@@ -118,7 +114,6 @@ const inputText = ref('');
 const outputText = ref('');
 const inputError = ref('');
 const outputInfo = ref('');
-const showToast = ref(false);
 
 // Function to convert text using the provided function
 const convertText = () => {
@@ -159,8 +154,8 @@ const clearInput = () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }

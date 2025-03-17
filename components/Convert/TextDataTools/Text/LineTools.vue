@@ -165,19 +165,15 @@
                 </div>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { textConverters } from '~/utils/textDataConverters';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 // Available tools
 const tools = [
@@ -193,7 +189,6 @@ const infoTab = ref('sort');
 const inputText = ref('');
 const outputText = ref('');
 const showOutput = ref(false);
-const showToast = ref(false);
 
 // Sort options
 const sortOptions = ref({
@@ -401,8 +396,8 @@ const pasteClipboard = async () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }

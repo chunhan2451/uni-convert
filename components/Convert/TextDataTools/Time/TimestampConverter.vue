@@ -171,19 +171,15 @@
                 </div>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { timeConverters } from '~/utils/timeConverters';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 // State
 const mode = ref('timestamp-to-date');
@@ -195,7 +191,6 @@ const dateError = ref('');
 const dateResult = ref('');
 const timestampResult = ref('');
 const selectedDateFormat = ref('local');
-const showToast = ref(false);
 
 // Format options
 const dateFormats = [
@@ -302,8 +297,8 @@ const clearTimestampInput = () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }

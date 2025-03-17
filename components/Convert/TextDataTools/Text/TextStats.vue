@@ -124,19 +124,15 @@
                 </button>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { textConverters } from '~/utils/textDataConverters';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 // State
 const inputText = ref('');
@@ -149,7 +145,6 @@ const stats = ref({
 });
 const wordFrequency = ref({});
 const showWordFrequency = ref(false);
-const showToast = ref(false);
 
 // Compute paragraph count
 const paragraphCount = computed(() => {
@@ -253,8 +248,8 @@ const copyStats = async () => {
 
     try {
         await navigator.clipboard.writeText(statsText);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }

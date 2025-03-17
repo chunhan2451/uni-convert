@@ -113,19 +113,15 @@
                 </div>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, reactive, watch } from 'vue';
 import { numberConverters } from '~/utils/numberConverters';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 // Available number bases
 const numberBases = [
@@ -146,7 +142,6 @@ const results = reactive({
     decimal: '',
     hexadecimal: '',
 });
-const showToast = ref(false);
 
 // Get input label based on selected base
 const getInputLabel = (base) => {
@@ -259,8 +254,8 @@ const clearInput = () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }

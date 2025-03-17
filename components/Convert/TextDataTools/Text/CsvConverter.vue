@@ -7,8 +7,8 @@
 
             <!-- Mode selection -->
             <div class="tabs tabs-boxed justify-center mb-6">
-                <a class="tab" :class="{ 'tab-active': mode === 'csv-to-json' }" @click="mode = 'csv-to-json'"> CSV to JSON </a>
-                <a class="tab" :class="{ 'tab-active': mode === 'json-to-csv' }" @click="mode = 'json-to-csv'"> JSON to CSV </a>
+                <a class="tab" :class="{ 'tab-active': mode === 'csv-to-json' }" @click="switchMode('csv-to-json')"> CSV to JSON </a>
+                <a class="tab" :class="{ 'tab-active': mode === 'json-to-csv' }" @click="switchMode('json-to-csv')"> JSON to CSV </a>
             </div>
 
             <!-- CSV to JSON Options -->
@@ -125,26 +125,24 @@ name,age,email
                 </div>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-middle">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { dataConverters } from '~/utils/textDataConverters';
+import { useUrlUpdate } from '~/composables/useUrlUpdate';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
+
+const { updateUrlPath } = useUrlUpdate();
 
 // State
 const mode = ref('csv-to-json');
 const inputText = ref('');
 const outputText = ref('');
 const inputError = ref('');
-const showToast = ref(false);
 const infoTab = ref('csv');
 
 // CSV options
@@ -190,6 +188,19 @@ const convertData = () => {
     }
 };
 
+// Switch between encode and decode modes
+const switchMode = (newMode) => {
+    if (mode.value === newMode) return;
+
+    mode.value = newMode;
+
+    if (newMode === 'csv-to-json') {
+        updateUrlPath('csv', 'json');
+    } else {
+        updateUrlPath('json', 'csv');
+    }
+};
+
 // Clear input
 const clearInput = () => {
     inputText.value = '';
@@ -211,10 +222,25 @@ const pasteClipboard = async () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000);
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000);
     } catch (err) {
         console.error('Failed to copy:', err);
     }
 };
+
+// Initialize path when component mounts
+const initializePath = () => {
+    const urlPath = window.location.pathname.split('/').pop();
+    if (urlPath === 'json-to-csv-converter') {
+        mode.value = 'json-to-csv';
+    } else {
+        mode.value = 'csv-to-json';
+    }
+};
+
+// Initialize on mount
+onMounted(() => {
+    initializePath();
+});
 </script>

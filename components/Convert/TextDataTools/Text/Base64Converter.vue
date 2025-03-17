@@ -54,6 +54,9 @@
 import { ref, computed } from 'vue';
 import BaseTextConverter from '../../BaseTextConverter.vue';
 import { dataConverters } from '~/utils/textDataConverters';
+import { useUrlUpdate } from '~/composables/useUrlUpdate';
+
+const { updateUrlPath } = useUrlUpdate();
 
 const converter = ref(null);
 const mode = ref('encode');
@@ -75,6 +78,12 @@ const switchMode = (newMode) => {
         converter.value.outputText = '';
         converter.value.inputError = '';
     }
+
+    if (newMode === 'encode') {
+        updateUrlPath('text', 'base64');
+    } else {
+        updateUrlPath('base64', 'text');
+    }
 };
 
 // Paste from clipboard
@@ -88,4 +97,19 @@ const pasteClipboard = async () => {
         console.error('Failed to read clipboard:', err);
     }
 };
+
+// Initialize path when component mounts
+const initializePath = () => {
+    const urlPath = window.location.pathname.split('/').pop();
+    if (urlPath === 'text-to-base64-converter') {
+        switchMode('encode');
+    } else {
+        switchMode('decode');
+    }
+};
+
+// Initialize on mount
+onMounted(() => {
+    initializePath();
+});
 </script>

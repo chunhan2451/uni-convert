@@ -115,19 +115,15 @@
                 </div>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div v-if="showToast" class="toast toast-end toast-bottom">
-            <div class="alert alert-success">
-                <span>Copied to clipboard!</span>
-            </div>
-        </div>
     </div>
 </template>
 
 <script setup>
 // Reference: https://convertacolor.com/
 import { colorConversions } from '~/utils/color';
+import { useAppState } from '~/composables/states'
+
+const appState = useAppState();
 
 const hex = ref('#000000');
 const rgb = ref([0, 0, 0]);
@@ -136,7 +132,6 @@ const cmyk = ref([0, 0, 0, 0]);
 
 const previewColor = computed(() => `rgb(${rgb.value.join(',')})`);
 
-const showToast = ref(false);
 
 // Conversion functions remain the same...
 const updateFromHex = () => {
@@ -172,8 +167,8 @@ const updateFromCmyk = () => {
 const copyToClipboard = async (text) => {
     try {
         await navigator.clipboard.writeText(text);
-        showToast.value = true;
-        setTimeout(() => (showToast.value = false), 2000); // Hide toast after 2 seconds
+        appState.value.showToast = true;
+        setTimeout(() => (appState.value.showToast = false), 2000); // Hide toast after 2 seconds
     } catch (err) {
         console.error('Failed to copy:', err);
     }
