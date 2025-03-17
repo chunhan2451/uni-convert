@@ -5,70 +5,63 @@
             <h1 class="text-3xl font-bold mb-2 text-center">Number System Converter</h1>
             <p class="text-zinc-600 mb-6 text-center">Convert between decimal, binary, octal, and hexadecimal</p>
 
-            <!-- Number base selection -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div>
-                    <label class="block text-zinc-700 text-sm font-medium mb-2">From Base</label>
-                    <select v-model="fromBase" class="select select-bordered w-full" @change="convertNumber">
-                        <option v-for="base in numberBases" :key="base.id" :value="base.id">
-                            {{ base.name }}
-                        </option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-zinc-700 text-sm font-medium mb-2">To Base</label>
-                    <select v-model="toBase" class="select select-bordered w-full" @change="convertNumber">
-                        <option v-for="base in numberBases" :key="base.id" :value="base.id">
-                            {{ base.name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- From input -->
+            <!-- From section -->
             <div class="mb-6">
-                <div class="flex justify-between items-center mb-2">
-                    <label class="block text-zinc-700 text-sm font-medium">
-                        {{ getInputLabel(fromBase) }}
-                    </label>
-                    <div>
-                        <button @click="clearInput" class="btn btn-xs btn-ghost">Clear</button>
-                    </div>
-                </div>
+                <label class="block text-zinc-700 text-sm font-medium mb-2">From</label>
                 <div class="flex">
-                    <div class="flex-grow">
-                        <input
-                            v-model="inputValue"
-                            :placeholder="getInputPlaceholder(fromBase)"
-                            class="input input-bordered w-full font-mono"
-                            :class="{ 'border-error': inputError }"
-                            @input="onInputChange"
-                        />
-                        <div v-if="inputError" class="text-error text-sm mt-1">{{ inputError }}</div>
-                    </div>
+                    <input
+                        v-model="inputValue"
+                        :placeholder="getInputPlaceholder(fromBase)"
+                        class="input input-bordered rounded-r-none w-full font-mono"
+                        :class="{ 'border-error': inputError }"
+                        @input="onInputChange"
+                    />
+                    <select
+                        v-model="fromBase"
+                        class="select select-bordered rounded-l-none border-l-0 min-w-36"
+                        @change="onFromBaseChange"
+                    >
+                        <option v-for="base in numberBases.filter((item) => item.id != toBase)" :key="base.id" :value="base.id">
+                            {{ base.name }}
+                        </option>
+                    </select>
                 </div>
+                <div v-if="inputError" class="text-error text-sm mt-1">{{ inputError }}</div>
             </div>
 
-            <!-- Results -->
-            <div class="space-y-4">
-                <div v-for="base in numberBases.filter((b) => b.id !== fromBase)" :key="base.id">
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="block text-zinc-700 text-sm font-medium">
-                            {{ base.name }}
-                        </label>
-                        <button v-if="results[base.id]" @click="copyToClipboard(results[base.id])" class="btn btn-xs btn-primary">
-                            <Icon :name="uiIcons.copy" class="mr-1" />Copy
-                        </button>
-                    </div>
+            <!-- Swap button -->
+            <div class="flex justify-center mb-6">
+                <button @click="swapBases" class="btn btn-circle btn-outline">
+                    <Icon :name="uiIcons.transfer" class="text-xl" />
+                </button>
+            </div>
+
+            <!-- To section -->
+            <div class="mb-8">
+                <label class="block text-zinc-700 text-sm font-medium mb-2">To</label>
+                <div class="flex">
                     <input
-                        :value="results[base.id]"
-                        :placeholder="getOutputPlaceholder(base.id)"
-                        class="input input-bordered w-full font-mono"
+                        :value="currentResult"
+                        :placeholder="getOutputPlaceholder(toBase)"
+                        class="input input-bordered rounded-r-none w-full font-mono"
                         readonly
                     />
+                    <select
+                        v-model="toBase"
+                        class="select select-bordered rounded-l-none border-l-0 min-w-36"
+                        @change="onToBaseChange"
+                    >
+                        <option v-for="base in numberBases.filter((item) => item.id != fromBase)" :key="base.id" :value="base.id">
+                            {{ base.name }}
+                        </option>
+                    </select>
                 </div>
             </div>
+
+            <!-- Copy Button -->
+            <button v-show="currentResult && toBase" @click="copyToClipboard(currentResult)" class="btn btn-primary w-full mb-6">
+                <Icon :name="uiIcons.copy" class="mr-2" />Copy Result
+            </button>
 
             <!-- Additional info -->
             <div class="mt-8 bg-base-200 rounded-lg p-4">
@@ -117,11 +110,14 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, computed, onMounted } from 'vue';
 import { numberConverters } from '~/utils/numberConverters';
-import { useAppState } from '~/composables/states'
+import { useAppState } from '~/composables/states';
+import { uiIcons } from '~/utils/appConstant';
+import { useUrlUpdate } from '~/composables/useUrlUpdate';
 
 const appState = useAppState();
+const { updateUrlPath, getUnitsFromUrl } = useUrlUpdate();
 
 // Available number bases
 const numberBases = [
@@ -143,11 +139,22 @@ const results = reactive({
     hexadecimal: '',
 });
 
-// Get input label based on selected base
-const getInputLabel = (base) => {
-    const baseObj = numberBases.find((b) => b.id === base);
-    return `${baseObj ? baseObj.name : 'Input'} Value`;
-};
+// Get initial units from URL
+onMounted(() => {
+    const urlUnits = getUnitsFromUrl();
+    if (urlUnits) {
+        fromBase.value = urlUnits.fromUnit;
+        toBase.value = urlUnits.toUnit;
+    } else {
+        // If no units in URL, set the default URL
+        updateUrlPath(fromBase.value, toBase.value);
+    }
+});
+
+// Computed property for the current result based on toBase
+const currentResult = computed(() => {
+    return results[toBase.value] || '';
+});
 
 // Get placeholder text based on base
 const getInputPlaceholder = (base) => {
@@ -168,6 +175,25 @@ const getInputPlaceholder = (base) => {
 // Get output placeholder
 const getOutputPlaceholder = (base) => {
     return `${base.charAt(0).toUpperCase() + base.slice(1)} result will appear here`;
+};
+
+// Swap from and to bases
+const swapBases = () => {
+    // Store current values
+    const temp = fromBase.value;
+    fromBase.value = toBase.value;
+    toBase.value = temp;
+
+    // If we have a result already, set it as the new input
+    if (results[temp]) {
+        inputValue.value = results[temp];
+    } else {
+        inputValue.value = '';
+    }
+
+    // Update URL and reconvert with new bases
+    updateUrlPath(fromBase.value, toBase.value);
+    convertNumber();
 };
 
 // Convert number based on selected bases
@@ -201,7 +227,7 @@ const convertNumber = () => {
                 decimalValue = numberConverters.octalToDecimal(inputValue.value);
                 break;
             case 'decimal':
-                decimalValue = inputValue.value;
+                decimalValue = parseInt(inputValue.value, 10);
                 break;
             case 'hexadecimal':
                 decimalValue = numberConverters.hexToDecimal(inputValue.value);
@@ -215,22 +241,10 @@ const convertNumber = () => {
         }
 
         // Then convert from decimal to all other bases
-        // Skip the original base
-        if (fromBase.value !== 'binary') {
-            results.binary = numberConverters.decimalToBinary(decimalValue);
-        }
-
-        if (fromBase.value !== 'octal') {
-            results.octal = numberConverters.decimalToOctal(decimalValue);
-        }
-
-        if (fromBase.value !== 'decimal') {
-            results.decimal = decimalValue;
-        }
-
-        if (fromBase.value !== 'hexadecimal') {
-            results.hexadecimal = numberConverters.decimalToHex(decimalValue);
-        }
+        results.binary = fromBase.value === 'binary' ? inputValue.value : numberConverters.decimalToBinary(decimalValue);
+        results.octal = fromBase.value === 'octal' ? inputValue.value : numberConverters.decimalToOctal(decimalValue);
+        results.decimal = fromBase.value === 'decimal' ? inputValue.value : decimalValue.toString();
+        results.hexadecimal = fromBase.value === 'hexadecimal' ? inputValue.value : numberConverters.decimalToHex(decimalValue);
     } catch (error) {
         inputError.value = error.message || 'An error occurred during conversion';
     }
@@ -261,7 +275,23 @@ const copyToClipboard = async (text) => {
     }
 };
 
-// Watch for changes in from/to base
+// Handler for fromBase change
+const onFromBaseChange = () => {
+    if (inputValue.value) {
+        convertNumber();
+    }
+    updateUrlPath(fromBase.value, toBase.value);
+};
+
+// Handler for toBase change
+const onToBaseChange = () => {
+    if (inputValue.value) {
+        convertNumber();
+    }
+    updateUrlPath(fromBase.value, toBase.value);
+};
+
+// Watch for changes in from/to base (as a backup)
 watch([fromBase, toBase], () => {
     if (inputValue.value) {
         convertNumber();

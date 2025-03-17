@@ -1,5 +1,3 @@
-import { warn } from "vue";
-
 /**
  * UI Icons utility using Phosphor Icons
  * A centralized icon management system for consistent usage across the application

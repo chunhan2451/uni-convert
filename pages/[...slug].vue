@@ -122,7 +122,25 @@ function handleSpecialFromToPatterns() {
     } else if ((from === 'csv' && to === 'json') || (from === 'json' && to === 'csv')) {
         toolCategory.value = 'Text & Data';
         return { toolId: 'csv' };
-    } else if ((from === 'decimal' && to === 'binary') || (from === 'binary' && to === 'decimal')) {
+    } else if (
+        // Starting with decimal-binary pairs
+        (from === 'decimal' && to === 'binary') ||
+        (from === 'binary' && to === 'decimal') ||
+        // Additional combinations with decimal
+        (from === 'decimal' && to === 'octal') ||
+        (from === 'decimal' && to === 'hexadecimal') ||
+        // Additional combinations with binary
+        (from === 'binary' && to === 'octal') ||
+        (from === 'binary' && to === 'hexadecimal') ||
+        // Additional combinations with octal
+        (from === 'octal' && to === 'decimal') ||
+        (from === 'octal' && to === 'binary') ||
+        (from === 'octal' && to === 'hexadecimal') ||
+        // Additional combinations with hexadecimal
+        (from === 'hexadecimal' && to === 'decimal') ||
+        (from === 'hexadecimal' && to === 'binary') ||
+        (from === 'hexadecimal' && to === 'octal')
+    ) {
         toolCategory.value = 'Number Systems';
         return { toolId: 'binary' };
     } else if ((from === 'decimal' && to === 'roman') || (from === 'roman' && to === 'decimal')) {
@@ -188,6 +206,7 @@ const pageTitle = computed(() => {
 const resolveToolToComponent = () => {
     // For from-to patterns
     if (isFromToPattern.value) {
+        console.log(conversionData.value);
         if (conversionData.value) {
             if (conversionData.value.toolId) {
                 // Handle special tool patterns
