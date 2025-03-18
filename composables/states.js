@@ -2,4 +2,5 @@
 export const useAppState = () =>
     useState('app', () => ({
         showToast: false,
+        toastMessage: '',
     }));

@@ -206,7 +206,6 @@ const pageTitle = computed(() => {
 const resolveToolToComponent = () => {
     // For from-to patterns
     if (isFromToPattern.value) {
-        console.log(conversionData.value);
         if (conversionData.value) {
             if (conversionData.value.toolId) {
                 // Handle special tool patterns

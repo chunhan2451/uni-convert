@@ -1,7 +1,7 @@
 <template>
     <div v-if="appState.showToast" class="toast toast-end toast-bottom">
         <div class="alert alert-success">
-            <span>Copied to clipboard!</span>
+            <span>{{ appState.toastMessage || 'Copied to clipboard!' }}</span>
         </div>
     </div>
 </template>
