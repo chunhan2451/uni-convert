@@ -209,6 +209,19 @@ export const additionalConverterCategories = [
         tools: [{ id: 'qr-code', name: 'QR Code Generator', description: 'Generate QR codes for text, URLs, and more' }],
         icon: uiIcons.qr,
     },
+    {
+        id: 'images',
+        name: 'Image Tools',
+        description: 'Convert and manipulate image files',
+        tools: [
+            {
+                id: 'image-format',
+                name: 'Image Format Converter',
+                description: 'Convert between JPG, PNG, WebP, SVG, and other image formats',
+            },
+        ],
+        icon: uiIcons.png,
+    },
 ];
 
 // Combined categories for global access

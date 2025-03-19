@@ -47,6 +47,10 @@ const converterComponents = {
 
     // Utilities
     'qr-code': () => import('./Utility/QrCodeGenerator.vue'),
+
+    // Image converters
+    'images': () => import('./TextDataTools/Images/ImageConverter.vue'),
+    'image-format': () => import('./TextDataTools/Images/ImageConverter.vue'),
 };
 
 // Helper function to get a converter component by category ID
