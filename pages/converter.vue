@@ -29,7 +29,7 @@
                 <!-- Unit conversion categories -->
                 <div v-if="filteredUnitCategories.length > 0" class="mb-12">
                     <div class="mb-6 flex items-center">
-                        <h2 class="text-2xl font-bold">Unit Converters</h2>
+                        <h2 class="text-2xl font-bold">Units</h2>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -40,7 +40,7 @@
                 <!-- Tools categories -->
                 <div v-if="filteredToolCategories.length > 0" class="mt-16">
                     <div class="mb-6 flex items-center">
-                        <h2 class="text-2xl font-bold">Text & Data Tools</h2>
+                        <h2 class="text-2xl font-bold">Tools</h2>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
