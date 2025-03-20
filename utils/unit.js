@@ -210,7 +210,7 @@ export const additionalConverterCategories = [
         icon: uiIcons.qr,
     },
     {
-        id: 'images',
+        id: 'image-format',
         name: 'Image Tools',
         description: 'Convert and manipulate image files',
         tools: [
@@ -221,6 +221,13 @@ export const additionalConverterCategories = [
             },
         ],
         icon: uiIcons.png,
+        units: [
+            { id: 'jpg', name: 'JPG' },
+            { id: 'png', name: 'PNG' },
+            { id: 'svg', name: 'SVG' },
+            { id: 'webp', name: 'WEBP' },
+            { id: 'heic', name: 'HEIC' },
+        ],
     },
 ];
 

@@ -45,7 +45,7 @@
 import { onMounted, shallowRef, ref, computed, watch } from 'vue';
 import Skeleton from '~/components/Skeleton.vue';
 import { getConverterByCategory } from '~/components/Convert';
-import { unitConvertCategories, additionalConverterCategories } from '~/utils/unit';
+import { unitConvertCategories, additionalConverterCategories, allConverterCategories } from '~/utils/unit';
 
 const isLoading = ref(true);
 
@@ -85,7 +85,7 @@ const conversionData = computed(() => {
     if (specialTools) return specialTools;
 
     // Find which category contains both units
-    for (const category of unitConvertCategories) {
+    for (const category of allConverterCategories) {
         const fromUnitExists = category.units && category.units.some((unit) => unit.id === fromUnitId.value);
         const toUnitExists = category.units && category.units.some((unit) => unit.id === toUnitId.value);
 
@@ -104,7 +104,7 @@ const conversionData = computed(() => {
 // Get category data for unit converters
 const categoryData = computed(() => {
     if (!conversionData.value) return null;
-    return unitConvertCategories.find((cat) => cat.id === conversionData.value.categoryId);
+    return allConverterCategories.find((cat) => cat.id === conversionData.value.categoryId);
 });
 
 // Handle special from-to patterns that aren't unit converters
