@@ -53,6 +53,7 @@ export const uiIcons = {
     categoryIcons: {
         angle: 'ph:triangle-bold',
         area: 'ph:square-bold',
+        cooking: 'ph:cooking-pot-bold', 
         css: 'ph:code-bold',
         data: 'ph:database-bold',
         energy: 'ph:lightning-bold',

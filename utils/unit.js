@@ -31,6 +31,18 @@ export const unitConvertCategories = [
         ],
     },
     {
+        id: 'cooking',
+        name: 'Cooking',
+        units: [
+            { id: 'cup', name: 'Cups (cup)', factor: 1 },
+            { id: 'tbsp', name: 'Tablespoon (tbsp)', factor: 0.0625 },
+            { id: 'tsp', name: 'Teaspoon (tsp)', factor: 0.0208333 },
+            { id: 'ml', name: 'Milliliter (ml)', factor: 0.00423223 },
+            { id: 'floz', name: 'Fluid Ounce (fl oz)', factor: 0.125 },
+            { id: 'g', name: 'Gram (g)', factor: 0 }, // Special conversion
+        ],
+    },
+    {
         id: 'css',
         name: 'CSS Units',
         units: [

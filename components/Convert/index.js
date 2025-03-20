@@ -9,6 +9,7 @@ const converterComponents = {
     angle: () => import('./Units/AngleConverter.vue'),
     area: () => import('./Units/AreaConverter.vue'),
     color: () => import('./Units/ColorConverter.vue'),
+    cooking: () => import('./Units/CookingConverter.vue'),
     css: () => import('./Units/CssConverter.vue'),
     data: () => import('./Units/DataConverter.vue'),
     energy: () => import('./Units/EnergyConverter.vue'),
