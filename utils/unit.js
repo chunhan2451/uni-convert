@@ -204,6 +204,19 @@ export const additionalConverterCategories = [
         icon: uiIcons.clock,
     },
     {
+        id: 'finance',
+        name: 'Financial Tools',
+        description: 'Calculate and analyze financial data',
+        tools: [
+            { 
+                id: 'loan', 
+                name: 'Loan Calculator', 
+                description: 'Calculate loan payments, interest, and amortization schedules' 
+            },
+        ],
+        icon: uiIcons.currencyCircleDollar,
+    },
+    {
         id: 'text-transform',
         name: 'Text Transformation',
         description: 'Transform and analyze text',

@@ -10,6 +10,7 @@ export const uiIcons = {
     copy: 'ph:copy-bold',
     arrowRight: 'ph:arrow-right-bold',
     arrowDown: 'ph:arrow-down-bold',
+    arrowUp: 'ph:arrow-up-bold',
     close: 'ph:x-circle-bold',
     refresh: 'ph:arrows-clockwise-bold',
     download: 'ph:download-simple-bold',
@@ -48,6 +49,11 @@ export const uiIcons = {
 
     png: 'ph:file-png-bold',
     svg: 'ph:file-svg-bold',
+
+    // Finance
+    currencyCircleDollar: 'ph:currency-circle-dollar-bold',
+    calculator: 'ph:calculator-bold',
+    mortgage: 'ph:house-bold',
 
     // Add any category-specific icons here if needed
     categoryIcons: {

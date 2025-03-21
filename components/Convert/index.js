@@ -50,8 +50,12 @@ const converterComponents = {
     'qr-code': () => import('./Utility/QrCodeGenerator.vue'),
 
     // Image converters
-    'images': () => import('./TextDataTools/Images/ImageConverter.vue'),
+    images: () => import('./TextDataTools/Images/ImageConverter.vue'),
     'image-format': () => import('./TextDataTools/Images/ImageConverter.vue'),
+
+    // Financial tools
+    loan: () => import('./FinancialTools/LoanCalculator.vue'),
+    mortgage: () => import('./FinancialTools/LoanCalculator.vue'),
 };
 
 // Helper function to get a converter component by category ID
