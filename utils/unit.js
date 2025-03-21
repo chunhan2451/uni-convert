@@ -92,6 +92,16 @@ export const unitConvertCategories = [
         ],
     },
     {
+        id: 'electrical',
+        name: 'Electrical Units',
+        units: [
+            { id: 'v', name: 'Voltage (V)', factor: 1 },
+            { id: 'i', name: 'Current (A)', factor: 1 },
+            { id: 'r', name: 'Resistance (Ω)', factor: 1 },
+            { id: 'p', name: 'Power (W)', factor: 1 }
+        ],
+    },
+    {
         id: 'energy',
         name: 'Energy',
         units: [

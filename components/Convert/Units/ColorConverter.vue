@@ -121,7 +121,7 @@
 <script setup>
 // Reference: https://convertacolor.com/
 import { colorConversions } from '~/utils/color';
-import { useAppState } from '~/composables/states'
+import { useAppState } from '~/composables/states';
 
 const appState = useAppState();
 
@@ -131,7 +131,6 @@ const hsl = ref({ h: 0, s: 0, l: 0 });
 const cmyk = ref([0, 0, 0, 0]);
 
 const previewColor = computed(() => `rgb(${rgb.value.join(',')})`);
-
 
 // Conversion functions remain the same...
 const updateFromHex = () => {
@@ -165,13 +164,9 @@ const updateFromCmyk = () => {
 };
 
 const copyToClipboard = async (text) => {
-    try {
-        await navigator.clipboard.writeText(text);
-        appState.value.showToast = true;
-        setTimeout(() => (appState.value.showToast = false), 2000); // Hide toast after 2 seconds
-    } catch (err) {
-        console.error('Failed to copy:', err);
-    }
+    await navigator.clipboard.writeText(text);
+    appState.value.showToast = true;
+    setTimeout(() => (appState.value.showToast = false), 2000); // Hide toast after 2 seconds
 };
 
 updateFromHex();

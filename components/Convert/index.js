@@ -14,6 +14,7 @@ const converterComponents = {
     css: () => import('./Units/CssConverter.vue'),
     data: () => import('./Units/DataConverter.vue'),
     dataspeed: () => import('./Units/DataSpeedConverter.vue'),
+    electrical: () => import('./Units/ElectricalConverter.vue'),
     energy: () => import('./Units/EnergyConverter.vue'),
     length: () => import('./Units/LengthConverter.vue'),
     pressure: () => import('./Units/PressureConverter.vue'),

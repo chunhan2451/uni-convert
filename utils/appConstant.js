@@ -63,6 +63,7 @@ export const uiIcons = {
         css: 'ph:code-bold',
         data: 'ph:database-bold',
         dataspeed: 'ph:wifi-high-bold',
+        electrical: 'ph:lightning-bold',
         energy: 'ph:lightning-bold',
         length: 'ph:ruler-bold',
         pressure: 'ph:gauge-bold',

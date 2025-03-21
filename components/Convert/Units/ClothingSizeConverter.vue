@@ -193,10 +193,12 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { useAppState } from '~/composables/states'
 import { useUrlUpdate } from '~/composables/useUrlUpdate';
 
 // Get URL update functionality
 const { updateUrlPath, getUnitsFromUrl } = useUrlUpdate();
+const appState = useAppState();
 
 // General setup
 const tabs = [
@@ -304,12 +306,9 @@ const swapClothingUnits = () => {
 
 // Copy to clipboard
 const copyToClipboard = async (text) => {
-    try {
-        await navigator.clipboard.writeText(text);
-        // Could add a toast notification here
-    } catch (err) {
-        console.error('Failed to copy: ', err);
-    }
+    await navigator.clipboard.writeText(text);
+    appState.value.showToast = true;
+    setTimeout(() => (appState.value.showToast = false), 2000); // Hide toast after 2 seconds
 };
 
 // Shoe size charts

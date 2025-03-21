@@ -13,7 +13,7 @@
             </div>
 
             <div>
-                <p class="text-sm text-base-content/70 mb-2">Convert between units like:</p>
+                <p class="text-sm text-base-content/70 mb-2">Convert between {{ category?.name.toLowerCase() }} like:</p>
                 <div class="flex flex-wrap gap-1.5 mb-4">
                     <span
                         v-for="unit in displayUnits"
