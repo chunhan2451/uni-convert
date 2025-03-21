@@ -1,13 +1,15 @@
 <!-- components/Convert/TextDataTools/Images/ImageConverter.vue -->
 <template>
     <div class="container mx-auto p-4">
-        <div class="card bg-base-100 shadow-xl max-w-3xl mx-auto">
+        <div class="max-w-3xl mx-auto">
             <div class="card-body">
-                <h2 class="card-title text-2xl flex items-center">
-                    <Icon :name="uiIcons.png" class="w-6 h-6 mr-2" />
-                    Image Format Converter
-                </h2>
-                <p class="text-base-content/70 mb-4">Convert your images between different formats (JPG, PNG, WebP, SVG)</p>
+                <div class="justify-center text-center">
+                    <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                        <Icon :name="uiIcons.png" class="text-primary h-6 w-6 text-2xl" />
+                    </div>
+                    <h1 class="text-3xl font-bold mb-2 text-center">Image Format Converter</h1>
+                    <p class="text-base-content/70 mb-4">Convert your images between different formats (JPG, PNG, WebP, SVG)</p>
+                </div>
 
                 <!-- File Upload Area -->
                 <div

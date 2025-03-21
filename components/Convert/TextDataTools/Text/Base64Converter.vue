@@ -12,7 +12,7 @@
             :auto-convert="true"
         >
             <template #options>
-                <div class="tabs tabs-boxed justify-center mb-6">
+                <div class="tabs tabs-lift justify-center mb-6">
                     <a class="tab" :class="{ 'tab-active': mode === 'encode' }" @click="switchMode('encode')">
                         Encode Text to Base64
                     </a>
@@ -52,6 +52,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import BaseTextConverter from '../../BaseTextConverter.vue';
 import { dataConverters } from '~/utils/textDataConverters';
 import { useUrlUpdate } from '~/composables/useUrlUpdate';

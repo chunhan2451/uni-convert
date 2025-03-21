@@ -2,11 +2,16 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-3xl font-bold mb-2 text-center">Duration Converter</h1>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.clock" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-2 text-center">Duration Converter</h1>
+            </div>
             <p class="text-zinc-600 mb-6 text-center">Convert between different time duration formats</p>
 
             <!-- Mode selection -->
-            <div class="tabs tabs-boxed justify-center mb-8">
+            <div class="tabs tabs-lift justify-center mb-8">
                 <a class="tab" :class="{ 'tab-active': mode === 'seconds-to-human' }" @click="mode = 'seconds-to-human'">
                     Seconds to Human Format
                 </a>
@@ -16,7 +21,7 @@
             </div>
 
             <!-- Seconds to Human Format -->
-            <div v-if="mode === 'seconds-to-human'" class="bg-base-100 p-6 rounded-lg shadow-sm mb-8">
+            <div v-if="mode === 'seconds-to-human'" class="rounded-lg mb-8">
                 <div class="mb-6">
                     <label class="block text-zinc-700 text-sm font-medium mb-2">Seconds</label>
                     <div class="flex gap-2">
@@ -64,7 +69,7 @@
             </div>
 
             <!-- Human Format to Seconds -->
-            <div v-else class="bg-base-100 p-6 rounded-lg shadow-sm mb-8">
+            <div v-else class="rounded-lg mb-8">
                 <div class="mb-4">
                     <label class="block text-zinc-700 text-sm font-medium mb-2">Human Duration Format</label>
                     <input
@@ -198,6 +203,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import { timeConverters } from '~/utils/timeConverters';
 import { useAppState } from '~/composables/states'
 

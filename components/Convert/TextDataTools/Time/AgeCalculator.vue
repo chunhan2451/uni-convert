@@ -2,7 +2,12 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-3xl font-bold mb-2 text-center">Age Calculator</h1>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.clock" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-2 text-center">Age Calculator</h1>
+            </div>
             <p class="text-zinc-600 mb-6 text-center">Calculate exact age and see equivalent animal ages</p>
 
             <!-- Date Input -->
@@ -26,7 +31,7 @@
                     <div class="flex flex-col md:flex-row gap-2 mt-4">
                         <button @click="useCurrentDate" class="btn btn-outline flex-1">
                             <Icon :name="uiIcons.calendar" class="h-5 w-5 mr-2 text-xl" />
-                            Use Today's Date
+                            Set Today
                         </button>
 
                         <button @click="resetForm" class="btn btn-outline btn-error flex-1">
@@ -147,6 +152,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 
 // Date inputs
 const birthDate = ref('');

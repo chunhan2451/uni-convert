@@ -1,402 +1,398 @@
 <!-- components/Convert/FinancialTools/LoanCalculator.vue -->
 <template>
     <div class="w-full max-w-4xl mx-auto">
-        <div class="card bg-base-100 shadow-md">
-            <div class="card-body p-6 md:p-8">
-                <h2 class="flex items-center text-2xl font-semibold mb-6 gap-3">
-                    <Icon :name="uiIcons.calculator" class="w-6 h-6" />
-                    Universal Loan Calculator
-                </h2>
-
-                <!-- Loan Type Selector -->
-                <div class="mb-6">
-                    <label class="block text-base-content/80 mb-2">Loan Type</label>
-                    <div class="flex gap-2">
-                        <button
-                            @click="loanType = 'mortgage'"
-                            class="btn flex-1"
-                            :class="loanType === 'mortgage' ? 'btn-primary' : 'btn-outline'"
-                        >
-                            <Icon :name="uiIcons.mortgage" class="w-4 h-4 mr-2" />
-                            Mortgage
-                        </button>
-                        <button
-                            @click="loanType = 'auto'"
-                            class="btn flex-1"
-                            :class="loanType === 'auto' ? 'btn-primary' : 'btn-outline'"
-                        >
-                            <Icon name="ph:car-bold" class="w-4 h-4 mr-2" />
-                            Auto Loan
-                        </button>
-                        <button
-                            @click="loanType = 'personal'"
-                            class="btn flex-1"
-                            :class="loanType === 'personal' ? 'btn-primary' : 'btn-outline'"
-                        >
-                            <Icon name="ph:wallet-bold" class="w-4 h-4 mr-2" />
-                            Personal Loan
-                        </button>
-                    </div>
+        <div class="justify-center text-center">
+            <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                <Icon :name="uiIcons.currencyCircleDollar" class="text-primary h-6 w-6 text-2xl" />
+            </div>
+            <h1 class="text-3xl font-bold mb-2 text-center">Universal Loan Calculator</h1>
+        </div>
+        <div class="p-2">
+            <!-- Loan Type Selector -->
+            <div class="mb-6">
+                <label class="block text-base-content/80 mb-2">Loan Type</label>
+                <div class="gap-2 grid grid-cols-2 md:grid-cols-3">
+                    <button
+                        @click="loanType = 'mortgage'"
+                        class="btn flex-1"
+                        :class="loanType === 'mortgage' ? 'btn-primary' : 'btn-outline'"
+                    >
+                        <Icon :name="uiIcons.mortgage" class="w-4 h-4 mr-2" />
+                        Mortgage
+                    </button>
+                    <button
+                        @click="loanType = 'auto'"
+                        class="btn flex-1"
+                        :class="loanType === 'auto' ? 'btn-primary' : 'btn-outline'"
+                    >
+                        <Icon name="ph:car-bold" class="w-4 h-4 mr-2" />
+                        Auto Loan
+                    </button>
+                    <button
+                        @click="loanType = 'personal'"
+                        class="btn flex-1"
+                        :class="loanType === 'personal' ? 'btn-primary' : 'btn-outline'"
+                    >
+                        <Icon name="ph:wallet-bold" class="w-4 h-4 mr-2" />
+                        Personal Loan
+                    </button>
                 </div>
+            </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Input Column -->
-                    <div class="space-y-6">
-                        <!-- Loan Amount -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Input Column -->
+                <div class="space-y-6">
+                    <!-- Loan Amount -->
+                    <div>
+                        <label class="block text-base-content/80 mb-2">Loan Amount</label>
+                        <div class="flex w-full">
+                            <span
+                                class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
+                                >$</span
+                            >
+                            <input
+                                v-model="loanAmount"
+                                type="number"
+                                min="1000"
+                                max="100000000"
+                                step="1000"
+                                class="input input-bordered rounded-l-none w-full focus:outline-none"
+                                placeholder="Enter loan amount"
+                                @input="validateInputs"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Interest Calculation Method (for Auto/Personal loans) -->
+                    <div v-if="loanType !== 'mortgage'">
+                        <label class="block text-base-content/80 mb-2">Interest Calculation</label>
+                        <select v-model="interestMethod" class="select select-bordered w-full">
+                            <option value="amortizing">Amortizing (Based on remaining balance)</option>
+                            <option value="simple">Simple (Pre-calculated)</option>
+                        </select>
+                    </div>
+
+                    <!-- Down Payment (for Auto/Mortgage) -->
+                    <div v-if="loanType !== 'personal'">
+                        <label class="block text-base-content/80 mb-2">Down Payment</label>
+                        <div class="flex w-full">
+                            <span
+                                class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
+                                >$</span
+                            >
+                            <input
+                                v-model="downPayment"
+                                type="number"
+                                min="0"
+                                step="1000"
+                                class="input input-bordered rounded-l-none w-full focus:outline-none"
+                                placeholder="Enter down payment"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Trade-in Value (Auto only) -->
+                    <div v-if="loanType === 'auto'">
+                        <label class="block text-base-content/80 mb-2">Trade-in Value</label>
+                        <div class="flex w-full">
+                            <span
+                                class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
+                                >$</span
+                            >
+                            <input
+                                v-model="tradeInValue"
+                                type="number"
+                                min="0"
+                                step="1000"
+                                class="input input-bordered rounded-l-none w-full focus:outline-none"
+                                placeholder="Enter trade-in value"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Interest Rate -->
+                    <div>
+                        <label class="block text-base-content/80 mb-2">Interest Rate</label>
+                        <div class="flex w-full">
+                            <input
+                                v-model="interestRate"
+                                type="number"
+                                min="0.1"
+                                max="20"
+                                step="0.1"
+                                class="input input-bordered rounded-r-none w-full focus:outline-none"
+                                placeholder="Enter annual interest rate"
+                            />
+                            <span
+                                class="flex items-center justify-center px-4 bg-base-200 border-y border-r border-base-300 rounded-r-lg"
+                                >%</span
+                            >
+                        </div>
+                        <input
+                            v-model="interestRate"
+                            type="range"
+                            min="0.1"
+                            max="15"
+                            step="0.1"
+                            class="range range-primary range-sm mt-4 w-full"
+                        />
+                    </div>
+
+                    <!-- Loan Term -->
+                    <div>
+                        <label class="block text-base-content/80 mb-2">Loan Term (Years)</label>
+                        <div class="flex w-full">
+                            <input
+                                v-model="loanTermYears"
+                                type="number"
+                                min="1"
+                                max="35"
+                                class="input input-bordered rounded-r-none w-full focus:outline-none"
+                                placeholder="Enter loan term"
+                            />
+                            <span
+                                class="flex items-center justify-center px-4 bg-base-200 border-y border-r border-base-300 rounded-r-lg"
+                                >years</span
+                            >
+                        </div>
+                        <input
+                            v-model="loanTermYears"
+                            type="range"
+                            min="1"
+                            max="35"
+                            step="1"
+                            class="range range-primary range-sm mt-4 w-full"
+                        />
+                    </div>
+
+                    <!-- Monthly Property Tax & Insurance (Mortgage only) -->
+                    <div v-if="loanType === 'mortgage'" class="space-y-4">
                         <div>
-                            <label class="block text-base-content/80 mb-2">Loan Amount</label>
+                            <label class="block text-base-content/80 mb-2">Property Tax (Yearly)</label>
                             <div class="flex w-full">
                                 <span
                                     class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
                                     >$</span
                                 >
                                 <input
-                                    v-model="loanAmount"
-                                    type="number"
-                                    min="1000"
-                                    max="100000000"
-                                    step="1000"
-                                    class="input input-bordered rounded-l-none w-full focus:outline-none"
-                                    placeholder="Enter loan amount"
-                                    @input="validateInputs"
-                                />
-                            </div>
-                        </div>
-
-                        <!-- Interest Calculation Method (for Auto/Personal loans) -->
-                        <div v-if="loanType !== 'mortgage'">
-                            <label class="block text-base-content/80 mb-2">Interest Calculation</label>
-                            <select v-model="interestMethod" class="select select-bordered w-full">
-                                <option value="amortizing">Amortizing (Based on remaining balance)</option>
-                                <option value="simple">Simple (Pre-calculated)</option>
-                            </select>
-                        </div>
-
-                        <!-- Down Payment (for Auto/Mortgage) -->
-                        <div v-if="loanType !== 'personal'">
-                            <label class="block text-base-content/80 mb-2">Down Payment</label>
-                            <div class="flex w-full">
-                                <span
-                                    class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
-                                    >$</span
-                                >
-                                <input
-                                    v-model="downPayment"
+                                    v-model="propertyTax"
                                     type="number"
                                     min="0"
-                                    step="1000"
+                                    step="100"
                                     class="input input-bordered rounded-l-none w-full focus:outline-none"
-                                    placeholder="Enter down payment"
+                                    placeholder="Yearly property tax"
                                 />
                             </div>
                         </div>
 
-                        <!-- Trade-in Value (Auto only) -->
-                        <div v-if="loanType === 'auto'">
-                            <label class="block text-base-content/80 mb-2">Trade-in Value</label>
+                        <div>
+                            <label class="block text-base-content/80 mb-2">Home Insurance (Yearly)</label>
                             <div class="flex w-full">
                                 <span
                                     class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
                                     >$</span
                                 >
                                 <input
-                                    v-model="tradeInValue"
+                                    v-model="homeInsurance"
                                     type="number"
                                     min="0"
-                                    step="1000"
+                                    step="100"
                                     class="input input-bordered rounded-l-none w-full focus:outline-none"
-                                    placeholder="Enter trade-in value"
+                                    placeholder="Yearly insurance"
                                 />
                             </div>
                         </div>
 
-                        <!-- Interest Rate -->
                         <div>
-                            <label class="block text-base-content/80 mb-2">Interest Rate</label>
+                            <label class="block text-base-content/80 mb-2">PMI (% of Loan, if < 20% down)</label>
                             <div class="flex w-full">
                                 <input
-                                    v-model="interestRate"
+                                    v-model="pmiRate"
                                     type="number"
-                                    min="0.1"
-                                    max="20"
-                                    step="0.1"
+                                    min="0"
+                                    max="2"
+                                    step="0.01"
                                     class="input input-bordered rounded-r-none w-full focus:outline-none"
-                                    placeholder="Enter annual interest rate"
+                                    placeholder="PMI rate"
                                 />
                                 <span
                                     class="flex items-center justify-center px-4 bg-base-200 border-y border-r border-base-300 rounded-r-lg"
                                     >%</span
                                 >
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Extra Payment Amount (conditional) -->
+                    <div v-if="includeExtraPayment">
+                        <label class="block text-base-content/80 mb-2">Extra Payment (Monthly)</label>
+                        <div class="flex w-full">
+                            <span
+                                class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
+                                >$</span
+                            >
                             <input
-                                v-model="interestRate"
-                                type="range"
-                                min="0.1"
-                                max="15"
-                                step="0.1"
-                                class="range range-primary range-sm mt-4 w-full"
+                                v-model="extraPayment"
+                                type="number"
+                                min="0"
+                                step="10"
+                                class="input input-bordered rounded-l-none w-full focus:outline-none"
+                                placeholder="Extra monthly payment"
                             />
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Loan Term -->
-                        <div>
-                            <label class="block text-base-content/80 mb-2">Loan Term (Years)</label>
-                            <div class="flex w-full">
-                                <input
-                                    v-model="loanTermYears"
-                                    type="number"
-                                    min="1"
-                                    max="35"
-                                    class="input input-bordered rounded-r-none w-full focus:outline-none"
-                                    placeholder="Enter loan term"
-                                />
-                                <span
-                                    class="flex items-center justify-center px-4 bg-base-200 border-y border-r border-base-300 rounded-r-lg"
-                                    >years</span
-                                >
-                            </div>
-                            <input
-                                v-model="loanTermYears"
-                                type="range"
-                                min="1"
-                                max="35"
-                                step="1"
-                                class="range range-primary range-sm mt-4 w-full"
-                            />
+                <!-- Results Column -->
+                <div class="space-y-6">
+                    <!-- Result Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-base-100 border border-base-200 rounded-lg p-4 shadow-sm">
+                            <div class="text-sm text-base-content/70 mb-1">Monthly Payment</div>
+                            <div class="text-2xl font-bold">${{ formatCurrency(monthlyPayment) }}</div>
                         </div>
 
-                        <!-- Monthly Property Tax & Insurance (Mortgage only) -->
-                        <div v-if="loanType === 'mortgage'" class="space-y-4">
-                            <div>
-                                <label class="block text-base-content/80 mb-2">Property Tax (Yearly)</label>
-                                <div class="flex w-full">
-                                    <span
-                                        class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
-                                        >$</span
-                                    >
-                                    <input
-                                        v-model="propertyTax"
-                                        type="number"
-                                        min="0"
-                                        step="100"
-                                        class="input input-bordered rounded-l-none w-full focus:outline-none"
-                                        placeholder="Yearly property tax"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-base-content/80 mb-2">Home Insurance (Yearly)</label>
-                                <div class="flex w-full">
-                                    <span
-                                        class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
-                                        >$</span
-                                    >
-                                    <input
-                                        v-model="homeInsurance"
-                                        type="number"
-                                        min="0"
-                                        step="100"
-                                        class="input input-bordered rounded-l-none w-full focus:outline-none"
-                                        placeholder="Yearly insurance"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-base-content/80 mb-2">PMI (% of Loan, if < 20% down)</label>
-                                <div class="flex w-full">
-                                    <input
-                                        v-model="pmiRate"
-                                        type="number"
-                                        min="0"
-                                        max="2"
-                                        step="0.01"
-                                        class="input input-bordered rounded-r-none w-full focus:outline-none"
-                                        placeholder="PMI rate"
-                                    />
-                                    <span
-                                        class="flex items-center justify-center px-4 bg-base-200 border-y border-r border-base-300 rounded-r-lg"
-                                        >%</span
-                                    >
-                                </div>
-                            </div>
+                        <div class="bg-base-100 border border-base-200 rounded-lg p-4 shadow-sm">
+                            <div class="text-sm text-base-content/70 mb-1">Total Payment</div>
+                            <div class="text-2xl font-bold">${{ formatCurrency(totalPayment) }}</div>
                         </div>
 
-                        <!-- Extra Payment Amount (conditional) -->
-                        <div v-if="includeExtraPayment">
-                            <label class="block text-base-content/80 mb-2">Extra Payment (Monthly)</label>
-                            <div class="flex w-full">
-                                <span
-                                    class="flex items-center justify-center px-4 bg-base-200 border-y border-l border-base-300 rounded-l-lg"
-                                    >$</span
-                                >
-                                <input
-                                    v-model="extraPayment"
-                                    type="number"
-                                    min="0"
-                                    step="10"
-                                    class="input input-bordered rounded-l-none w-full focus:outline-none"
-                                    placeholder="Extra monthly payment"
-                                />
-                            </div>
+                        <div class="bg-base-100 border border-base-200 rounded-lg p-4 shadow-sm">
+                            <div class="text-sm text-base-content/70 mb-1">Total Interest</div>
+                            <div class="text-2xl font-bold">${{ formatCurrency(totalInterest) }}</div>
+                        </div>
+
+                        <div v-if="includeExtraPayment" class="bg-base-100 border border-success/20 rounded-lg p-4 shadow-sm">
+                            <div class="text-sm text-success-content/70 mb-1">Interest Savings</div>
+                            <div class="text-2xl font-bold text-success">${{ formatCurrency(interestSavings) }}</div>
                         </div>
                     </div>
 
-                    <!-- Results Column -->
-                    <div class="space-y-6">
-                        <!-- Result Cards -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-base-100 border border-base-200 rounded-lg p-4 shadow-sm">
-                                <div class="text-sm text-base-content/70 mb-1">Monthly Payment</div>
-                                <div class="text-2xl font-bold">${{ formatCurrency(monthlyPayment) }}</div>
+                    <!-- Payment Breakdown -->
+                    <div class="mt-6">
+                        <h3 class="text-base-content/80 mb-4">Payment Breakdown</h3>
+                        <div class="flex flex-col items-center">
+                            <div class="w-32 h-32 relative">
+                                <svg viewBox="0 0 100 100" class="w-full h-full">
+                                    <!-- Principal section (full circle background) -->
+                                    <circle
+                                        cx="50"
+                                        cy="50"
+                                        r="40"
+                                        fill="none"
+                                        stroke="#c5e8c8"
+                                        stroke-width="15"
+                                        stroke-dasharray="251.2"
+                                        stroke-dashoffset="0"
+                                        transform="rotate(-90 50 50)"
+                                    />
+
+                                    <!-- Interest section (overlay) -->
+                                    <circle
+                                        cx="50"
+                                        cy="50"
+                                        r="40"
+                                        fill="none"
+                                        stroke="#4ade80"
+                                        stroke-width="15"
+                                        :stroke-dasharray="`${251.2 * (totalInterest / totalPayment)} ${
+                                            251.2 * (1 - totalInterest / totalPayment)
+                                        }`"
+                                        transform="rotate(-90 50 50)"
+                                    />
+                                </svg>
                             </div>
 
-                            <div class="bg-base-100 border border-base-200 rounded-lg p-4 shadow-sm">
-                                <div class="text-sm text-base-content/70 mb-1">Total Payment</div>
-                                <div class="text-2xl font-bold">${{ formatCurrency(totalPayment) }}</div>
-                            </div>
-
-                            <div class="bg-base-100 border border-base-200 rounded-lg p-4 shadow-sm">
-                                <div class="text-sm text-base-content/70 mb-1">Total Interest</div>
-                                <div class="text-2xl font-bold">${{ formatCurrency(totalInterest) }}</div>
-                            </div>
-
-                            <div v-if="includeExtraPayment" class="bg-base-100 border border-success/20 rounded-lg p-4 shadow-sm">
-                                <div class="text-sm text-success-content/70 mb-1">Interest Savings</div>
-                                <div class="text-2xl font-bold text-success">${{ formatCurrency(interestSavings) }}</div>
-                            </div>
-                        </div>
-
-                        <!-- Payment Breakdown -->
-                        <div class="mt-6">
-                            <h3 class="text-base-content/80 mb-4">Payment Breakdown</h3>
-                            <div class="flex flex-col items-center">
-                                <div class="w-32 h-32 relative">
-                                    <svg viewBox="0 0 100 100" class="w-full h-full">
-                                        <!-- Principal section (full circle background) -->
-                                        <circle
-                                            cx="50"
-                                            cy="50"
-                                            r="40"
-                                            fill="none"
-                                            stroke="#c5e8c8"
-                                            stroke-width="15"
-                                            stroke-dasharray="251.2"
-                                            stroke-dashoffset="0"
-                                            transform="rotate(-90 50 50)"
-                                        />
-
-                                        <!-- Interest section (overlay) -->
-                                        <circle
-                                            cx="50"
-                                            cy="50"
-                                            r="40"
-                                            fill="none"
-                                            stroke="#4ade80"
-                                            stroke-width="15"
-                                            :stroke-dasharray="`${251.2 * (totalInterest / totalPayment)} ${
-                                                251.2 * (1 - totalInterest / totalPayment)
-                                            }`"
-                                            transform="rotate(-90 50 50)"
-                                        />
-                                    </svg>
+                            <!-- Legend and detailed breakdown -->
+                            <div class="grid grid-cols-2 gap-x-6 gap-y-2 mt-4 text-sm">
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 rounded-full mr-2" style="background-color: #4ade80"></div>
+                                    <span>Interest</span>
                                 </div>
+                                <div class="text-right font-medium">${{ formatCurrency(totalInterest) }}</div>
 
-                                <!-- Legend and detailed breakdown -->
-                                <div class="grid grid-cols-2 gap-x-6 gap-y-2 mt-4 text-sm">
-                                    <div class="flex items-center">
-                                        <div class="w-3 h-3 rounded-full mr-2" style="background-color: #4ade80"></div>
-                                        <span>Interest</span>
-                                    </div>
-                                    <div class="text-right font-medium">${{ formatCurrency(totalInterest) }}</div>
-
-                                    <div class="flex items-center">
-                                        <div class="w-3 h-3 rounded-full mr-2" style="background-color: #c5e8c8"></div>
-                                        <span>Principal</span>
-                                    </div>
-                                    <div class="text-right font-medium">${{ formatCurrency(totalPayment - totalInterest) }}</div>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 rounded-full mr-2" style="background-color: #c5e8c8"></div>
+                                    <span>Principal</span>
                                 </div>
+                                <div class="text-right font-medium">${{ formatCurrency(totalPayment - totalInterest) }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Amortization Schedule -->
-                <div class="mt-8 border-t border-base-200 pt-6">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-medium">Amortization Schedule</h3>
-                        <button
-                            @click="showAmortizationTable = !showAmortizationTable"
-                            class="flex items-center gap-2 text-base-content/70 hover:text-primary"
-                        >
-                            <Icon :name="showAmortizationTable ? uiIcons.arrowUp : uiIcons.arrowDown" class="w-4 h-4" />
-                            {{ showAmortizationTable ? 'Hide' : 'Show' }} Schedule
-                        </button>
-                    </div>
-
-                    <div v-if="showAmortizationTable" class="overflow-x-auto mt-4">
-                        <table class="table table-zebra w-full">
-                            <thead>
-                                <tr>
-                                    <th class="bg-base-200/50">Payment #</th>
-                                    <th class="bg-base-200/50">Payment Amount</th>
-                                    <th class="bg-base-200/50">Principal</th>
-                                    <th class="bg-base-200/50">Interest</th>
-                                    <th v-if="loanType === 'mortgage'" class="bg-base-200/50">Taxes & Ins.</th>
-                                    <th v-if="loanType === 'mortgage' && showPmi" class="bg-base-200/50">PMI</th>
-                                    <th class="bg-base-200/50">Remaining Balance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(payment, index) in amortizationSchedule.slice(0, 12)" :key="index">
-                                    <td>{{ payment.paymentNumber }}</td>
-                                    <td>${{ formatCurrency(payment.paymentAmount) }}</td>
-                                    <td>${{ formatCurrency(payment.principalPayment) }}</td>
-                                    <td>${{ formatCurrency(payment.interestPayment) }}</td>
-                                    <td v-if="loanType === 'mortgage'">${{ formatCurrency(payment.tax + payment.insurance) }}</td>
-                                    <td v-if="loanType === 'mortgage' && showPmi">${{ formatCurrency(payment.pmi) }}</td>
-                                    <td>${{ formatCurrency(payment.remainingBalance) }}</td>
-                                </tr>
-                                <tr v-if="amortizationSchedule.length > 12" class="text-center">
-                                    <td colspan="7" class="py-2">
-                                        <button
-                                            @click="expandedTable = !expandedTable"
-                                            class="text-sm text-primary hover:underline"
-                                        >
-                                            {{ expandedTable ? 'Show Less' : 'Show All Payments' }}
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr
-                                    v-if="expandedTable"
-                                    v-for="payment in amortizationSchedule.slice(12)"
-                                    :key="'full-' + payment.paymentNumber"
-                                >
-                                    <td>{{ payment.paymentNumber }}</td>
-                                    <td>${{ formatCurrency(payment.paymentAmount) }}</td>
-                                    <td>${{ formatCurrency(payment.principalPayment) }}</td>
-                                    <td>${{ formatCurrency(payment.interestPayment) }}</td>
-                                    <td v-if="loanType === 'mortgage'">${{ formatCurrency(payment.tax + payment.insurance) }}</td>
-                                    <td v-if="loanType === 'mortgage' && showPmi">${{ formatCurrency(payment.pmi) }}</td>
-                                    <td>${{ formatCurrency(payment.remainingBalance) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="mt-6 border-t border-base-200 pt-6 flex flex-wrap gap-3">
-                    <button class="btn btn-outline gap-2" @click="copyResultsToClipboard">
-                        <Icon :name="uiIcons.copy" class="w-4 h-4" />
-                        Copy Results
-                    </button>
-                    <button class="btn btn-outline gap-2" @click="resetCalculator">
-                        <Icon :name="uiIcons.eraser" class="w-4 h-4" />
-                        Reset
+            <!-- Amortization Schedule -->
+            <div class="mt-8 border-t border-base-200 pt-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-medium">Amortization Schedule</h3>
+                    <button
+                        @click="showAmortizationTable = !showAmortizationTable"
+                        class="flex items-center gap-2 text-base-content/70 hover:text-primary"
+                    >
+                        <Icon :name="showAmortizationTable ? uiIcons.arrowUp : uiIcons.arrowDown" class="w-4 h-4" />
+                        {{ showAmortizationTable ? 'Hide' : 'Show' }} Schedule
                     </button>
                 </div>
+
+                <div v-if="showAmortizationTable" class="overflow-x-auto mt-4">
+                    <table class="table table-zebra w-full">
+                        <thead>
+                            <tr>
+                                <th class="bg-base-200/50">Payment #</th>
+                                <th class="bg-base-200/50">Payment Amount</th>
+                                <th class="bg-base-200/50">Principal</th>
+                                <th class="bg-base-200/50">Interest</th>
+                                <th v-if="loanType === 'mortgage'" class="bg-base-200/50">Taxes & Ins.</th>
+                                <th v-if="loanType === 'mortgage' && showPmi" class="bg-base-200/50">PMI</th>
+                                <th class="bg-base-200/50">Remaining Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(payment, index) in amortizationSchedule.slice(0, 12)" :key="index">
+                                <td>{{ payment.paymentNumber }}</td>
+                                <td>${{ formatCurrency(payment.paymentAmount) }}</td>
+                                <td>${{ formatCurrency(payment.principalPayment) }}</td>
+                                <td>${{ formatCurrency(payment.interestPayment) }}</td>
+                                <td v-if="loanType === 'mortgage'">${{ formatCurrency(payment.tax + payment.insurance) }}</td>
+                                <td v-if="loanType === 'mortgage' && showPmi">${{ formatCurrency(payment.pmi) }}</td>
+                                <td>${{ formatCurrency(payment.remainingBalance) }}</td>
+                            </tr>
+                            <tr v-if="amortizationSchedule.length > 12" class="text-center">
+                                <td colspan="7" class="py-2">
+                                    <button @click="expandedTable = !expandedTable" class="text-sm text-primary hover:underline">
+                                        {{ expandedTable ? 'Show Less' : 'Show All Payments' }}
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr
+                                v-if="expandedTable"
+                                v-for="payment in amortizationSchedule.slice(12)"
+                                :key="'full-' + payment.paymentNumber"
+                            >
+                                <td>{{ payment.paymentNumber }}</td>
+                                <td>${{ formatCurrency(payment.paymentAmount) }}</td>
+                                <td>${{ formatCurrency(payment.principalPayment) }}</td>
+                                <td>${{ formatCurrency(payment.interestPayment) }}</td>
+                                <td v-if="loanType === 'mortgage'">${{ formatCurrency(payment.tax + payment.insurance) }}</td>
+                                <td v-if="loanType === 'mortgage' && showPmi">${{ formatCurrency(payment.pmi) }}</td>
+                                <td>${{ formatCurrency(payment.remainingBalance) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-6 border-t border-base-200 pt-6 flex flex-wrap gap-3">
+                <button class="btn btn-outline gap-2" @click="copyResultsToClipboard">
+                    <Icon :name="uiIcons.copy" class="w-4 h-4" />
+                    Copy Results
+                </button>
+                <button class="btn btn-outline gap-2" @click="resetCalculator">
+                    <Icon :name="uiIcons.eraser" class="w-4 h-4" />
+                    Reset
+                </button>
             </div>
         </div>
     </div>

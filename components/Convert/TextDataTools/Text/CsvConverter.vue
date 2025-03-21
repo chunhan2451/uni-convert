@@ -2,13 +2,22 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-3xl font-bold mb-2 text-center">CSV ↔ JSON Converter</h1>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.textBox" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-2 text-center">CSV ↔ JSON Converter</h1>
+            </div>
             <p class="text-zinc-600 mb-6 text-center">Convert between CSV and JSON formats easily</p>
 
             <!-- Mode selection -->
-            <div class="tabs tabs-boxed justify-center mb-6">
-                <a class="tab" :class="{ 'tab-active': mode === 'csv-to-json' }" @click="switchMode('csv-to-json')"> CSV to JSON </a>
-                <a class="tab" :class="{ 'tab-active': mode === 'json-to-csv' }" @click="switchMode('json-to-csv')"> JSON to CSV </a>
+            <div class="tabs tabs-lift justify-center mb-6">
+                <a class="tab" :class="{ 'tab-active': mode === 'csv-to-json' }" @click="switchMode('csv-to-json')">
+                    CSV to JSON
+                </a>
+                <a class="tab" :class="{ 'tab-active': mode === 'json-to-csv' }" @click="switchMode('json-to-csv')">
+                    JSON to CSV
+                </a>
             </div>
 
             <!-- CSV to JSON Options -->
@@ -130,9 +139,10 @@ name,age,email
 
 <script setup>
 import { ref } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import { dataConverters } from '~/utils/textDataConverters';
 import { useUrlUpdate } from '~/composables/useUrlUpdate';
-import { useAppState } from '~/composables/states'
+import { useAppState } from '~/composables/states';
 
 const appState = useAppState();
 

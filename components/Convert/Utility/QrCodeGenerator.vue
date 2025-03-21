@@ -2,13 +2,18 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-3xl font-bold mb-2 text-center">QR Code Generator</h1>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.qr" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-2 text-center">QR Code Generator</h1>
+            </div>
             <p class="text-zinc-600 mb-6 text-center">Generate customized QR codes with optional logo</p>
 
             <!-- QR Code Content Input -->
             <div class="mb-6">
                 <label class="block text-zinc-700 text-sm font-medium mb-2 text-center">QR Code Content</label>
-                <div class="tabs tabs-boxed justify-center mb-4">
+                <div class="tabs tabs-lift justify-center mb-4">
                     <a class="tab" :class="{ 'tab-active': contentType === 'url' }" @click="contentType = 'url'"> URL </a>
                     <a class="tab" :class="{ 'tab-active': contentType === 'text' }" @click="contentType = 'text'"> Text </a>
                     <a class="tab" :class="{ 'tab-active': contentType === 'email' }" @click="contentType = 'email'"> Email </a>
@@ -303,6 +308,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import QRCode from 'qrcode';
 
 // Content type selection

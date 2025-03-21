@@ -2,11 +2,16 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-3xl font-bold mb-2 text-center">Text Line Tools</h1>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.textVariant" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-2 text-center">Text Line Tools</h1>
+            </div>
             <p class="text-zinc-600 mb-6 text-center">Sort, filter, and manipulate text lines</p>
 
             <!-- Tools Selection -->
-            <div class="tabs tabs-boxed justify-center mb-6">
+            <div class="tabs tabs-lift justify-center mb-6">
                 <a
                     v-for="tool in tools"
                     :key="tool.id"
@@ -170,6 +175,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import { textConverters } from '~/utils/textDataConverters';
 import { useAppState } from '~/composables/states'
 
