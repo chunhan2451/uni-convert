@@ -39,7 +39,7 @@ export const unitConvertCategories = [
             { id: 'uk', name: 'UK Sizes' },
             { id: 'eu', name: 'EU Sizes' },
             { id: 'cm', name: 'Centimeters (CM)' },
-            { id: 'intl', name: 'International Sizes' }
+            { id: 'intl', name: 'International Sizes' },
         ],
     },
     {
@@ -77,6 +77,18 @@ export const unitConvertCategories = [
             { id: 'MB', name: 'Megabyte (MB)', factor: 1048576 },
             { id: 'GB', name: 'Gigabyte (GB)', factor: 1073741824 },
             { id: 'TB', name: 'Terabyte (TB)', factor: 1099511627776 },
+        ],
+    },
+    {
+        id: 'dataspeed',
+        name: 'Data Transfer & Internet Speed',
+        units: [
+            { id: 'mbps', name: 'Megabits per second (Mbps)', factor: 1 },
+            { id: 'MBps', name: 'Megabytes per second (MBps)', factor: 0.125 },
+            { id: 'gbps', name: 'Gigabits per second (Gbps)', factor: 0.001 },
+            { id: 'GBps', name: 'Gigabytes per second (GBps)', factor: 0.000125 },
+            { id: 'kbps', name: 'Kilobits per second (kbps)', factor: 1000 },
+            { id: 'KBps', name: 'Kilobytes per second (KBps)', factor: 125 },
         ],
     },
     {
@@ -220,10 +232,10 @@ export const additionalConverterCategories = [
         name: 'Financial Tools',
         description: 'Calculate and analyze financial data',
         tools: [
-            { 
-                id: 'loan', 
-                name: 'Loan Calculator', 
-                description: 'Calculate loan payments, interest, and amortization schedules' 
+            {
+                id: 'loan',
+                name: 'Loan Calculator',
+                description: 'Calculate loan payments, interest, and amortization schedules',
             },
         ],
         icon: uiIcons.currencyCircleDollar,

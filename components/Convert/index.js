@@ -13,6 +13,7 @@ const converterComponents = {
     cooking: () => import('./Units/CookingConverter.vue'),
     css: () => import('./Units/CssConverter.vue'),
     data: () => import('./Units/DataConverter.vue'),
+    dataspeed: () => import('./Units/DataSpeedConverter.vue'),
     energy: () => import('./Units/EnergyConverter.vue'),
     length: () => import('./Units/LengthConverter.vue'),
     pressure: () => import('./Units/PressureConverter.vue'),
