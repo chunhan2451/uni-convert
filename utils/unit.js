@@ -31,6 +31,18 @@ export const unitConvertCategories = [
         ],
     },
     {
+        id: 'clothing',
+        name: 'Clothing & Shoe Sizes',
+        description: 'Convert between international clothing and shoe size standards',
+        units: [
+            { id: 'us', name: 'US Sizes' },
+            { id: 'uk', name: 'UK Sizes' },
+            { id: 'eu', name: 'EU Sizes' },
+            { id: 'cm', name: 'Centimeters (CM)' },
+            { id: 'intl', name: 'International Sizes' }
+        ],
+    },
+    {
         id: 'cooking',
         name: 'Cooking',
         units: [

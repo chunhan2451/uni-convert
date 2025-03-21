@@ -71,6 +71,7 @@ export const uiIcons = {
         volume: 'ph:cube-bold',
         weight: 'ph:scales-bold',
         color: 'ph:palette-bold',
+        clothing: 'ph:t-shirt-bold',
         default: 'ph:arrows-horizontal-bold',
     },
 };

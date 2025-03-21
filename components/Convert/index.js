@@ -8,6 +8,7 @@ const converterComponents = {
     // Unit-based converters
     angle: () => import('./Units/AngleConverter.vue'),
     area: () => import('./Units/AreaConverter.vue'),
+    clothing: () => import('./Units/ClothingSizeConverter.vue'),
     color: () => import('./Units/ColorConverter.vue'),
     cooking: () => import('./Units/CookingConverter.vue'),
     css: () => import('./Units/CssConverter.vue'),
