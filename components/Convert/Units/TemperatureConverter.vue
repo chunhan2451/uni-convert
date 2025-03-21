@@ -1,20 +1,18 @@
 <!-- components/Convert/Categories/TemperatureConverter.vue -->
 <template>
-    <div>
-        <BaseConverter
-            :category="temperatureCategory"
-            title="Temperature Converter"
-            ref="baseConverter"
-            :convert-function="convertTemperature"
-            :formula-function="getConversionFormula"
-        />
-    </div>
+    <BaseConverter
+        :category="temperatureCategory"
+        title="Temperature Converter"
+        ref="baseConverter"
+        :convert-function="convertTemperature"
+        :formula-function="getConversionFormula"
+    />
 </template>
 
 <script setup>
-import { ref} from 'vue';
+import { ref } from 'vue';
 import { unitConvertCategories } from '~/utils/unit';
-import BaseConverter from "../BaseConverter.vue";
+import BaseConverter from '../BaseConverter.vue';
 
 // Get the temperature category from unitConvertCategories
 const temperatureCategory = unitConvertCategories.find((cat) => cat.id === 'temperature');

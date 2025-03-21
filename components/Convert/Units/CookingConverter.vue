@@ -2,7 +2,12 @@
 <template>
     <div class="w-full">
         <div class="p-5">
-            <h2 class="text-2xl font-bold mb-6 text-center">Cooking Converter</h2>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.categoryIcons.cooking" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-8 text-center">Cooking Converter</h1>
+            </div>
 
             <!-- From Section -->
             <div class="mb-8">

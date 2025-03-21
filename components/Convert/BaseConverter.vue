@@ -2,7 +2,12 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-xl mx-auto">
-            <h1 v-show="title" class="text-3xl font-bold mb-6 text-center">{{ title }}</h1>
+            <div class="justify-center" v-show="title || category?.id">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center" v-show="category?.id && category?.id != 'css'">
+                    <Icon :name="uiIcons.categoryIcons[category.id] || uiIcons.categoryIcons.default" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 v-show="title" class="text-3xl font-bold mb-6 text-center">{{ title }}</h1>
+            </div>
 
             <!-- From Section -->
             <div class="mb-4">
@@ -17,7 +22,7 @@
                     />
                     <select v-model="fromUnit" class="select join-item bg-white w-2/5" @change="convertFromValue">
                         <option disabled value="">Unit</option>
-                        <option v-for="unit in units.filter(item => item.id != toUnit)" :key="unit.id" :value="unit.id">
+                        <option v-for="unit in units.filter((item) => item.id != toUnit)" :key="unit.id" :value="unit.id">
                             {{ unit.name }}
                         </option>
                     </select>
@@ -38,7 +43,7 @@
                     <input v-model="toValue" type="text" class="input join-item flex-1 bg-white" placeholder="Result" readonly />
                     <select v-model="toUnit" class="select join-item bg-white w-2/5" @change="convertFromValue">
                         <option disabled value="">Unit</option>
-                        <option v-for="unit in units.filter(item => item.id != fromUnit)" :key="unit.id" :value="unit.id">
+                        <option v-for="unit in units.filter((item) => item.id != fromUnit)" :key="unit.id" :value="unit.id">
                             {{ unit.name }}
                         </option>
                     </select>
@@ -60,8 +65,9 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import { useUrlUpdate } from '~/composables/useUrlUpdate';
-import { useAppState } from '~/composables/states'
+import { useAppState } from '~/composables/states';
 
 const appState = useAppState();
 

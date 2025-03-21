@@ -2,7 +2,12 @@
 <template>
     <div class="container mx-auto p-4">
         <div class="max-w-xl mx-auto">
-            <h1 class="text-3xl font-bold mb-6 text-center">CSS Units Converter</h1>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.categoryIcons.css" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-8 text-center">CSS Units Converter</h1>
+            </div>
 
             <!-- CSS Options -->
             <div class="mb-6 p-4 bg-zinc-100 rounded-xl shadow-sm">
@@ -44,6 +49,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import { unitConvertCategories } from '~/utils/unit';
 import BaseConverter from "../BaseConverter.vue";
 

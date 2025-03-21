@@ -3,7 +3,12 @@
     <div class="container mx-auto p-4">
         <div class="max-w-xl mx-auto">
             <!-- Narrower max-width for single column -->
-            <h1 class="text-4xl font-bold mb-4 text-center">Color Converter</h1>
+            <div class="justify-center">
+                <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                    <Icon :name="uiIcons.categoryIcons.color" class="text-primary h-6 w-6 text-2xl" />
+                </div>
+                <h1 class="text-3xl font-bold mb-2 text-center">Color Converter</h1>
+            </div>
             <p class="text-gray-600 mb-8 text-center text-lg">Convert between HEX, RGB, HSL, and CMYK formats instantly</p>
 
             <!-- Color Preview -->

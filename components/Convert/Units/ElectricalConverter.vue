@@ -1,7 +1,12 @@
 <!-- components/Units/ElectricalConverter.vue -->
 <template>
     <div class="converter-container max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-center mb-8">Electrical Converter</h1>
+        <div class="justify-center">
+            <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
+                <Icon :name="uiIcons.categoryIcons.electrical" class="text-primary h-6 w-6 text-2xl" />
+            </div>
+            <h1 class="text-3xl font-bold mb-8 text-center">Electrical Converter</h1>
+        </div>
 
         <!-- From Section -->
         <div class="mb-4">
@@ -119,6 +124,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import { useAppState } from '~/composables/states';
 import { useUrlUpdate } from '~/composables/useUrlUpdate';
 

@@ -42,6 +42,7 @@ export const unitConvertCategories = [
             { id: 'intl', name: 'International Sizes' },
         ],
     },
+    colorCategory,
     {
         id: 'cooking',
         name: 'Cooking',
@@ -197,8 +198,6 @@ export const unitConvertCategories = [
             { id: 'st', name: 'Stone (st)', factor: 6.35029 },
         ],
     },
-    // Color category
-    colorCategory,
 ];
 
 // Additional converter categories (not unit-based)
@@ -246,6 +245,11 @@ export const additionalConverterCategories = [
                 id: 'loan',
                 name: 'Loan Calculator',
                 description: 'Calculate loan payments, interest, and amortization schedules',
+            },
+            {
+                id: 'compound-interest',
+                name: 'Compound Interest Calculator',
+                description: 'Calculate how your investments grow over time with compound interest',
             },
         ],
         icon: uiIcons.currencyCircleDollar,

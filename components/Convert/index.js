@@ -59,6 +59,8 @@ const converterComponents = {
     // Financial tools
     loan: () => import('./FinancialTools/LoanCalculator.vue'),
     mortgage: () => import('./FinancialTools/LoanCalculator.vue'),
+    compound: () => import('./FinancialTools/CompoundInterestCalculator.vue'),
+    'compound-interest': () => import('./FinancialTools/CompoundInterestCalculator.vue'),
 };
 
 // Helper function to get a converter component by category ID

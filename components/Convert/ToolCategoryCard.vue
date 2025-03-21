@@ -22,7 +22,7 @@
                     @click="navigateToTool(tool.id)"
                 >
                     <div class="flex items-center gap-2">
-                        <div class="badge badge-outline badge-sm">{{ tool.id }}</div>
+                        <!-- <div class="badge badge-outline badge-sm">{{ tool.id }}</div> -->
                         <span class="font-medium">{{ tool.name }}</span>
                     </div>
                     <Icon
