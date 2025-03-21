@@ -354,7 +354,6 @@ const fetchCities = async () => {
             const newCities = allTimezones.filter((city) => !existingIds.has(city.id));
             cities.value = [...cities.value, ...newCities];
 
-            console.log(cities.value);
             // Re-filter cities based on the search term
             filterCities();
         }
