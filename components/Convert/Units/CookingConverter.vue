@@ -67,9 +67,9 @@
                 <button
                     @click="copyToClipboard(toValue)"
                     class="btn btn-primary w-full flex items-center justify-center"
-                    :class="{ 'opacity-80': copied }"
+                    :class="{ 'opacity-80': appState.showToast }"
                 >
-                    <Icon :name="copied ? uiIcons.checkCircle : uiIcons.copy" class="h-5 w-5 mr-2" />
+                    <Icon :name="appState.showToast ? uiIcons.checkCircle : uiIcons.copy" class="h-5 w-5 mr-2" />
                     Copy Result
                 </button>
             </div>
@@ -88,6 +88,9 @@
 import { ref, watch, onMounted, computed } from 'vue';
 import { uiIcons } from '~/utils/appConstant';
 import { useUrlUpdate } from '~/composables/useUrlUpdate';
+import { useAppState } from '~/composables/states';
+
+const appState = useAppState();
 
 // Initialize URL handling
 const { updateUrlPath, getUnitsFromUrl } = useUrlUpdate();
@@ -129,7 +132,6 @@ const toUnit = ref('tbsp');
 const fromValue = ref('');
 const toValue = ref('');
 const selectedIngredient = ref('water');
-const copied = ref(false);
 
 // Determine if we need to show the ingredient selector
 const showIngredientSelector = computed(() => {
@@ -322,15 +324,9 @@ const swapUnits = () => {
 const copyToClipboard = async (text) => {
     if (!text) return;
 
-    try {
-        await navigator.clipboard.writeText(text);
-        copied.value = true;
-        setTimeout(() => {
-            copied.value = false;
-        }, 2000);
-    } catch (err) {
-        console.error('Failed to copy: ', err);
-    }
+    await navigator.clipboard.writeText(text);
+    appState.value.showToast = true;
+    setTimeout(() => (appState.value.showToast = false), 2000);
 };
 
 // Watch for changes in units and update conversion

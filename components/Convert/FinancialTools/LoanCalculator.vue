@@ -392,10 +392,6 @@
                         <Icon :name="uiIcons.copy" class="w-4 h-4" />
                         Copy Results
                     </button>
-                    <button class="btn btn-outline gap-2" @click="downloadPDF">
-                        <Icon :name="uiIcons.download" class="w-4 h-4" />
-                        Download PDF
-                    </button>
                     <button class="btn btn-outline gap-2" @click="resetCalculator">
                         <Icon :name="uiIcons.eraser" class="w-4 h-4" />
                         Reset
@@ -409,6 +405,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { uiIcons } from '~/utils/appConstant';
+import { useAppState } from '~/composables/states';
+
+const appState = useAppState();
 
 // Form inputs - Common
 const loanType = ref('mortgage'); // 'mortgage', 'auto', 'personal'
@@ -747,7 +746,7 @@ const validateInputs = () => {
     }
 };
 
-const copyResultsToClipboard = () => {
+const copyResultsToClipboard = async () => {
     let results = `
   Loan Type: ${loanType.value.charAt(0).toUpperCase() + loanType.value.slice(1)}
   Loan Amount: ${formatCurrency(loanAmount.value)}
@@ -791,16 +790,9 @@ const copyResultsToClipboard = () => {
   `;
     }
 
-    navigator.clipboard.writeText(results.trim());
-
-    // You could add a toast notification here
-    alert('Results copied to clipboard!');
-};
-
-// These would need actual implementation in a real application
-const downloadPDF = () => {
-    alert('PDF download functionality would be implemented here');
-    // In a real implementation, you would generate and download a PDF with the loan details
+    await navigator.clipboard.writeText(results.trim());
+    appState.value.showToast = true;
+    setTimeout(() => (appState.value.showToast = false), 2000);
 };
 
 const resetCalculator = () => {
