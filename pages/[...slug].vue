@@ -42,10 +42,11 @@
 </template>
 
 <script setup>
+import { NuxtLink } from '#components';
 import { onMounted, shallowRef, ref, computed, watch } from 'vue';
 import Skeleton from '~/components/Skeleton.vue';
 import { getConverterByCategory } from '~/components/Convert';
-import { unitConvertCategories, additionalConverterCategories, allConverterCategories } from '~/utils/unit';
+import { allConverterCategories } from '~/utils/unit';
 
 const isLoading = ref(true);
 

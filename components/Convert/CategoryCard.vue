@@ -56,7 +56,9 @@
 </template>
 
 <script setup>
+import { NuxtLink } from '#components';
 import { computed } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 
 const props = defineProps({
     category: {

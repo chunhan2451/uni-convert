@@ -51,6 +51,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { uiIcons } from '~/utils/appConstant';
 import BaseTextConverter from '../../BaseTextConverter.vue';
 import { dataConverters } from '~/utils/textDataConverters';
 import { useUrlUpdate } from '~/composables/useUrlUpdate';

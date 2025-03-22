@@ -37,6 +37,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { uiIcons } from '~/utils/appConstant';
 
 const props = defineProps({
     category: {

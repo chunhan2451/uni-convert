@@ -66,6 +66,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { unitConvertCategories, additionalConverterCategories } from '~/utils/unit';
+import { uiIcons } from '~/utils/appConstant';
 import CategoryCard from '~/components/Convert/CategoryCard.vue';
 import ToolCategoryCard from '~/components/Convert/ToolCategoryCard.vue';
 

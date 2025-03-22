@@ -126,6 +126,7 @@
 <script setup>
 // Reference: https://convertacolor.com/
 import { colorConversions } from '~/utils/color';
+import { uiIcons } from '~/utils/appConstant';
 import { useAppState } from '~/composables/states';
 
 const appState = useAppState();

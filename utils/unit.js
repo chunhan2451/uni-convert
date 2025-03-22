@@ -115,6 +115,15 @@ export const unitConvertCategories = [
         ],
     },
     {
+        id: 'fuel',
+        name: 'Fuel Efficiency',
+        units: [
+            { id: 'mpg', name: 'Miles per Gallon (MPG)' },
+            { id: 'kml', name: 'Kilometers per Liter (km/L)' },
+            { id: 'l100km', name: 'Liters per 100km (L/100km)' },
+        ],
+    },
+    {
         id: 'length',
         name: 'Length',
         units: [

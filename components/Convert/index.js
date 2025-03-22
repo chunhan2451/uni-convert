@@ -16,6 +16,7 @@ const converterComponents = {
     dataspeed: () => import('./Units/DataSpeedConverter.vue'),
     electrical: () => import('./Units/ElectricalConverter.vue'),
     energy: () => import('./Units/EnergyConverter.vue'),
+    fuel: () => import('./Units/FuelEfficiencyConverter.vue'),
     length: () => import('./Units/LengthConverter.vue'),
     pressure: () => import('./Units/PressureConverter.vue'),
     speed: () => import('./Units/SpeedConverter.vue'),

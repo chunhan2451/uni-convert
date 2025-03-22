@@ -108,3 +108,6 @@
         </section>
     </div>
 </template>
+<script setup>
+import { NuxtLink } from '#components';
+</script>

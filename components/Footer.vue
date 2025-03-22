@@ -39,3 +39,6 @@
         </div>
     </footer>
 </template>
+<script setup>
+import { NuxtLink } from '#components';
+</script>

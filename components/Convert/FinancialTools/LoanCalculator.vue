@@ -25,7 +25,7 @@
                         class="btn flex-1"
                         :class="loanType === 'auto' ? 'btn-primary' : 'btn-outline'"
                     >
-                        <Icon name="ph:car-bold" class="w-4 h-4 mr-2" />
+                        <Icon :name="uiIcons.car" class="w-4 h-4 mr-2" />
                         Auto Loan
                     </button>
                     <button
@@ -33,7 +33,7 @@
                         class="btn flex-1"
                         :class="loanType === 'personal' ? 'btn-primary' : 'btn-outline'"
                     >
-                        <Icon name="ph:wallet-bold" class="w-4 h-4 mr-2" />
+                        <Icon :name="uiIcons.wallet" class="w-4 h-4 mr-2" />
                         Personal Loan
                     </button>
                 </div>

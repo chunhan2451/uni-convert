@@ -55,6 +55,10 @@ export const uiIcons = {
     calculator: 'ph:calculator-bold',
     mortgage: 'ph:house-bold',
 
+    car: 'ph:car-bold',
+    wallet: 'ph:wallet-bold',
+    spinner: 'ph:spinner',
+
     // Add any category-specific icons here if needed
     categoryIcons: {
         angle: 'ph:triangle-bold',
@@ -65,6 +69,7 @@ export const uiIcons = {
         dataspeed: 'ph:wifi-high-bold',
         electrical: 'ph:lightning-bold',
         energy: 'ph:lightning-bold',
+        fuel: 'ph:gas-pump-bold',
         length: 'ph:ruler-bold',
         pressure: 'ph:gauge-bold',
         speed: 'ph:speedometer-bold',

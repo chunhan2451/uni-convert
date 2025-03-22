@@ -37,7 +37,7 @@
                     <h3 class="font-bold">Add City</h3>
                     <div class="flex items-center">
                         <div v-if="isLoading" class="mr-2">
-                            <Icon name="ph:spinner" class="h-5 w-5 animate-spin text-primary" />
+                            <Icon :name="uiIcons.spinner" class="h-5 w-5 animate-spin text-primary" />
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
             <!-- Empty State -->
             <div v-else class="bg-base-100 rounded-lg shadow-sm p-8 text-center">
                 <div v-if="isLoading">
-                    <Icon name="ph:spinner" class="h-16 w-16 mx-auto mb-4 text-primary animate-spin" />
+                    <Icon :name="uiIcons.spinner" class="h-16 w-16 mx-auto mb-4 text-primary animate-spin" />
                     <h3 class="text-lg font-medium mb-2">Loading time zone data...</h3>
                     <p class="text-zinc-600 mb-4">Please wait while we fetch timezone information</p>
                 </div>

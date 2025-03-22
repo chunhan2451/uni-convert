@@ -32,7 +32,7 @@
             <!-- Swap Button -->
             <div class="flex justify-center my-4">
                 <button class="btn btn-circle btn-outline" @click="swapUnits">
-                    <Icon name="ph:arrows-vertical-bold" class="h-6 w-6" />
+                    <Icon :name="uiIcons.transfer" class="h-6 w-6" />
                 </button>
             </div>
 
@@ -51,7 +51,7 @@
 
             <!-- Copy Result Button - Only shown when there's a result -->
             <button v-if="convertedValue" class="btn btn-primary w-full mt-4" @click="copyToClipboard(convertedValue)">
-                <Icon name="ph:copy-bold" class="h-5 w-5 mr-2" />
+                <Icon :name="uiIcons.copy" class="h-5 w-5 mr-2" />
                 Copy Result
             </button>
 

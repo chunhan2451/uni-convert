@@ -32,3 +32,7 @@
         </div>
     </nav>
 </template>
+<script setup>
+import { NuxtLink } from '#components';
+import { uiIcons } from '~/utils/appConstant';
+</script>
