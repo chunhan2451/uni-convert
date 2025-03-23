@@ -21,7 +21,6 @@
                         @input="convertFromValue"
                     />
                     <select v-model="fromUnit" class="select join-item bg-white w-2/5" @change="convertFromValue">
-                        <option disabled value="">Unit</option>
                         <option v-for="unit in units.filter((item) => item.id != toUnit)" :key="unit.id" :value="unit.id">
                             {{ unit.name }}
                         </option>
@@ -42,7 +41,6 @@
                 <div class="join w-full">
                     <input v-model="toValue" type="text" class="input join-item flex-1 bg-white" placeholder="Result" readonly />
                     <select v-model="toUnit" class="select join-item bg-white w-2/5" @change="convertFromValue">
-                        <option disabled value="">Unit</option>
                         <option v-for="unit in units.filter((item) => item.id != fromUnit)" :key="unit.id" :value="unit.id">
                             {{ unit.name }}
                         </option>
