@@ -25,7 +25,7 @@
             </div>
 
             <!-- Categories Section -->
-            <div v-if="filteredUnitCategories.length > 0 || filteredToolCategories.length > 0" class="mb-16">
+            <div v-if="filteredUnitCategories.length > 0 || filteredToolCategories.length > 0">
                 <!-- Unit conversion categories -->
                 <div v-if="filteredUnitCategories.length > 0" class="mb-12">
                     <div class="mb-6 flex items-center">
