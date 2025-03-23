@@ -11,48 +11,40 @@
         <!-- Height Section -->
         <div class="mb-4">
             <label class="block text-base-content text-sm font-medium mb-2">Height</label>
-            <div class="flex gap-2">
-                <div class="w-2/3">
-                    <input
-                        v-model="height"
-                        type="number"
-                        class="input input-bordered w-full"
-                        placeholder="Height"
-                        min="1"
-                        @input="calculateBMI"
-                    />
-                </div>
-                <div class="w-1/3">
-                    <select v-model="heightUnit" class="select select-bordered w-full" @change="calculateBMI">
-                        <option value="cm">Centimeters (cm)</option>
-                        <option value="m">Meters (m)</option>
-                        <option value="in">Inches (in)</option>
-                        <option value="ft">Feet (ft)</option>
-                    </select>
-                </div>
+            <div class="join w-full">
+                <input
+                    v-model="height"
+                    type="number"
+                    class="input input-bordered join-item flex-1"
+                    placeholder="Height"
+                    min="1"
+                    @input="calculateBMI"
+                />
+                <select v-model="heightUnit" class="select select-bordered join-item w-2/5" @change="calculateBMI">
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="m">Meters (m)</option>
+                    <option value="in">Inches (in)</option>
+                    <option value="ft">Feet (ft)</option>
+                </select>
             </div>
         </div>
 
         <!-- Weight Section -->
         <div class="mb-6">
             <label class="block text-base-content text-sm font-medium mb-2">Weight</label>
-            <div class="flex gap-2">
-                <div class="w-2/3">
-                    <input
-                        v-model="weight"
-                        type="number"
-                        class="input input-bordered w-full"
-                        placeholder="Weight"
-                        min="1"
-                        @input="calculateBMI"
-                    />
-                </div>
-                <div class="w-1/3">
-                    <select v-model="weightUnit" class="select select-bordered w-full" @change="calculateBMI">
-                        <option value="kg">Kilograms (kg)</option>
-                        <option value="lb">Pounds (lb)</option>
-                    </select>
-                </div>
+            <div class="join w-full">
+                <input
+                    v-model="weight"
+                    type="number"
+                    class="input input-bordered join-item flex-1"
+                    placeholder="Weight"
+                    min="1"
+                    @input="calculateBMI"
+                />
+                <select v-model="weightUnit" class="select select-bordered join-item w-2/5" @change="calculateBMI">
+                    <option value="kg">Kilograms (kg)</option>
+                    <option value="lb">Pounds (lb)</option>
+                </select>
             </div>
         </div>
 
@@ -65,7 +57,7 @@
                 </div>
                 <button
                     @click="copyToClipboard(`BMI: ${bmiResult.toFixed(1)} - ${getBMICategory(bmiResult)}`)"
-                    class="btn btn-sm"
+                    class="btn btn-sm btn-primary"
                 >
                     <Icon :name="uiIcons.copy" class="h-4 w-4 mr-1" />
                     Copy
