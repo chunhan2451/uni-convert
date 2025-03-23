@@ -155,8 +155,8 @@
         </div>
 
         <!-- Size Chart - Using details/summary instead of collapse for better compatibility -->
-        <details class="bg-base-200 rounded-lg p-1" open>
-            <summary class="p-3 font-medium cursor-pointer hover:bg-base-300 rounded-lg">
+        <details class="collapse collapse-arrow bg-base-200 rounded-lg p-1" open>
+            <summary class="font-medium cursor-pointer hover:bg-base-300 rounded-lg collapse-title">
                 {{ selectedGender === 'men' ? "Men's" : "Women's" }}
                 {{
                     activeTab === 'shoes'
@@ -169,7 +169,7 @@
                 }}
                 Size Chart
             </summary>
-            <div class="p-4 pt-2">
+            <div class="p-4 pt-2 collapse-content">
                 <div class="overflow-x-auto">
                     <table class="table table-zebra w-full">
                         <thead>

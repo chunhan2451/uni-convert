@@ -59,6 +59,9 @@ export const uiIcons = {
     wallet: 'ph:wallet-bold',
     spinner: 'ph:spinner',
 
+    // Health icons
+    heartPulse: 'ph:heartbeat-bold',
+
     // Add any category-specific icons here if needed
     categoryIcons: {
         angle: 'ph:triangle-bold',

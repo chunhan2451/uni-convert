@@ -62,6 +62,12 @@ const converterComponents = {
     mortgage: () => import('./FinancialTools/LoanCalculator.vue'),
     compound: () => import('./FinancialTools/CompoundInterestCalculator.vue'),
     'compound-interest': () => import('./FinancialTools/CompoundInterestCalculator.vue'),
+
+    // Health & Fitness tools
+    bmi: () => import('./HealthTools/BmiCalculator.vue'),
+    calories: () => import('./HealthTools/CaloriesConverter.vue'),
+    steps: () => import('./HealthTools/StepsConverter.vue'),
+    bloodsugar: () => import('./HealthTools/BloodSugarConverter.vue'),
 };
 
 // Helper function to get a converter component by category ID

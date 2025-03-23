@@ -99,7 +99,7 @@ export const unitConvertCategories = [
             { id: 'v', name: 'Voltage (V)', factor: 1 },
             { id: 'i', name: 'Current (A)', factor: 1 },
             { id: 'r', name: 'Resistance (Ω)', factor: 1 },
-            { id: 'p', name: 'Power (W)', factor: 1 }
+            { id: 'p', name: 'Power (W)', factor: 1 },
         ],
     },
     {
@@ -300,6 +300,18 @@ export const additionalConverterCategories = [
             { id: 'webp', name: 'WEBP' },
             { id: 'heic', name: 'HEIC' },
         ],
+    },
+    {
+        id: 'health-fitness',
+        name: 'Health & Fitness',
+        description: 'Health and fitness related tools and calculators',
+        tools: [
+            { id: 'bmi', name: 'BMI Calculator', description: 'Calculate Body Mass Index from height and weight' },
+            { id: 'calories', name: 'Calories Burned Calculator', description: 'Convert between calories and exercise duration' },
+            { id: 'steps', name: 'Steps Converter', description: 'Convert between steps, miles, and kilometers' },
+            { id: 'bloodsugar', name: 'Blood Sugar Converter', description: 'Convert between mg/dL and mmol/L' },
+        ],
+        icon: uiIcons.heartPulse,
     },
 ];
 
