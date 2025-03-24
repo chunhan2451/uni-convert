@@ -4,8 +4,8 @@
         <div class="card-body p-6">
             <!-- Category header with icon -->
             <div class="flex items-center gap-3 mb-2">
-                <div class="p-2 bg-primary/10 rounded-lg">
-                    <Icon :name="category.icon || uiIcons.tools" class="text-primary h-5 w-5" />
+                <div class="p-2 bg-primary/10 rounded-lg flex"">
+                    <Icon :name="category.icon || uiIcons.tools" class="text-primary h-5 w-5 text-2xl" />
                 </div>
                 <h3 class="text-xl font-medium">{{ category.name }}</h3>
             </div>
