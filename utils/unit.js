@@ -291,6 +291,11 @@ export const additionalConverterCategories = [
                 name: 'Image Format Converter',
                 description: 'Convert between JPG, PNG, WebP, SVG, and other image formats',
             },
+            {
+                id: 'image-compressor',
+                name: 'Image Compressor',
+                description: 'Compress images to reduce their size for easier sharing',
+            },
         ],
         icon: uiIcons.png,
         units: [

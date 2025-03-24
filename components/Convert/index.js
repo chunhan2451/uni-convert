@@ -56,6 +56,7 @@ const converterComponents = {
     // Image converters
     images: () => import('./TextDataTools/Images/ImageConverter.vue'),
     'image-format': () => import('./TextDataTools/Images/ImageConverter.vue'),
+    'image-compressor': () => import('./TextDataTools/Images/ImageCompressor.vue'),
 
     // Financial tools
     loan: () => import('./FinancialTools/LoanCalculator.vue'),
