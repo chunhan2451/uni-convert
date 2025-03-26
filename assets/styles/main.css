@@ -1,4 +1,21 @@
-@import "tailwindcss";
+/* assets/styles/main.css */
+@import './fonts.css';
+
+@import 'tailwindcss';
 @plugin "daisyui" {
     themes: emerald --default;
+}
+
+/* Apply Inter font to all text */
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Optimize font display */
+@layer base {
+    html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
 }

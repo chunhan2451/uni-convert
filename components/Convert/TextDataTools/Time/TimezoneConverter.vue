@@ -22,7 +22,7 @@
                             <p class="text-zinc-500 text-sm">Today, +0HRS</p>
                         </div>
                         <div class="text-right">
-                            <div class="text-5xl font-bold font-mono">{{ formatTime(localTime) }}</div>
+                            <div class="text-5xl font-bold">{{ formatTime(localTime) }}</div>
                             <div class="text-xs text-zinc-500">
                                 <span class="ml-1">{{ localTimezoneOffsetFormatted }}</span>
                             </div>
@@ -133,7 +133,7 @@
                             <p class="text-zinc-500 text-sm">Today, {{ getTimeOffsetLabel(city.offset) }}</p>
                         </div>
                         <div class="text-right">
-                            <div class="text-5xl font-bold font-mono">{{ formatTime(getCityTime(city)) }}</div>
+                            <div class="text-5xl font-bold">{{ formatTime(getCityTime(city)) }}</div>
                             <div class="text-xs text-zinc-500">{{ formatTimezoneOffset(city.offset) }}</div>
                         </div>
                     </div>

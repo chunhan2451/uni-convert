@@ -24,7 +24,7 @@
                 </div>
                 <textarea
                     v-model="jsonInput"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     placeholder="Paste your JSON here..."
                 ></textarea>
                 <div v-if="jsonError" class="text-error text-sm mt-1">{{ jsonError }}</div>
@@ -68,7 +68,7 @@
                 </div>
                 <textarea
                     v-model="jsonOutput"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     readonly
                 ></textarea>
             </div>

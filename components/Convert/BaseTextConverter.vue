@@ -24,7 +24,7 @@
                     <textarea
                         v-model="inputText"
                         :placeholder="inputPlaceholder"
-                        class="textarea textarea-bordered flex-grow min-h-40 font-mono text-sm"
+                        class="textarea textarea-bordered flex-grow min-h-40 text-sm"
                         :class="{ 'border-error': inputError }"
                     ></textarea>
                     <div v-if="inputError" class="text-error text-sm mt-1">{{ inputError }}</div>
@@ -44,7 +44,7 @@
                     <textarea
                         v-model="outputText"
                         :placeholder="outputPlaceholder"
-                        class="textarea textarea-bordered flex-grow min-h-40 font-mono text-sm"
+                        class="textarea textarea-bordered flex-grow min-h-40 text-sm"
                         readonly
                     ></textarea>
                     <div v-if="outputInfo" class="text-info text-sm mt-1">{{ outputInfo }}</div>

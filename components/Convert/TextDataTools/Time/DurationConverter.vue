@@ -92,7 +92,7 @@
                             <Icon :name="uiIcons.copy" class="mr-1" />Copy
                         </button>
                     </div>
-                    <div class="p-4 bg-base-200 rounded-lg min-h-10 text-xl font-mono">
+                    <div class="p-4 bg-base-200 rounded-lg min-h-10 text-xl">
                         {{ seconds || 'Enter duration to convert' }}
                     </div>
                 </div>

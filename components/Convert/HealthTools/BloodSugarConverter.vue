@@ -76,8 +76,8 @@
         <!-- <div class="mt-2 text-base-content p-4 bg-base-200 rounded-xl">
             <h3 class="font-semibold mb-2">Conversion Formula:</h3>
             <ul class="text-sm space-y-1">
-                <li>mg/dL to mmol/L: <span class="font-mono">divide by 18</span></li>
-                <li>mmol/L to mg/dL: <span class="font-mono">multiply by 18</span></li>
+                <li>mg/dL to mmol/L: <span>divide by 18</span></li>
+                <li>mmol/L to mg/dL: <span>multiply by 18</span></li>
             </ul>
         </div> -->
 

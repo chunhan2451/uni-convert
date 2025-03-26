@@ -24,7 +24,7 @@
                 </div>
                 <textarea
                     v-model="inputText"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     placeholder="Enter text to convert..."
                 ></textarea>
             </div>
@@ -52,7 +52,7 @@
                 </div>
                 <textarea
                     v-model="outputText"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     placeholder="Converted text will appear here..."
                     readonly
                 ></textarea>
@@ -73,37 +73,37 @@
                         <tbody>
                             <tr>
                                 <td>lowercase</td>
-                                <td class="font-mono">the quick brown fox</td>
+                                <td>the quick brown fox</td>
                                 <td>General text, documentation</td>
                             </tr>
                             <tr>
                                 <td>UPPERCASE</td>
-                                <td class="font-mono">THE QUICK BROWN FOX</td>
+                                <td>THE QUICK BROWN FOX</td>
                                 <td>Emphasis, headings, constants</td>
                             </tr>
                             <tr>
                                 <td>Title Case</td>
-                                <td class="font-mono">The Quick Brown Fox</td>
+                                <td>The Quick Brown Fox</td>
                                 <td>Titles, headings, names</td>
                             </tr>
                             <tr>
                                 <td>camelCase</td>
-                                <td class="font-mono">theQuickBrownFox</td>
+                                <td>theQuickBrownFox</td>
                                 <td>JavaScript variables, functions</td>
                             </tr>
                             <tr>
                                 <td>PascalCase</td>
-                                <td class="font-mono">TheQuickBrownFox</td>
+                                <td>TheQuickBrownFox</td>
                                 <td>Classes, React components</td>
                             </tr>
                             <tr>
                                 <td>snake_case</td>
-                                <td class="font-mono">the_quick_brown_fox</td>
+                                <td>the_quick_brown_fox</td>
                                 <td>Python variables, SQL</td>
                             </tr>
                             <tr>
                                 <td>kebab-case</td>
-                                <td class="font-mono">the-quick-brown-fox</td>
+                                <td>the-quick-brown-fox</td>
                                 <td>URLs, CSS classes, HTML attributes</td>
                             </tr>
                         </tbody>

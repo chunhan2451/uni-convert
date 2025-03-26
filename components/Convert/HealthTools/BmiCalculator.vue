@@ -120,7 +120,7 @@
                 BMI (Body Mass Index) is a measure of body fat based on height and weight that applies to adult men and women.
             </p>
             <p class="mb-2">BMI Formula:</p>
-            <p class="bg-base-300 p-2 rounded mb-3 font-mono">BMI = weight(kg) / [height(m)]²</p>
+            <p class="bg-base-300 p-2 rounded mb-3">BMI = weight(kg) / [height(m)]²</p>
             <p class="text-base-content/70">
                 Note: BMI is a general guideline and doesn't account for factors like muscle mass, bone density, or overall body
                 composition.

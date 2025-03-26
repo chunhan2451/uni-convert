@@ -59,7 +59,7 @@
                 </div>
                 <textarea
                     v-model="inputText"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     :placeholder="mode === 'csv-to-json' ? 'Paste your CSV here...' : 'Paste your JSON array here...'"
                 ></textarea>
                 <div v-if="inputError" class="text-error text-sm mt-1">{{ inputError }}</div>
@@ -85,7 +85,7 @@
                 </div>
                 <textarea
                     v-model="outputText"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     :placeholder="mode === 'csv-to-json' ? 'JSON output will appear here...' : 'CSV output will appear here...'"
                     readonly
                 ></textarea>

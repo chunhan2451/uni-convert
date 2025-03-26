@@ -17,7 +17,7 @@
                     <input
                         v-model="inputValue"
                         :placeholder="getInputPlaceholder(fromBase)"
-                        class="input input-bordered rounded-r-none w-full font-mono"
+                        class="input input-bordered rounded-r-none w-full"
                         :class="{ 'border-error': inputError }"
                         @input="onInputChange"
                     />
@@ -48,7 +48,7 @@
                     <input
                         :value="currentResult"
                         :placeholder="getOutputPlaceholder(toBase)"
-                        class="input input-bordered rounded-r-none w-full font-mono"
+                        class="input input-bordered rounded-r-none w-full"
                         readonly
                     />
                     <select
@@ -86,25 +86,25 @@
                                 <td>Binary</td>
                                 <td>Base-2 number system</td>
                                 <td>0, 1</td>
-                                <td class="font-mono">1101 = 13₁₀</td>
+                                <td>1101 = 13₁₀</td>
                             </tr>
                             <tr>
                                 <td>Octal</td>
                                 <td>Base-8 number system</td>
                                 <td>0-7</td>
-                                <td class="font-mono">15 = 13₁₀</td>
+                                <td>15 = 13₁₀</td>
                             </tr>
                             <tr>
                                 <td>Decimal</td>
                                 <td>Base-10 number system</td>
                                 <td>0-9</td>
-                                <td class="font-mono">13 = 13₁₀</td>
+                                <td>13 = 13₁₀</td>
                             </tr>
                             <tr>
                                 <td>Hexadecimal</td>
                                 <td>Base-16 number system</td>
                                 <td>0-9, A-F</td>
-                                <td class="font-mono">D = 13₁₀</td>
+                                <td>D = 13₁₀</td>
                             </tr>
                         </tbody>
                     </table>

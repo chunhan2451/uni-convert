@@ -37,7 +37,7 @@
                 </div>
                 <textarea
                     v-model="inputText"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     placeholder="Enter text with multiple lines..."
                 ></textarea>
                 <div class="flex justify-between mt-1">
@@ -112,7 +112,7 @@
                 </div>
                 <textarea
                     v-model="outputText"
-                    class="textarea textarea-bordered w-full min-h-40 font-mono text-sm"
+                    class="textarea textarea-bordered w-full min-h-40 text-sm"
                     placeholder="Result will appear here..."
                     readonly
                 ></textarea>
