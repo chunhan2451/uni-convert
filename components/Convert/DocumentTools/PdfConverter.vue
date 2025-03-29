@@ -4,7 +4,7 @@
         <div class="max-w-3xl mx-auto">
             <div class="justify-center">
                 <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
-                    <Icon :name="uiIcons.textBox" class="text-primary h-6 w-6 text-2xl" />
+                    <Icon :name="uiIcons.document" class="text-primary h-6 w-6 text-2xl" />
                 </div>
                 <h1 class="text-3xl font-bold mb-2 text-center">{{ title }}</h1>
             </div>
@@ -28,13 +28,28 @@
                 />
 
                 <div v-if="!selectedFiles.length">
-                    <Icon :name="uiIcons.textBox" class="w-16 h-16 text-base-content/30 text-2xl mx-auto mb-4" />
-                    <p class="text-lg mb-2">Drag and drop {{ filePlaceholderText }}</p>
+                    <div class="relative inline-block mb-4 sm:mb-5">
+                        <div
+                            class="absolute -right-3 -top-3 sm:-right-4 sm:-top-4 bg-primary/90 text-white rounded-full p-1.5 sm:p-2 shadow-md animate-pulse flex"
+                        >
+                            <Icon :name="uiIcons.arrowDown" class="h-4 w-4 sm:h-5 sm:w-5" />
+                        </div>
+                        <div class="bg-primary/10 rounded-full p-4 sm:p-6 flex">
+                            <Icon
+                                :name="uiIcons.document"
+                                class="h-14 w-14 sm:h-20 sm:w-20 text-primary/90 text-xl sm:text-2xl"
+                            />
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-medium mb-2 sm:mb-4">Drop {{ filePlaceholderText }} Here!</h3>
                     <p class="text-base-content/50 mb-4">- or -</p>
                     <button class="btn btn-primary" @click="$refs.fileInput.click()">Select {{ filePlaceholderText }}</button>
-                    <p class="text-sm text-base-content/50 mt-4">
-                        {{ isMultipleOperation ? 'Select multiple files to merge' : 'Max file size: 10MB' }}
-                    </p>
+
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-5 sm:mt-8 max-w-md mx-auto">
+                        <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">
+                            {{ isMultipleOperation ? 'Select multiple files to merge' : 'Max file size: 10MB' }}
+                        </div>
+                    </div>
                 </div>
 
                 <div v-else>
@@ -949,7 +964,6 @@ const getInfoContent = () => {
                     <li>Maintain formatting including fonts, paragraphs, and images</li>
                     <li>Processed entirely in your browser - files are never uploaded to any server</li>
                 </ul>
-                <p class="mt-2 text-xs text-base-content/70">Note: Browser-based conversion has limitations. For best results with complex documents, consider using a dedicated converter.</p>
             `;
         case 'image-to-pdf':
             return `
@@ -970,7 +984,6 @@ const getInfoContent = () => {
                     <li>Process files quickly and efficiently</li>
                     <li>Everything is processed in your browser - files are never uploaded to any server</li>
                 </ul>
-                <p class="mt-2 text-xs text-base-content/70">Note: Browser-based tools have limitations. For best results with complex documents, consider using dedicated software.</p>
             `;
     }
 };

@@ -50,7 +50,9 @@
                 />
 
                 <div class="relative inline-block mb-4 sm:mb-5">
-                    <div class="absolute -right-3 -top-3 sm:-right-4 sm:-top-4 bg-primary/90 text-white rounded-full p-1.5 sm:p-2 shadow-md animate-pulse flex">
+                    <div
+                        class="absolute -right-3 -top-3 sm:-right-4 sm:-top-4 bg-primary/90 text-white rounded-full p-1.5 sm:p-2 shadow-md animate-pulse flex"
+                    >
                         <Icon :name="uiIcons.arrowDown" class="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
                     <div class="bg-primary/10 rounded-full p-4 sm:p-6 flex">
@@ -59,10 +61,14 @@
                 </div>
 
                 <h3 class="text-xl sm:text-2xl font-medium mb-2 sm:mb-4">Drop Images Here!</h3>
+                <p class="text-base-content/50 mb-4">- or -</p>
+                <button class="btn btn-primary" >Select Images</button>
 
                 <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-5 sm:mt-8 max-w-md mx-auto">
-                    <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">Up to {{ MAX_FILES }} images</div>
-                    <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">Max 10MB per file</div>
+                    <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">
+                        Up to {{ MAX_FILES }} images
+                    </div>
+                    <!-- <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">Max 10MB per file</div> -->
                 </div>
             </div>
 
@@ -76,7 +82,11 @@
                                 <Icon :name="uiIcons.checkCircle" class="h-6 w-6 sm:h-7 sm:w-7 text-success mr-2 sm:mr-3" />
                                 <h3 class="font-semibold text-lg sm:text-xl">Compression Results</h3>
                             </div>
-                            <button @click="downloadAllFiles" class="btn btn-primary btn-sm sm:btn-md gap-1 sm:gap-2 w-full sm:w-auto" :disabled="isProcessing">
+                            <button
+                                @click="downloadAllFiles"
+                                class="btn btn-primary btn-sm sm:btn-md gap-1 sm:gap-2 w-full sm:w-auto"
+                                :disabled="isProcessing"
+                            >
                                 <Icon :name="isProcessing ? uiIcons.spinner : uiIcons.download" class="h-4 w-4 sm:h-5 sm:w-5" />
                                 Download All
                             </button>
@@ -104,7 +114,9 @@
                 <!-- File List Section -->
                 <div class="flex justify-between items-center mb-3 sm:mb-4">
                     <h2 class="text-lg sm:text-xl font-bold flex items-center">
-                        <span class="bg-primary/10 rounded-full h-6 w-6 sm:h-8 sm:w-8 inline-flex items-center justify-center mr-2">
+                        <span
+                            class="bg-primary/10 rounded-full h-6 w-6 sm:h-8 sm:w-8 inline-flex items-center justify-center mr-2"
+                        >
                             <span class="text-primary font-bold text-sm sm:text-base">{{ fileList.length }}</span>
                         </span>
                         Images
@@ -133,7 +145,11 @@
                                         class="h-full w-full object-cover"
                                         alt="Image preview"
                                     />
-                                    <Icon v-else :name="getFileIcon(file.type)" class="h-full w-full p-2 sm:p-3 text-primary/60" />
+                                    <Icon
+                                        v-else
+                                        :name="getFileIcon(file.type)"
+                                        class="h-full w-full p-2 sm:p-3 text-primary/60"
+                                    />
                                 </div>
 
                                 <!-- Status indicator -->
@@ -161,13 +177,20 @@
                             <div class="flex-grow min-w-0">
                                 <div class="flex items-start justify-between">
                                     <div>
-                                        <p class="font-medium truncate text-sm sm:text-base">{{ file.name }}</p>
+                                        <p class="font-medium truncate text-sm sm:text-base whitespace-pre-wrap">
+                                            {{ file.name }}
+                                        </p>
                                         <div class="flex flex-wrap items-center gap-1 sm:gap-2 mt-0.5 sm:mt-1">
-                                            <span class="text-xs sm:text-sm text-base-content/70">{{ formatFileSize(file.size) }}</span>
+                                            <span class="text-xs sm:text-sm text-base-content/70">{{
+                                                formatFileSize(file.size)
+                                            }}</span>
 
                                             <!-- Compression results info -->
                                             <template v-if="file.status === 'compressed'">
-                                                <Icon :name="uiIcons.arrowRight" class="h-3 w-3 sm:h-4 sm:w-4 text-base-content/40" />
+                                                <Icon
+                                                    :name="uiIcons.arrowRight"
+                                                    class="h-3 w-3 sm:h-4 sm:w-4 text-base-content/40"
+                                                />
                                                 <span class="text-xs sm:text-sm">{{ formatFileSize(file.compressedSize) }}</span>
                                                 <span class="text-xs px-1.5 py-0.5 rounded-full bg-primary/20 text-primary">
                                                     {{ file.compressionRate }}%
@@ -208,7 +231,10 @@
                                             :disabled="isProcessing"
                                             title="Remove image"
                                         >
-                                            <Icon :name="uiIcons.close" class="h-3.5 w-3.5 sm:h-5 sm:w-5 text-base hover:text-error" />
+                                            <Icon
+                                                :name="uiIcons.close"
+                                                class="h-3.5 w-3.5 sm:h-5 sm:w-5 text-base hover:text-error"
+                                            />
                                         </button>
                                     </div>
                                 </div>
@@ -272,12 +298,12 @@ const handleFileSelect = (event) => {
         }
 
         // Filter out files larger than 10MB
-        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
-        const validSizeFiles = imageFiles.filter(file => {
-            if (file.size > MAX_FILE_SIZE) {
-                showToast(`"${file.name}" exceeds 10MB limit`, 'error');
-                return false;
-            }
+        // const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+        const validSizeFiles = imageFiles.filter((file) => {
+            // if (file.size > MAX_FILE_SIZE) {
+            //     showToast(`"${file.name}" exceeds 10MB limit`, 'error');
+            //     return false;
+            // }
             return true;
         });
 
@@ -301,12 +327,12 @@ const handleFileDrop = (event) => {
     }
 
     // Filter out files larger than 10MB
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
-    const validSizeFiles = droppedFiles.filter(file => {
-        if (file.size > MAX_FILE_SIZE) {
-            showToast(`"${file.name}" exceeds 10MB limit`, 'error');
-            return false;
-        }
+    // const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+    const validSizeFiles = droppedFiles.filter((file) => {
+        // if (file.size > MAX_FILE_SIZE) {
+        //     showToast(`"${file.name}" exceeds 10MB limit`, 'error');
+        //     return false;
+        // }
         return true;
     });
 
@@ -487,12 +513,12 @@ const compressImage = async (file) => {
 
 // Get appropriate icon for file type
 const getFileIcon = (fileType) => {
-  if (fileType.includes('image/jpeg') || fileType.includes('image/jpg')) return uiIcons.png;
-  if (fileType.includes('image/png')) return uiIcons.svg;
-  if (fileType.includes('image/gif')) return uiIcons.png;
-  if (fileType.includes('image/webp')) return uiIcons.png;
-  if (fileType.includes('image/svg')) return uiIcons.svg;
-  return uiIcons.png; // Default for images
+    if (fileType.includes('image/jpeg') || fileType.includes('image/jpg')) return uiIcons.png;
+    if (fileType.includes('image/png')) return uiIcons.svg;
+    if (fileType.includes('image/gif')) return uiIcons.png;
+    if (fileType.includes('image/webp')) return uiIcons.png;
+    if (fileType.includes('image/svg')) return uiIcons.svg;
+    return uiIcons.png; // Default for images
 };
 
 // Update file status and properties

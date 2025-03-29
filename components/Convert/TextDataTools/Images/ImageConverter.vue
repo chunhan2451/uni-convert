@@ -1,124 +1,162 @@
 <!-- components/Convert/TextDataTools/Images/ImageConverter.vue -->
 <template>
-    <div class="container mx-auto p-4">
-        <div class="max-w-3xl mx-auto">
-            <div class="card-body">
-                <div class="justify-center text-center">
-                    <div class="p-2 bg-primary/10 rounded-lg flex mb-3 justify-self-center">
-                        <Icon :name="uiIcons.png" class="text-primary h-6 w-6 text-2xl" />
+    <div class="container mx-auto p-2 sm:p-4">
+        <div class="max-w-xl mx-auto">
+            <!-- Dynamic Header that changes based on state -->
+            <div class="text-center mb-6 sm:mb-8">
+                <div class="flex justify-center mb-3 sm:mb-4">
+                    <div class="relative">
+                        <div class="p-2 bg-primary/10 rounded-lg flex justify-self-center">
+                            <Icon :name="uiIcons.png" class="text-primary h-5 w-5 sm:h-6 sm:w-6 text-xl sm:text-2xl" />
+                        </div>
+                        <div
+                            v-if="convertedImageUrl"
+                            class="absolute -top-2 -right-2 bg-success rounded-full h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center border-2 border-white"
+                        >
+                            <Icon :name="uiIcons.checkCircle" class="text-white h-3 w-3 sm:h-4 sm:w-4" />
+                        </div>
                     </div>
-                    <h1 class="text-3xl font-bold mb-2 text-center">Image Format Converter</h1>
-                    <p class="text-base-content/70 mb-4">Convert your images between different formats (JPG, PNG, WebP, SVG)</p>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2 text-center">
+                    {{ convertedImageUrl ? 'Conversion Complete!' : 'Image Format Converter' }}
+                </h1>
+                <p class="text-sm sm:text-base text-base-content/70">
+                    {{
+                        convertedImageUrl
+                            ? `Your image has been converted to ${targetFormat.toUpperCase()}`
+                            : 'Convert between JPG, PNG, WebP, and SVG formats'
+                    }}
+                </p>
+            </div>
+
+            <!-- Main Content: Upload Area (Only for File Upload) -->
+
+            <!-- File Actions (Outside Upload Area) -->
+            <div v-if="selectedFile && !convertedImageUrl" class="mb-4 flex justify-end">
+                <button class="btn btn-ghost btn-sm" @click="clearFile">
+                    <Icon :name="uiIcons.close" class="w-5 h-5 mr-1 text-lg" />
+                    Remove Image
+                </button>
+            </div>
+            <div
+                class="border-2 border-dashed border-base-300 rounded-lg p-6 sm:p-10 mb-6 sm:mb-10 text-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+                @click="$refs.fileInput.click()"
+                @dragover.prevent="isDragging = true"
+                @dragleave.prevent="isDragging = false"
+                @drop.prevent="handleFileDrop"
+                :class="{ 'border-primary bg-primary/5 scale-[1.01]': isDragging }"
+            >
+                <input
+                    ref="fileInput"
+                    type="file"
+                    class="hidden"
+                    @change="handleFileSelect"
+                    accept=".jpg,.jpeg,.png,.webp,.avif,.svg,image/jpeg,image/png,image/webp,image/avif,image/svg+xml"
+                />
+
+                <div v-if="!selectedFile">
+                    <div class="relative inline-block mb-4 sm:mb-5">
+                        <div
+                            class="absolute -right-3 -top-3 sm:-right-4 sm:-top-4 bg-primary/90 text-white rounded-full p-1.5 sm:p-2 shadow-md animate-pulse flex"
+                        >
+                            <Icon :name="uiIcons.arrowDown" class="h-4 w-4 sm:h-5 sm:w-5" />
+                        </div>
+                        <div class="bg-primary/10 rounded-full p-4 sm:p-6 flex">
+                            <Icon :name="uiIcons.png" class="h-14 w-14 sm:h-20 sm:w-20 text-primary/90 text-xl sm:text-2xl" />
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl sm:text-2xl font-medium mb-2 sm:mb-4">Drop Image Here!</h3>
+                    <p class="text-base-content/50 mb-4">- or -</p>
+                    <button class="btn btn-primary">Select Image</button>
+
+                    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-5 sm:mt-8 max-w-md mx-auto">
+                        <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">
+                            Supports JPG, PNG, WebP, SVG
+                        </div>
+                        <!-- <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">Max 10MB</div> -->
+                    </div>
                 </div>
 
-                <!-- File Upload Area -->
-                <div
-                    class="border-2 border-dashed border-base-300 rounded-lg p-8 text-center mb-4 transition-colors"
-                    :class="{ 'border-primary bg-primary/5': isDragging }"
-                    @dragover.prevent="isDragging = true"
-                    @dragleave.prevent="isDragging = false"
-                    @drop.prevent="handleFileDrop"
-                >
-                    <input ref="fileInput" type="file" class="hidden" accept="image/*" @change="handleFileSelect" />
-
-                    <div v-if="!selectedFile">
-                        <Icon :name="uiIcons.download" class="w-12 h-12 text-base-content/30 mx-auto mb-4" />
-                        <p class="text-lg mb-2">Drag and drop an image here</p>
-                        <p class="text-base-content/50 mb-4">- or -</p>
-                        <button class="btn btn-primary" @click="$refs.fileInput.click()">Select Image</button>
-                        <p class="text-sm text-base-content/50 mt-4">Supported formats: JPG, PNG, WebP, SVG</p>
-                    </div>
-
-                    <div v-else class="text-left">
-                        <div class="flex items-center mb-4">
-                            <div class="w-16 h-16 mr-4 rounded-lg overflow-hidden bg-base-200 flex items-center justify-center">
-                                <img
-                                    v-if="previewUrl"
-                                    :src="previewUrl"
-                                    class="max-w-full max-h-full object-contain"
-                                    alt="Preview"
-                                />
-                                <Icon v-else :name="uiIcons.png" class="w-8 h-8 text-base-content/30" />
+                <div v-else>
+                    <div class="flex items-center">
+                        <div class="w-16 h-16 mr-4 rounded-lg overflow-hidden bg-base-200 flex items-center justify-center">
+                            <img v-if="previewUrl" :src="previewUrl" class="max-w-full max-h-full object-contain" alt="Preview" />
+                            <Icon v-else :name="uiIcons.png" class="w-8 h-8 text-base-content/30" />
+                        </div>
+                        <div class="flex-1 text-left">
+                            <div class="font-medium truncate whitespace-pre-wrap">{{ selectedFile.name }}</div>
+                            <div class="text-sm text-base-content/70">
+                                {{ getFileSize(selectedFile.size) }} · {{ getFileType(selectedFile.type) }}
                             </div>
-                            <div class="flex-1">
-                                <div class="font-medium truncate">{{ selectedFile.name }}</div>
-                                <div class="text-sm text-base-content/70">
-                                    {{ getFileSize(selectedFile.size) }} · {{ getFileType(selectedFile.type) }}
-                                </div>
-                            </div>
-                            <button class="btn btn-ghost btn-sm" @click="clearFile">
-                                <Icon :name="uiIcons.close" class="w-5 h-5 text-lg" />
-                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Conversion Options -->
-                <div v-if="selectedFile" class="mb-6">
-                    <div class="mb-4">
-                        <label class="font-medium mb-2 block">Convert to:</label>
-                        <div class="flex flex-wrap gap-2">
-                            <button
-                                v-for="format in availableFormats"
-                                :key="format.id"
-                                class="btn"
-                                :class="targetFormat === format.id ? 'btn-primary' : 'btn-outline'"
-                                @click="targetFormat = format.id"
-                                :disabled="getCurrentFormat() === format.id"
-                            >
-                                {{ format.name }}
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="font-medium mb-2 block">Quality:</label>
-                        <div class="flex items-center gap-4">
-                            <input
-                                v-model="quality"
-                                type="range"
-                                min="10"
-                                max="100"
-                                step="5"
-                                class="range range-primary"
-                                :disabled="targetFormat === 'svg'"
-                            />
-                            <span class="text-base-content/70 w-12 text-center">{{ quality }}%</span>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-primary w-full mt-4" @click="convertImage" :disabled="!canConvert || isConverting">
-                        <Icon v-if="isConverting" :name="uiIcons.refresh" class="animate-spin w-5 h-5 mr-2" />
-                        <Icon v-else :name="uiIcons.transfer" class="w-5 h-5 mr-2" />
-                        {{ isConverting ? 'Converting...' : 'Convert Image' }}
-                    </button>
-                </div>
-
-                <!-- Conversion Result -->
-                <div v-if="convertedImageUrl" class="bg-base-200 p-4 rounded-lg">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-medium">Converted Image</h3>
-                        <div class="text-sm text-base-content/70">
-                            {{ getFileSize(convertedSize) }}
-                        </div>
-                    </div>
-
-                    <div class="bg-base-100 p-2 rounded-lg mb-4 flex justify-center">
-                        <img :src="convertedImageUrl" class="max-w-full max-h-64 object-contain rounded" alt="Converted image" />
-                    </div>
-
-                    <div class="flex gap-2">
-                        <button class="btn btn-primary flex-1" @click="downloadImage">
-                            <Icon :name="uiIcons.download" class="w-5 h-5 mr-2" />
-                            Download
+            <!-- Conversion Options -->
+            <div v-if="selectedFile && !convertedImageUrl" class="mb-6">
+                <div class="mb-4">
+                    <label class="font-medium mb-2 block">Convert to:</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button
+                            v-for="format in availableFormats"
+                            :key="format.id"
+                            class="btn"
+                            :class="targetFormat === format.id ? 'btn-primary' : 'btn-outline'"
+                            @click="targetFormat = format.id"
+                            :disabled="getCurrentFormat() === format.id"
+                        >
+                            {{ format.name }}
                         </button>
                     </div>
                 </div>
 
-                <!-- Info Alert -->
-                <div class="alert alert-info mt-6 text-sm">
-                    <Icon :name="uiIcons.info" class="w-5 h-5" />
-                    <div>All conversion happens in your browser - your images are never uploaded to any server.</div>
+                <div class="mb-4">
+                    <label class="font-medium mb-2 block">Quality:</label>
+                    <div class="flex items-center gap-4">
+                        <input
+                            v-model="quality"
+                            type="range"
+                            min="10"
+                            max="100"
+                            step="5"
+                            class="range range-primary"
+                            :disabled="targetFormat === 'svg'"
+                        />
+                        <span class="text-base-content/70 w-12 text-center">{{ quality }}%</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-full mt-4" @click="convertImage" :disabled="!canConvert || isConverting">
+                    <Icon v-if="isConverting" :name="uiIcons.refresh" class="animate-spin w-5 h-5 mr-2" />
+                    <Icon v-else :name="uiIcons.transfer" class="w-5 h-5 mr-2" />
+                    {{ isConverting ? 'Converting...' : 'Convert Image' }}
+                </button>
+            </div>
+
+            <!-- Conversion Result -->
+            <div v-if="convertedImageUrl" class="bg-base-200 p-4 rounded-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-medium">Converted Image</h3>
+                    <div class="text-sm text-base-content/70">
+                        {{ getFileSize(convertedSize) }}
+                    </div>
+                </div>
+
+                <div class="bg-base-100 p-2 rounded-lg mb-4 flex justify-center">
+                    <img :src="convertedImageUrl" class="max-w-full max-h-64 object-contain rounded" alt="Converted image" />
+                </div>
+
+                <div class="flex gap-2">
+                    <button class="btn btn-primary flex-1" @click="downloadImage">
+                        <Icon :name="uiIcons.download" class="w-5 h-5 mr-2" />
+                        Download
+                    </button>
+                    <button class="btn btn-outline flex-1" @click="convertNew">
+                        <Icon :name="uiIcons.refresh" class="w-5 h-5 mr-2" />
+                        Convert New Image
+                    </button>
                 </div>
             </div>
         </div>
@@ -171,6 +209,13 @@ const handleFileDrop = (event) => {
 
 // Process the selected file
 const processFile = (file) => {
+    // Check file size (max 10MB)
+    // const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    // if (file.size > MAX_FILE_SIZE) {
+    //     alert('File is too large. Maximum size is 10MB.');
+    //     return;
+    // }
+
     selectedFile.value = file;
 
     // Create preview URL
@@ -428,6 +473,21 @@ const downloadImage = () => {
     a.href = convertedImageUrl.value;
     a.download = newFileName;
     a.click();
+};
+
+// Reset for new conversion
+const convertNew = () => {
+    if (convertedImageUrl.value) {
+        URL.revokeObjectURL(convertedImageUrl.value);
+    }
+    convertedImageUrl.value = null;
+    convertedSize.value = 0;
+
+    if (previewUrl.value && selectedFile.value) {
+        // Keep the current file selected, just reset the conversion result
+    } else {
+        clearFile();
+    }
 };
 
 // Clean up URLs when component is unmounted
