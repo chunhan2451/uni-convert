@@ -264,7 +264,12 @@ export const additionalConverterCategories = [
                 id: 'tip',
                 name: 'Tip Calculator',
                 description: 'Calculate restaurant tips and split bills easily',
-            }
+            },
+            {
+                id: 'discount',
+                name: 'Discount Calculator',
+                description: 'Calculate final prices after applying percentage discounts',
+            },
         ],
         icon: uiIcons.currencyCircleDollar,
     },
