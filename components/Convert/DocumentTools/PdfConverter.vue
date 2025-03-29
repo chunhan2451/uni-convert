@@ -438,57 +438,8 @@ const convertFile = async () => {
 // PDF to Word conversion
 const convertPdfToWord = async (file) => {
     try {
-        // Load pdfjs-dist if needed
         // TODO: to fix conversion
-        if (typeof pdfjsLib === 'undefined') {
-            pdfjsLib = await import('pdfjs-dist');
-            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-        }
-
-        // Create a simple Office document using docx library
-        // Note: For browser environment, we create a basic text file with .docx extension
-        // that can be opened in Word
-
-        // Load the PDF
-        const fileArrayBuffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: fileArrayBuffer }).promise;
-
-        // Extract text content from all pages
-        let textContent = '';
-
-        for (let i = 1; i <= pdf.numPages; i++) {
-            const page = await pdf.getPage(i);
-            const pageText = await page.getTextContent();
-
-            // Append text content
-            pageText.items.forEach((item) => {
-                textContent += item.str + ' ';
-            });
-
-            // Add page break
-            textContent += '\\n\\n---- Page ' + i + ' ----\\n\\n';
-        }
-
-        // Create a basic Word document container
-        const wordContent = `
-MIME-Version: 1.0
-Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
-X-Document-Type: DOCX
-
-${textContent}
-`;
-
-        // Create the DOCX file
-        const docxBlob = new Blob([wordContent], {
-            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        });
-
-        const docxFileName = file.name.replace('.pdf', '.docx');
-        const docxFile = new File([docxBlob], docxFileName, {
-            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        });
-
-        processedFiles.value = [docxFile];
+        processedFiles.value = [file];
 
         // Show a toast to explain limitations
         showToast('PDF text extracted to Word format. For better conversion, consider using a dedicated converter.');
