@@ -19,7 +19,7 @@
                                 <div class="p-4 bg-base-200">
                                     <div class="bg-white rounded-lg mb-3 p-3 shadow-sm hover:shadow-md transition-shadow">
                                         <div class="flex items-center mb-2">
-                                            <div class="bg-success/10 rounded-full p-1.5 mr-2">
+                                            <div class="bg-success/10 rounded-full p-1.5 mr-2 flex">
                                                 <Icon :name="uiIcons.categoryIcons.length" class="text-success w-4 h-4" />
                                             </div>
                                             <div class="font-medium text-sm">Length Converter</div>
@@ -39,7 +39,7 @@
 
                                     <div class="bg-white rounded-lg mb-3 p-3 shadow-sm hover:shadow-md transition-shadow">
                                         <div class="flex items-center mb-2">
-                                            <div class="bg-success/10 rounded-full p-1.5 mr-2">
+                                            <div class="bg-success/10 rounded-full p-1.5 mr-2 flex">
                                                 <Icon :name="uiIcons.categoryIcons.temperature" class="text-success w-4 h-4" />
                                             </div>
                                             <div class="font-medium text-sm">Temperature Converter</div>
@@ -59,7 +59,7 @@
 
                                     <div class="bg-white rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow">
                                         <div class="flex items-center mb-2">
-                                            <div class="bg-success/10 rounded-full p-1.5 mr-2">
+                                            <div class="bg-success/10 rounded-full p-1.5 mr-2 flex">
                                                 <Icon :name="uiIcons.categoryIcons.time" class="text-success w-4 h-4" />
                                             </div>
                                             <div class="font-medium text-sm">Time Zone Converter</div>
@@ -85,18 +85,18 @@
                     <div class="mx-auto max-w-md px-4">
                         <!-- Added margin-top and padding -->
                         <div class="space-y-4 mb-6 animate-fade-in-delayed">
-                            <div class="flex justify-center">
+                            <div class="flex justify-center items-center">
                                 <!-- Changed to items-start -->
-                                <span class="text-xl mr-4 pt-0.5">⚡</span>
+                                <span class="text-xl mr-4">⚡</span>
                                 <!-- Added pt-0.5 to align icon -->
                                 <span class="text-lg font-medium">Simple, fast conversions</span>
                             </div>
-                            <div class="flex justify-center">
-                                <span class="text-xl mr-4 pt-0.5">🔄</span>
+                            <div class="flex justify-center items-center">
+                                <span class="text-xl mr-4">🔄</span>
                                 <span class="text-lg font-medium">Most common units & formats</span>
                             </div>
-                            <div class="flex justify-center">
-                                <span class="text-xl mr-4 pt-0.5">✨</span>
+                            <div class="flex justify-center items-center">
+                                <span class="text-xl mr-4">✨</span>
                                 <span class="text-lg font-medium">Effortless user experience</span>
                             </div>
                         </div>
@@ -124,15 +124,15 @@
                                 Your daily dose of <span class="text-gradient">conversion</span>.
                             </h1>
                             <div class="space-y-4 mb-8">
-                                <div class="flex items-start">
+                                <div class="flex items-center">
                                     <span class="text-2xl mr-4 pt-0.5">⚡</span>
                                     <span class="text-xl font-medium">Simple, fast conversions</span>
                                 </div>
-                                <div class="flex items-start">
+                                <div class="flex items-center">
                                     <span class="text-2xl mr-4 pt-0.5">🔄</span>
                                     <span class="text-xl font-medium">Most common units & formats</span>
                                 </div>
-                                <div class="flex items-start">
+                                <div class="flex items-center">
                                     <span class="text-2xl mr-4 pt-0.5">✨</span>
                                     <span class="text-xl font-medium">Effortless user experience</span>
                                 </div>
@@ -158,7 +158,7 @@
                                     <div class="p-5 bg-base-200">
                                         <div class="bg-white rounded-lg mb-3 p-4 shadow-sm hover:shadow-md transition-shadow">
                                             <div class="flex items-center mb-3">
-                                                <div class="bg-success/10 rounded-full p-2 mr-3">
+                                                <div class="bg-success/10 rounded-full p-2 mr-3 flex">
                                                     <Icon :name="uiIcons.categoryIcons.length" class="text-success w-5 h-5" />
                                                 </div>
                                                 <div class="font-medium">Length Converter</div>
@@ -178,7 +178,7 @@
 
                                         <div class="bg-white rounded-lg mb-3 p-4 shadow-sm hover:shadow-md transition-shadow">
                                             <div class="flex items-center mb-3">
-                                                <div class="bg-success/10 rounded-full p-2 mr-3">
+                                                <div class="bg-success/10 rounded-full p-2 mr-3 flex">
                                                     <Icon
                                                         :name="uiIcons.categoryIcons.temperature"
                                                         class="text-success w-5 h-5"
@@ -201,7 +201,7 @@
 
                                         <div class="bg-white rounded-lg mb-3 p-4 shadow-sm hover:shadow-md transition-shadow">
                                             <div class="flex items-center mb-3">
-                                                <div class="bg-success/10 rounded-full p-2 mr-3">
+                                                <div class="bg-success/10 rounded-full p-2 mr-3 flex">
                                                     <Icon :name="uiIcons.categoryIcons.time" class="text-success w-5 h-5" />
                                                 </div>
                                                 <div class="font-medium">Time Zone Converter</div>
