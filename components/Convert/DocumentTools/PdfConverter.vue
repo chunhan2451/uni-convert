@@ -62,7 +62,7 @@
                             <div class="flex items-center">
                                 <Icon :name="getFileIcon(file.type)" class="w-8 h-8 text-primary/60 mr-3 text-xl" />
                                 <div class="text-left">
-                                    <p class="font-medium truncate max-w-96">{{ file.name }}</p>
+                                    <p class="font-medium truncate max-w-48 md:max-w-96 whitespace-pre-wrap">{{ file.name }}</p>
                                     <p class="text-xs text-base-content/70">{{ formatFileSize(file.size) }}</p>
                                 </div>
                             </div>
@@ -124,15 +124,20 @@
                     <div
                         v-for="(file, index) in processedFiles"
                         :key="index"
-                        class="bg-base-200 rounded-lg p-4 mb-2 flex justify-between items-center"
+                        class="bg-base-200 rounded-lg p-3 sm:p-4 mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 shadow-sm"
                     >
-                        <div class="flex items-center">
-                            <Icon :name="getFileIcon(file.type)" class="w-6 h-6 text-primary/60 mr-3" />
-                            <span class="font-medium truncate max-w-80">{{ file.name }}</span>
+                        <div class="flex items-center overflow-hidden">
+                            <Icon
+                                :name="getFileIcon(file.type)"
+                                class="w-5 h-5 sm:w-6 sm:h-6 text-primary/60 flex-shrink-0 mr-2 sm:mr-3"
+                            />
+                            <span class="font-medium truncate max-w-[180px] sm:max-w-[250px] md:max-w-[350px] lg:max-w-[450px]">{{
+                                file.name
+                            }}</span>
                         </div>
-                        <button @click="downloadFile(file)" class="btn btn-primary btn-sm">
+                        <button @click="downloadFile(file)" class="btn btn-primary btn-sm w-full sm:w-auto">
                             <Icon :name="uiIcons.download" class="w-4 h-4 mr-1" />
-                            Download
+                            <span>Download</span>
                         </button>
                     </div>
                 </div>
@@ -442,7 +447,7 @@ const convertPdfToWord = async (file) => {
         const { Document, Packer, Paragraph } = await import('docx');
         const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf');
         const pdfjsWorkerUrl = (await import('pdfjs-dist/legacy/build/pdf.worker.min?url')).default;
-        
+
         // Set the worker source for PDF.js
         pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerUrl;
 
@@ -505,40 +510,40 @@ const convertImagesToPdf = async (fileList) => {
     try {
         // Create a PDF document
         const pdfDoc = await PDFDocument.create();
-        
+
         // Process each image in the file list
         for (const file of fileList) {
             try {
                 // Load and prepare the image based on its type
                 let embeddedImage;
-                
+
                 try {
                     // Convert the image to appropriate format via canvas to ensure compatibility
                     const bitmap = await createImageBitmap(file);
-                    
+
                     // Create a canvas with the image dimensions
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    
+
                     // Set canvas dimensions to match the image
                     canvas.width = bitmap.width;
                     canvas.height = bitmap.height;
-                    
+
                     // Draw the image on the canvas
                     ctx.drawImage(bitmap, 0, 0);
-                    
+
                     // Get image data as PNG (works better with pdf-lib than JPEG)
                     const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png', 0.9));
                     const imageData = await blob.arrayBuffer();
-                    
+
                     // Embed the PNG in the PDF
                     embeddedImage = await pdfDoc.embedPng(imageData);
                 } catch (imageErr) {
                     console.warn(`Error processing image via canvas for ${file.name}, trying direct method:`, imageErr);
-                    
+
                     // Fallback to direct embedding if canvas approach fails
                     const arrayBuffer = await file.arrayBuffer();
-                    
+
                     if (file.type.includes('jpeg') || file.type.includes('jpg')) {
                         embeddedImage = await pdfDoc.embedJpg(arrayBuffer);
                     } else if (file.type.includes('png')) {
@@ -548,26 +553,27 @@ const convertImagesToPdf = async (fileList) => {
                         continue; // Skip this file and continue with the next one
                     }
                 }
-                
+
                 if (!embeddedImage) {
                     console.warn(`Failed to embed image ${file.name} in PDF, skipping`);
                     continue; // Skip this file and continue with the next one
                 }
-                
+
                 // Get image dimensions
                 const { width: imgWidth, height: imgHeight } = embeddedImage;
-                
+
                 // Define standard page sizes (A4)
                 const a4Width = 595;
                 const a4Height = 842;
-                
+
                 // Calculate page dimensions based on image aspect ratio
                 let pageWidth, pageHeight;
                 const aspectRatio = imgWidth / imgHeight;
-                
+
                 if (aspectRatio > 1) {
                     // Landscape orientation - fit to A4 landscape
-                    if (imgWidth > a4Height) { // Use a4Height as width for landscape
+                    if (imgWidth > a4Height) {
+                        // Use a4Height as width for landscape
                         pageWidth = a4Height;
                         pageHeight = pageWidth / aspectRatio;
                     } else {
@@ -584,10 +590,10 @@ const convertImagesToPdf = async (fileList) => {
                         pageHeight = imgHeight;
                     }
                 }
-                
+
                 // Add a page with calculated dimensions
                 const page = pdfDoc.addPage([Math.max(pageWidth, 100), Math.max(pageHeight, 100)]);
-                
+
                 // Draw the image on the page (centered)
                 page.drawImage(embeddedImage, {
                     x: 0,
@@ -595,19 +601,18 @@ const convertImagesToPdf = async (fileList) => {
                     width: pageWidth,
                     height: pageHeight,
                 });
-                
+
                 // Add a small status update for each image processed
                 showToast(`Added ${file.name} to PDF...`, 'info', 1000);
-                
             } catch (singleImageError) {
                 console.error(`Error processing image ${file.name}:`, singleImageError);
                 // Continue processing other images even if one fails
             }
         }
-        
+
         // Save the PDF
         const pdfBytes = await pdfDoc.save();
-        
+
         // Create a filename based on number of images
         let pdfFileName;
         if (fileList.length === 1) {
@@ -618,20 +623,19 @@ const convertImagesToPdf = async (fileList) => {
             const timestamp = new Date().toISOString().slice(0, 10);
             pdfFileName = `converted_images_${timestamp}.pdf`;
         }
-        
+
         // Create a File object for the UI
         const pdfFile = new File([pdfBytes], pdfFileName, { type: 'application/pdf' });
-        
+
         // Update the processed files array for UI display
         processedFiles.value = [pdfFile];
-        
+
         // Show success message based on number of files
         if (fileList.length === 1) {
             showToast('Image successfully converted to PDF.');
         } else {
             showToast(`${fileList.length} images successfully combined into one PDF.`);
         }
-        
     } catch (error) {
         console.error('Error converting images to PDF:', error);
         throw new Error('Failed to convert images to PDF: ' + error.message);
