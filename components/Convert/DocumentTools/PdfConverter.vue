@@ -163,9 +163,6 @@ import { PDFDocument } from 'pdf-lib';
 const appState = useAppState();
 const route = useRoute();
 
-// PDF.js library reference - will be loaded dynamically
-let pdfjsLib;
-
 // State variables
 const fileInput = ref(null);
 const selectedFiles = ref([]);
@@ -438,14 +435,67 @@ const convertFile = async () => {
 // PDF to Word conversion
 const convertPdfToWord = async (file) => {
     try {
-        // TODO: to fix conversion
-        processedFiles.value = [file];
+        isProcessing.value = true;
+        showToast('Extracting text from PDF...', 'info');
 
-        // Show a toast to explain limitations
-        showToast('PDF text extracted to Word format. For better conversion, consider using a dedicated converter.');
+        // Dynamic imports at function level
+        const { Document, Packer, Paragraph } = await import('docx');
+        const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf');
+        const pdfjsWorkerUrl = (await import('pdfjs-dist/legacy/build/pdf.worker.min?url')).default;
+        
+        // Set the worker source for PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerUrl;
+
+        // Read the PDF file
+        const arrayBuffer = await file.arrayBuffer();
+
+        // Load the PDF document using PDF.js
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+        // Create paragraphs array to store text
+        let paragraphs = [];
+
+        // Extract text from each page
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+
+            let pageText = textContent.items.map((item) => item.str).join(' '); // Extract plain text
+            paragraphs.push(new Paragraph(pageText)); // Store text as a paragraph
+        }
+
+        // Create a simple Word document with extracted text
+        const doc = new Document({
+            sections: [
+                {
+                    children: paragraphs,
+                },
+            ],
+        });
+
+        // Generate the docx file
+        const blob = await Packer.toBlob(doc);
+
+        // Create filename based on original PDF name
+        const fileName = file.name.replace(/\.pdf$/i, '') + '.docx';
+
+        // Create a File object for the UI
+        const wordFile = new File([blob], fileName, {
+            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            lastModified: new Date().getTime(),
+        });
+
+        // Update the processed files array for UI display
+        processedFiles.value = [wordFile];
+
+        // Show success message
+        showToast('PDF successfully converted to Word with plain text.');
     } catch (error) {
         console.error('Error converting PDF to Word:', error);
+        showToast('Error converting PDF to Word: ' + error.message, 'error');
         throw new Error('Failed to convert PDF to Word: ' + error.message);
+    } finally {
+        isProcessing.value = false;
     }
 };
 
@@ -910,9 +960,8 @@ const getInfoContent = () => {
             return `
                 <p class="mb-2">Convert PDF documents to editable Word format with these benefits:</p>
                 <ul class="list-disc pl-5 space-y-1">
-                    <li>Extract text, images, and formatting from PDF files</li>
+                    <li>Extract text only from PDF files</li>
                     <li>Create editable DOCX files that can be modified in Microsoft Word</li>
-                    <li>Maintain formatting including fonts, paragraphs, and images</li>
                     <li>Processed entirely in your browser - files are never uploaded to any server</li>
                 </ul>
             `;
