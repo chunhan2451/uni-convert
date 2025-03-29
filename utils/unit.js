@@ -260,6 +260,11 @@ export const additionalConverterCategories = [
                 name: 'Compound Interest Calculator',
                 description: 'Calculate how your investments grow over time with compound interest',
             },
+            {
+                id: 'tip',
+                name: 'Tip Calculator',
+                description: 'Calculate restaurant tips and split bills easily',
+            }
         ],
         icon: uiIcons.currencyCircleDollar,
     },

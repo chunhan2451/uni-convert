@@ -63,6 +63,7 @@ const converterComponents = {
     mortgage: () => import('./FinancialTools/LoanCalculator.vue'),
     compound: () => import('./FinancialTools/CompoundInterestCalculator.vue'),
     'compound-interest': () => import('./FinancialTools/CompoundInterestCalculator.vue'),
+    tip: () => import('./FinancialTools/TipCalculator.vue'),
 
     // Health & Fitness tools
     bmi: () => import('./HealthTools/BmiCalculator.vue'),
