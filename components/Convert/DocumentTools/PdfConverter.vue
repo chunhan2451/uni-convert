@@ -47,7 +47,7 @@
 
                     <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-5 sm:mt-8 max-w-md mx-auto">
                         <div class="bg-base-100 px-3 py-1.5 sm:py-2 rounded-full shadow-sm text-xs sm:text-sm">
-                            {{ isMultipleOperation ? 'Select multiple files to merge' : 'Max file size: 10MB' }}
+                            Max 10MB per file
                         </div>
                     </div>
                 </div>
@@ -200,7 +200,7 @@ const conversionType = computed(() => {
 
 // Determine if multiple files are allowed (for merge operation)
 const isMultipleOperation = computed(() => {
-    return operationType.value === 'merge';
+    return operationType.value === 'merge' || conversionType.value === 'image-to-pdf';
 });
 
 // UI related computed properties
@@ -267,7 +267,7 @@ const filePlaceholderText = computed(() => {
         case 'pdf-to-word':
             return 'PDF file';
         case 'image-to-pdf':
-            return 'image file';
+            return 'images';
         default:
             return 'file';
     }
@@ -425,7 +425,7 @@ const convertFile = async () => {
             await convertPdfToWord(file);
             break;
         case 'image-to-pdf':
-            await convertImageToPdf(file);
+            await convertImagesToPdf(selectedFiles.value);
             break;
         default:
             showToast('Unsupported conversion type', 'error');
@@ -500,111 +500,141 @@ const convertPdfToWord = async (file) => {
 };
 
 // Image to PDF conversion
-const convertImageToPdf = async (file) => {
+// Image to PDF conversion - modified to handle multiple files
+const convertImagesToPdf = async (fileList) => {
     try {
-        // TODO: to fix conversion
         // Create a PDF document
         const pdfDoc = await PDFDocument.create();
-
-        // Load and prepare the image based on its type
-        let imageData, embeddedImage;
-
-        try {
-            // Convert the image to appropriate format via canvas to ensure compatibility
-            const bitmap = await createImageBitmap(file);
-
-            // Create a canvas with the image dimensions
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            // Set canvas dimensions to match the image
-            canvas.width = bitmap.width;
-            canvas.height = bitmap.height;
-
-            // Draw the image on the canvas
-            ctx.drawImage(bitmap, 0, 0);
-
-            // Get image data as PNG (works better with pdf-lib than JPEG)
-            const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png', 1.0));
-            imageData = await blob.arrayBuffer();
-
-            // Embed the PNG in the PDF
-            embeddedImage = await pdfDoc.embedPng(imageData);
-        } catch (imageErr) {
-            console.warn('Error processing image via canvas, trying direct method:', imageErr);
-
-            // Fallback to direct embedding if canvas approach fails
-            const arrayBuffer = await file.arrayBuffer();
-
-            if (file.type.includes('jpeg') || file.type.includes('jpg')) {
-                embeddedImage = await pdfDoc.embedJpg(arrayBuffer);
-            } else if (file.type.includes('png')) {
-                embeddedImage = await pdfDoc.embedPng(arrayBuffer);
-            } else {
-                throw new Error(`Unsupported image format: ${file.type}. Please use JPEG or PNG.`);
+        
+        // Process each image in the file list
+        for (const file of fileList) {
+            try {
+                // Load and prepare the image based on its type
+                let embeddedImage;
+                
+                try {
+                    // Convert the image to appropriate format via canvas to ensure compatibility
+                    const bitmap = await createImageBitmap(file);
+                    
+                    // Create a canvas with the image dimensions
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set canvas dimensions to match the image
+                    canvas.width = bitmap.width;
+                    canvas.height = bitmap.height;
+                    
+                    // Draw the image on the canvas
+                    ctx.drawImage(bitmap, 0, 0);
+                    
+                    // Get image data as PNG (works better with pdf-lib than JPEG)
+                    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png', 0.9));
+                    const imageData = await blob.arrayBuffer();
+                    
+                    // Embed the PNG in the PDF
+                    embeddedImage = await pdfDoc.embedPng(imageData);
+                } catch (imageErr) {
+                    console.warn(`Error processing image via canvas for ${file.name}, trying direct method:`, imageErr);
+                    
+                    // Fallback to direct embedding if canvas approach fails
+                    const arrayBuffer = await file.arrayBuffer();
+                    
+                    if (file.type.includes('jpeg') || file.type.includes('jpg')) {
+                        embeddedImage = await pdfDoc.embedJpg(arrayBuffer);
+                    } else if (file.type.includes('png')) {
+                        embeddedImage = await pdfDoc.embedPng(arrayBuffer);
+                    } else {
+                        console.warn(`Skipping unsupported image format: ${file.type} for file ${file.name}`);
+                        continue; // Skip this file and continue with the next one
+                    }
+                }
+                
+                if (!embeddedImage) {
+                    console.warn(`Failed to embed image ${file.name} in PDF, skipping`);
+                    continue; // Skip this file and continue with the next one
+                }
+                
+                // Get image dimensions
+                const { width: imgWidth, height: imgHeight } = embeddedImage;
+                
+                // Define standard page sizes (A4)
+                const a4Width = 595;
+                const a4Height = 842;
+                
+                // Calculate page dimensions based on image aspect ratio
+                let pageWidth, pageHeight;
+                const aspectRatio = imgWidth / imgHeight;
+                
+                if (aspectRatio > 1) {
+                    // Landscape orientation - fit to A4 landscape
+                    if (imgWidth > a4Height) { // Use a4Height as width for landscape
+                        pageWidth = a4Height;
+                        pageHeight = pageWidth / aspectRatio;
+                    } else {
+                        pageWidth = imgWidth;
+                        pageHeight = imgHeight;
+                    }
+                } else {
+                    // Portrait orientation - fit to A4 portrait
+                    if (imgHeight > a4Height) {
+                        pageHeight = a4Height;
+                        pageWidth = pageHeight * aspectRatio;
+                    } else {
+                        pageWidth = imgWidth;
+                        pageHeight = imgHeight;
+                    }
+                }
+                
+                // Add a page with calculated dimensions
+                const page = pdfDoc.addPage([Math.max(pageWidth, 100), Math.max(pageHeight, 100)]);
+                
+                // Draw the image on the page (centered)
+                page.drawImage(embeddedImage, {
+                    x: 0,
+                    y: 0,
+                    width: pageWidth,
+                    height: pageHeight,
+                });
+                
+                // Add a small status update for each image processed
+                showToast(`Added ${file.name} to PDF...`, 'info', 1000);
+                
+            } catch (singleImageError) {
+                console.error(`Error processing image ${file.name}:`, singleImageError);
+                // Continue processing other images even if one fails
             }
         }
-
-        if (!embeddedImage) {
-            throw new Error('Failed to embed image in PDF');
-        }
-
-        // Get image dimensions, keeping aspect ratio but limiting size to reasonable PDF page
-        const { width: imgWidth, height: imgHeight } = embeddedImage;
-
-        // Define standard page sizes
-        const a4Width = 595;
-        const a4Height = 842;
-
-        // Calculate page dimensions based on image aspect ratio
-        let pageWidth, pageHeight;
-        const aspectRatio = imgWidth / imgHeight;
-
-        if (aspectRatio > 1) {
-            // Landscape orientation
-            if (imgWidth > a4Width) {
-                pageWidth = a4Width;
-                pageHeight = pageWidth / aspectRatio;
-            } else {
-                pageWidth = imgWidth;
-                pageHeight = imgHeight;
-            }
-        } else {
-            // Portrait orientation
-            if (imgHeight > a4Height) {
-                pageHeight = a4Height;
-                pageWidth = pageHeight * aspectRatio;
-            } else {
-                pageWidth = imgWidth;
-                pageHeight = imgHeight;
-            }
-        }
-
-        // Add a page with calculated dimensions
-        const page = pdfDoc.addPage([pageWidth, pageHeight]);
-
-        // Draw the image on the page (centered)
-        page.drawImage(embeddedImage, {
-            x: 0,
-            y: 0,
-            width: pageWidth,
-            height: pageHeight,
-        });
-
+        
         // Save the PDF
         const pdfBytes = await pdfDoc.save();
-
-        // Create a file from the PDF
-        const pdfFileName = file.name.replace(/\.(jpg|jpeg|png|gif|bmp)$/i, '.pdf');
+        
+        // Create a filename based on number of images
+        let pdfFileName;
+        if (fileList.length === 1) {
+            // For single image, use the original file name
+            pdfFileName = fileList[0].name.replace(/\.(jpg|jpeg|png|gif|bmp)$/i, '.pdf');
+        } else {
+            // For multiple images, create a sensible name
+            const timestamp = new Date().toISOString().slice(0, 10);
+            pdfFileName = `converted_images_${timestamp}.pdf`;
+        }
+        
+        // Create a File object for the UI
         const pdfFile = new File([pdfBytes], pdfFileName, { type: 'application/pdf' });
-
+        
+        // Update the processed files array for UI display
         processedFiles.value = [pdfFile];
-
-        // Show success message
-        showToast('Image successfully converted to PDF.');
+        
+        // Show success message based on number of files
+        if (fileList.length === 1) {
+            showToast('Image successfully converted to PDF.');
+        } else {
+            showToast(`${fileList.length} images successfully combined into one PDF.`);
+        }
+        
     } catch (error) {
-        console.error('Error converting Image to PDF:', error);
-        throw new Error('Failed to convert Image to PDF: ' + error.message);
+        console.error('Error converting images to PDF:', error);
+        throw new Error('Failed to convert images to PDF: ' + error.message);
     }
 };
 
