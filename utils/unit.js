@@ -315,6 +315,7 @@ export const additionalConverterCategories = [
             { id: 'calories', name: 'Calories Burned Calculator', description: 'Convert between calories and exercise duration' },
             { id: 'steps', name: 'Steps Converter', description: 'Convert between steps, miles, and kilometers' },
             { id: 'bloodsugar', name: 'Blood Sugar Converter', description: 'Convert between mg/dL and mmol/L' },
+            { id: 'bmr', name: 'BMR Calculator', description: 'Calculate Basal Metabolic Rate and daily calorie needs' },
         ],
         icon: uiIcons.heartPulse,
     },

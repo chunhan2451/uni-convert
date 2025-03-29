@@ -69,6 +69,7 @@ const converterComponents = {
     calories: () => import('./HealthTools/CaloriesConverter.vue'),
     steps: () => import('./HealthTools/StepsConverter.vue'),
     bloodsugar: () => import('./HealthTools/BloodSugarConverter.vue'),
+    bmr: () => import('./HealthTools/BmrCalculator.vue'),
 
     // PDF to Word
     'pdf-to-word': () => import('./DocumentTools/PdfConverter.vue'),
