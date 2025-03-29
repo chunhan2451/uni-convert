@@ -120,7 +120,6 @@
 import { ref, computed, watch } from 'vue';
 import { useAppState } from '~/composables/states';
 import { uiIcons } from '~/utils/appConstant';
-import { NuxtLink } from '#components';
 
 // Reactive state
 const originalPrice = ref('');
@@ -164,28 +163,16 @@ const resetForm = () => {
 };
 
 // Copy the calculation result to clipboard
-const copyResult = () => {
+const copyResult = async () => {
     // Format with larger font and simple layout for better readability
     const resultText = `Original Price: ${parseFloat(originalPrice.value).toFixed(2)}\nDiscount: ${
         discountPercentage.value
     }% (-${discountAmount.value.toFixed(2)})\nFinal Price: ${finalPrice.value.toFixed(2)}`;
 
     // Copy to clipboard
-    navigator.clipboard
-        .writeText(resultText)
-        .then(() => {
-            // Show friendly toast message
-            appState.toastMessage = 'Price calculation copied to clipboard!';
-            appState.showToast = true;
-
-            // Hide toast after 3 seconds
-            setTimeout(() => {
-                appState.showToast = false;
-            }, 3000);
-        })
-        .catch((err) => {
-            console.error('Failed to copy text: ', err);
-        });
+    await navigator.clipboard.writeText(resultText);
+    appState.value.showToast = true;
+    setTimeout(() => (appState.value.showToast = false), 2000); // Hide toast after 2 seconds
 };
 
 // SEO metadata
