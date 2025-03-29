@@ -62,6 +62,16 @@ export const uiIcons = {
     // Health icons
     heartPulse: 'ph:heartbeat-bold',
 
+    document: 'ph:file-pdf-bold',
+    file: 'ph:file-bold',
+    docx: 'ph:file-doc-bold',
+    excel: 'ph:file-xls-bold',
+    fileMerge: 'ph:files-bold',
+    fileSplit: 'ph:file-arrow-bold',
+    compress: 'ph:compress-bold',
+    plus: 'ph:plus-bold',
+    zip: 'ph:file-zip-bold',
+
     // Add any category-specific icons here if needed
     categoryIcons: {
         angle: 'ph:triangle-bold',

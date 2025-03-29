@@ -318,6 +318,39 @@ export const additionalConverterCategories = [
         ],
         icon: uiIcons.heartPulse,
     },
+    {
+        id: 'document-tools',
+        name: 'PDF & Document Tools',
+        description: 'Convert between PDF and other document formats, merge, split, and compress PDF files',
+        tools: [
+            {
+                id: 'pdf-to-word',
+                name: 'PDF to Word',
+                description: 'Convert PDF documents to editable Word (DOCX) format',
+            },
+            {
+                id: 'image-to-pdf',
+                name: 'Image to PDF',
+                description: 'Convert JPG, PNG, or other image formats to PDF',
+            },
+            {
+                id: 'merge-pdf',
+                name: 'Merge PDFs',
+                description: 'Combine multiple PDF files into one document',
+            },
+            {
+                id: 'split-pdf',
+                name: 'Split PDF',
+                description: 'Extract pages from a PDF document into separate files',
+            },
+            {
+                id: 'compress-pdf',
+                name: 'Compress PDF',
+                description: 'Reduce PDF file size while maintaining quality',
+            },
+        ],
+        icon: uiIcons.document,
+    },
 ];
 
 // Combined categories for global access

@@ -69,6 +69,15 @@ const converterComponents = {
     calories: () => import('./HealthTools/CaloriesConverter.vue'),
     steps: () => import('./HealthTools/StepsConverter.vue'),
     bloodsugar: () => import('./HealthTools/BloodSugarConverter.vue'),
+
+    // PDF to Word
+    'pdf-to-word': () => import('./DocumentTools/PdfConverter.vue'),
+    'image-to-pdf': () => import('./DocumentTools/PdfConverter.vue'),
+    'jpg-to-pdf': () => import('./DocumentTools/PdfConverter.vue'),
+    'png-to-pdf': () => import('./DocumentTools/PdfConverter.vue'),
+    'merge-pdf': () => import('./DocumentTools/PdfConverter.vue'),
+    'split-pdf': () => import('./DocumentTools/PdfConverter.vue'),
+    'compress-pdf': () => import('./DocumentTools/PdfConverter.vue'),
 };
 
 // Helper function to get a converter component by category ID

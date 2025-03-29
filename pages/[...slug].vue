@@ -27,8 +27,8 @@
             </div>
         </div>
 
-        <!-- Tool Converter -->
-        <div v-else-if="dynamicComponent && !isFromToPattern">
+        <!-- Tool Converter or Pdf Converter -->
+        <div v-else-if="dynamicComponent && (!isFromToPattern || isPdfComponent)">
             <component :is="dynamicComponent" />
         </div>
 
@@ -57,6 +57,7 @@ const slug = Array.isArray(route.params.slug) ? route.params.slug.join('/') : ro
 // Use shallowRef for component to avoid reactivity warnings
 const dynamicComponent = shallowRef(null);
 const toolCategory = ref(null);
+const isPdfComponent = ref(false);
 
 // Check if this is a from-to pattern converter
 const isFromToPattern = computed(() => {
@@ -203,8 +204,36 @@ const pageTitle = computed(() => {
         .join(' ');
 });
 
+function handlePdfConverters(slug) {
+    isPdfComponent.value = false;
+
+    // Check for PDF converter patterns
+    const pdfPatterns = [
+        'pdf-to-word-converter',
+        'image-to-pdf-converter',
+        'merge-pdf',
+        'split-pdf',
+        'compress-pdf'
+    ];
+    
+    if (pdfPatterns.includes(slug)) {
+        // Extract the tool ID from the slug (remove -converter suffix if present)
+        const toolId = slug.replace('-converter', '');
+        toolCategory.value = 'Document Tools';
+        isPdfComponent.value = true; // Set to false for PDF tools
+        return { toolId };
+    }
+    
+    return null;
+}
+
 // Find the tool component based on the URL path
 const resolveToolToComponent = () => {
+    const pdfConverter = handlePdfConverters(slug);
+    if (pdfConverter) {
+        return pdfConverter.toolId;
+    }
+
     // For from-to patterns
     if (isFromToPattern.value) {
         if (conversionData.value) {
@@ -215,6 +244,17 @@ const resolveToolToComponent = () => {
                 // Handle unit converter patterns
                 return conversionData.value.categoryId;
             }
+        }
+
+        // Also check for PDF patterns like pdf-to-word
+        if (fromUnitId.value === 'pdf' && ['word', 'image'].includes(toUnitId.value)) {
+            toolCategory.value = 'Document Tools';
+            return `pdf-to-${toUnitId.value}`;
+        }
+        
+        if (['word', 'image'].includes(fromUnitId.value) && toUnitId.value === 'pdf') {
+            toolCategory.value = 'Document Tools';
+            return `${fromUnitId.value}-to-pdf`;
         }
         return null;
     }
