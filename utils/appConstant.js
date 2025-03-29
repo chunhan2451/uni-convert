@@ -49,6 +49,7 @@ export const uiIcons = {
 
     png: 'ph:file-png-bold',
     svg: 'ph:file-svg-bold',
+    warning: 'ph:warning-bold',
 
     // Finance
     currencyCircleDollar: 'ph:currency-circle-dollar-bold',

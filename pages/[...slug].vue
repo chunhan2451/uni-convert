@@ -7,8 +7,6 @@
                 <ul>
                     <li><NuxtLink to="/">Home</NuxtLink></li>
                     <li><NuxtLink to="/converter">Converters</NuxtLink></li>
-                    <!-- <li v-if="toolCategory && !isFromToPattern">{{ toolCategory }}</li>
-                    <li v-if="categoryData && isFromToPattern">{{ categoryData.name }}</li> -->
                     <li>{{ pageTitle }}</li>
                 </ul>
             </div>
@@ -33,10 +31,8 @@
         </div>
 
         <!-- Not Found State -->
-        <div v-else class="container mx-auto p-8 text-center">
-            <h1 class="text-3xl font-bold mb-4">Tool Not Found</h1>
-            <p class="mb-6">Sorry, we couldn't find the converter or tool you're looking for.</p>
-            <NuxtLink to="/converter" class="btn btn-primary"> Browse All Tools </NuxtLink>
+        <div v-else>
+            <NotFoundError />
         </div>
     </div>
 </template>
@@ -44,6 +40,7 @@
 <script setup>
 import { NuxtLink } from '#components';
 import { onMounted, shallowRef, ref, computed, watch } from 'vue';
+import NotFoundError from '~/components/NotFoundError.vue';
 import Skeleton from '~/components/Skeleton.vue';
 import { getConverterByCategory } from '~/components/Convert';
 import { allConverterCategories } from '~/utils/unit';
